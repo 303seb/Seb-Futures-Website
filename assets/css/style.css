@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Seb Futures — core stylesheet
+   The Market Element — core stylesheet
 
    No background patterns — depth comes entirely from purple-tinted shadows
    in the same lavender as the accent. The page is the off-white gray from
@@ -30,7 +30,7 @@
   --purple-deep:   #453a80;  /* deepest — button gradient end */
   --purple-soft:   #ede9fa;  /* pale tint fills */
   --purple-line:   #cdc4ec;  /* accent borders */
-  --purple-edge:   #cfc8ea;  /* solid raised edge — must sit darker than --bg */
+  --purple-ring:   rgba(207, 200, 234, 0.5);  /* even ring around the nav bubble */
   --purple-glow:   rgba(115, 101, 182, 0.3);
 
   /* Order-flow colours. *-ink variants are the readable-on-white versions. */
@@ -178,8 +178,8 @@ p { color: var(--text-mid); }
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--purple-bright);
-  background: var(--purple-soft);
+  color: var(--text-mid);
+  background: rgba(22, 23, 28, 0.055);
   border-radius: 100px;
   padding: 6px 14px;
   margin-bottom: 20px;
@@ -190,7 +190,7 @@ p { color: var(--text-mid); }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--purple);
+  background: var(--text-dim);
 }
 
 /* Provides the stacking context the soft glows sit behind */
@@ -303,12 +303,13 @@ p { color: var(--text-mid); }
   background: #fff;
   border-radius: 22px;
   padding: 9px 14px 9px 18px;
-  /* Layered: inner highlight, contact shadow, solid raised edge, cast shadow */
+  /* Even ring + even glow so the purple wraps the whole bubble, with a
+     slight downward cast left in to keep it feeling raised rather than flat */
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 1px 2px rgba(115, 101, 182, 0.14),
-    0 6px 0 -2px var(--purple-edge),
-    0 16px 32px -10px rgba(115, 101, 182, 0.4);
+    0 0 0 3px var(--purple-ring),
+    0 0 22px 3px rgba(115, 101, 182, 0.3),
+    0 6px 22px -2px rgba(115, 101, 182, 0.34);
   transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
@@ -316,9 +317,9 @@ p { color: var(--text-mid); }
 .nav.is-stuck .nav__bubble {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 1px 2px rgba(115, 101, 182, 0.12),
-    0 4px 0 -2px var(--purple-edge),
-    0 12px 26px -10px rgba(115, 101, 182, 0.34);
+    0 0 0 3px var(--purple-ring),
+    0 0 18px 2px rgba(115, 101, 182, 0.26),
+    0 5px 18px -2px rgba(115, 101, 182, 0.3);
 }
 
 .brand {
@@ -916,7 +917,7 @@ p { color: var(--text-mid); }
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--purple-bright);
+  color: var(--text-mid);
   padding: 18px 0 14px;
   margin-bottom: 4px;
   border-bottom: 1px solid var(--border-soft);
@@ -1362,9 +1363,9 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
     background: #fff;
     border-radius: 20px;
     box-shadow:
-      0 1px 2px rgba(115, 101, 182, 0.14),
-      0 6px 0 -2px var(--purple-edge),
-      0 18px 34px -10px rgba(115, 101, 182, 0.4);
+      0 0 0 3px var(--purple-ring),
+      0 0 22px 3px rgba(115, 101, 182, 0.3),
+      0 8px 24px -2px rgba(115, 101, 182, 0.34);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;
     visibility: hidden;
@@ -1394,7 +1395,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
   .promo__item { gap: 9px; padding-inline: 20px; }
-  .brand__text { font-size: 0.94rem; }
+  .brand__text { font-size: 0.82rem; }
 }
 
 /* --------------------------------------------------------------------------

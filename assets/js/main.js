@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Seb Futures — site behaviour
+   The Market Element — site behaviour
    Mobile nav, sticky header, FAQ accordion, giveaway countdown,
    scroll reveal, and the hero candlestick chart.
    ========================================================================== */

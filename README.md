@@ -2,7 +2,7 @@
 
 Sebastian Salazar
 
-Trading mentorship site for the Seb Futures community — NQ / ES futures education,
+Trading mentorship site for The Market Element — NQ / ES futures education,
 Discord community, and giveaways.
 
 Static HTML/CSS/JS. No build step, no dependencies.
@@ -43,16 +43,13 @@ Surfaces form a three-step ladder — page, band, card:
 | `--purple-bright` | `#54479b` | emphasis that must be **read** |
 | `--purple-deep` | `#453a80` | gradient ends |
 | `--purple-soft` | `#ede9fa` | pale tint fills |
-| `--purple-edge` | `#cfc8ea` | solid raised edge under the nav bubble |
+| `--purple-ring` | `rgba(207,200,234,.5)` | even ring around the nav bubble |
 | `--text` | `#16171c` | body ink |
 | `--red` / `--red-ink` | `#d63a54` / `#b3243c` | short signal / red text |
 | `--green` / `--green-ink` | `#1e9488` / `#14746a` | bullish candles / green text |
 
-Two constraints worth keeping if you retune these:
+One constraint worth keeping if you retune these:
 
-- `--purple-edge` must stay **darker than `--bg`**. It is the solid layer in
-  the nav bubble's shadow stack that makes it read as raised; lighter than
-  the page and it turns into a halo.
 - On these light surfaces the pale lavender is only usable as a *fill* — it
   fails contrast as text. Anything read uses `--purple-bright` or
   `--purple-deep`; the `*-ink` variants exist for the same reason.
@@ -69,7 +66,8 @@ Placeholders that need real values:
   not their real logo. Replace the file (keep the name) with the asset from
   their affiliate kit; it renders 19px tall on purple, so white works best
 - **Alpha Futures affiliate link** — `href="#"` on the `.promo` bar
-- **Social links** — `href="#"` in the nav bubble and every footer
+- **Social links** — Instagram and YouTube are wired up; Discord and X in
+  the footer are still `href="#"`
 - **Email** — `hello@example.com` in footers and `faq.html`
 - **Stats** — member counts and session numbers on `index.html` / `discord.html`
 - **Giveaway** — prize, and the `data-countdown` ISO date on `giveaways.html`
@@ -77,7 +75,7 @@ Placeholders that need real values:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=5`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=6`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
