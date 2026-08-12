@@ -71,25 +71,49 @@ One constraint worth keeping if you retune these:
 All tokens are at the top of `assets/css/style.css`. The hero chart's colours
 are set in `renderChart()` in `assets/js/main.js`.
 
-## Before going live
+## Filling in the content
 
-Placeholders that need real values:
+Every piece of copy is a placeholder written in square brackets describing
+what belongs in that slot, e.g. `[Put how many active members are in the
+group]`. The layout, styling and JavaScript are finished — only the words
+are missing.
 
-- **Discord invite link** — `href="#"` on the join buttons in `discord.html`
+To find what is left, search the HTML files for `[`. When a page returns no
+matches, that page is done.
+
+Structural comments mark each section (`<!-- STATS -->`, `<!-- CHANNELS -->`
+and so on) so you can work one section at a time. Repeated blocks — cards,
+steps, channels, FAQ items, table rows — can be duplicated or deleted freely;
+the JavaScript picks up whatever is there.
+
+### Text that is NOT a placeholder
+
+Four things are real text, left in on purpose:
+
+- **The promo bar** — Alpha Futures / code `NQSEB`, on every page.
+- **The risk disclosure** in every footer. A trading education site should
+  carry one; have it reviewed for your jurisdiction rather than deleted.
+- **The impersonation warning** on the Discord page. Scam DMs are the
+  standard attack on trading communities.
+- **The scam warning and giveaway terms** on the Giveaways page. The "no
+  purchase necessary" wording matters for giveaway compliance in many places.
+
+Edit the wording freely, but think twice before removing them.
+
+### Links still to fill in
+
+- **Discord invite** — `href="#"` on the Discord page buttons
+- **Alpha Futures affiliate link** — `href="#"` on the promo bar
 - **Alpha Futures logo** — `assets/alpha-futures.svg` is a placeholder mark,
-  not their real logo. Replace the file (keep the name) with the asset from
-  their affiliate kit; it renders 19px tall on purple, so white works best
-- **Alpha Futures affiliate link** — `href="#"` on the `.promo` bar
-- **Social links** — Instagram and YouTube are wired up; Discord and X in
-  the footer are still `href="#"`
-- **Email** — `hello@example.com` in footers and `faq.html`
-- **Stats** — member counts and session numbers on `index.html` / `discord.html`
-- **Giveaway** — prize, and the `data-countdown` ISO date on `giveaways.html`
-- **Past winners** — sample rows in the `giveaways.html` table
+  not their real logo. Replace the file, keep the name
+- **Discord and X** in the footer socials (Instagram and YouTube are wired up)
+- **Contact email** in the footer
+- **Giveaway closing date** — the `data-countdown` attribute on
+  `giveaways.html`, ISO 8601 with your UTC offset
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=9`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=10`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
