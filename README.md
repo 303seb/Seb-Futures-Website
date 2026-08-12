@@ -2,7 +2,7 @@
 
 Sebastian Salazar
 
-Trading mentorship site for the Bazz Trades community — NQ / ES futures education,
+Trading mentorship site for the Seb Futures community — NQ / ES futures education,
 Discord community, and giveaways.
 
 Static HTML/CSS/JS. No build step, no dependencies.

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Bazz Trades — site behaviour
+   Seb Futures — site behaviour
    Mobile nav, sticky header, FAQ accordion, giveaway countdown,
    scroll reveal, and the hero candlestick chart.
    ========================================================================== */
