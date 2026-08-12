@@ -27,32 +27,38 @@ assets/
 
 ## Palette
 
-Clean white theme. No background patterns — depth comes from purple-tinted
-shadows in the same lavender as the accent.
+No background patterns. Depth comes from purple-tinted shadows in the same
+lavender as the accent. The page is the off-white gray sampled from the
+chart's plot area; cards are white so they lift off it.
+
+Surfaces form a three-step ladder — page, band, card:
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--bg` / `--surface` | `#ffffff` | page and card background |
-| `--bg-elev` | `#faf9fe` | alternating section bands |
-| `--paper-deep` | `#f8f6fd` | footer |
+| `--bg` | `#e5e5e7` | page background (the chart's plot area) |
+| `--bg-elev` | `#eeecf4` | alternating section bands |
+| `--surface` | `#ffffff` | cards, panels, nav bubble |
+| `--paper-deep` | `#dcdbe2` | footer |
 | `--purple` | `#7365b6` | fills, marks — carries white text |
-| `--purple-bright` | `#54479b` | emphasis that must be **read** on white |
+| `--purple-bright` | `#54479b` | emphasis that must be **read** |
 | `--purple-deep` | `#453a80` | gradient ends |
 | `--purple-soft` | `#ede9fa` | pale tint fills |
-| `--purple-edge` | `#e4defa` | solid raised edge under the nav bubble |
+| `--purple-edge` | `#cfc8ea` | solid raised edge under the nav bubble |
 | `--text` | `#16171c` | body ink |
 | `--red` / `--red-ink` | `#d63a54` / `#b3243c` | short signal / red text |
 | `--green` / `--green-ink` | `#1e9488` / `#14746a` | bullish candles / green text |
 
-Every shadow token is tinted with the accent purple rather than neutral
-black — that is what gives the site its depth on a flat white background.
+Two constraints worth keeping if you retune these:
 
-On white the pale lavender is only usable as a *fill*; it fails contrast as
-text. Anything that has to be read uses `--purple-bright` or `--purple-deep`,
-and the `*-ink` variants exist for the same reason.
+- `--purple-edge` must stay **darker than `--bg`**. It is the solid layer in
+  the nav bubble's shadow stack that makes it read as raised; lighter than
+  the page and it turns into a halo.
+- On these light surfaces the pale lavender is only usable as a *fill* — it
+  fails contrast as text. Anything read uses `--purple-bright` or
+  `--purple-deep`; the `*-ink` variants exist for the same reason.
 
-All tokens are defined at the top of `assets/css/style.css`. The hero chart's
-colours are set in `renderChart()` in `assets/js/main.js`.
+All tokens are at the top of `assets/css/style.css`. The hero chart's colours
+are set in `renderChart()` in `assets/js/main.js`.
 
 ## Before going live
 
@@ -71,7 +77,7 @@ Placeholders that need real values:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=4`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=5`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

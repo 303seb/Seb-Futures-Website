@@ -1,27 +1,28 @@
 /* ==========================================================================
    Seb Futures — core stylesheet
 
-   Clean white theme. No background patterns — depth comes entirely from
-   purple-tinted shadows in the same lavender as the accent, so surfaces
-   lift off the page rather than being drawn onto it.
+   No background patterns — depth comes entirely from purple-tinted shadows
+   in the same lavender as the accent. The page is the off-white gray from
+   the chart's plot area; cards are white, so they lift off it.
 
-   Note on the purple tokens: on white, the pale lavender is only usable as
-   a FILL. Anything that has to be read (links, labels, numbers) uses the
-   deepened --purple-bright / --purple-deep instead.
+   Note on the purple tokens: on these light surfaces the pale lavender is
+   only usable as a FILL. Anything that has to be read (links, labels,
+   numbers) uses the deepened --purple-bright / --purple-deep instead.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Surfaces — flat white, with a barely-there lavender tint for banding */
-  --bg:            #ffffff;
-  --bg-elev:       #faf9fe;
+  /* Page is the off-white gray sampled from the chart's plot area; cards
+     stay pure white so they lift off it. Three-step ladder: page, band, card. */
+  --bg:            #e5e5e7;
+  --bg-elev:       #eeecf4;
   --surface:       #ffffff;
   --surface-2:     #ffffff;
-  --border:        #e7e3f5;
-  --border-soft:   #efedf9;
-  --paper-deep:    #f8f6fd;
+  --border:        #d8d5e4;
+  --border-soft:   #e6e3f0;
+  --paper-deep:    #dcdbe2;
 
   /* Lavender — from the chart's highlighted zone */
   --purple:        #7365b6;  /* fills, marks, borders — carries white text */
@@ -29,7 +30,7 @@
   --purple-deep:   #453a80;  /* deepest — button gradient end */
   --purple-soft:   #ede9fa;  /* pale tint fills */
   --purple-line:   #cdc4ec;  /* accent borders */
-  --purple-edge:   #e4defa;  /* solid raised edge under the nav bubble */
+  --purple-edge:   #cfc8ea;  /* solid raised edge — must sit darker than --bg */
   --purple-glow:   rgba(115, 101, 182, 0.3);
 
   /* Order-flow colours. *-ink variants are the readable-on-white versions. */
@@ -52,8 +53,8 @@
   --radius-lg: 24px;
 
   /* Every shadow is tinted with the accent purple — never neutral black */
-  --shadow-xs: 0 1px 2px rgba(115, 101, 182, 0.07);
-  --shadow-sm: 0 2px 6px rgba(115, 101, 182, 0.09);
+  --shadow-xs: 0 1px 2px rgba(115, 101, 182, 0.10);
+  --shadow-sm: 0 2px 7px rgba(115, 101, 182, 0.13);
   --shadow:    0 4px 10px -2px rgba(115, 101, 182, 0.13), 0 12px 28px -10px rgba(115, 101, 182, 0.22);
   --shadow-lg: 0 8px 18px -4px rgba(115, 101, 182, 0.16), 0 28px 56px -18px rgba(115, 101, 182, 0.3);
 
