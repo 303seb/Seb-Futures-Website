@@ -71,7 +71,7 @@ Placeholders that need real values:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=3`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=4`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

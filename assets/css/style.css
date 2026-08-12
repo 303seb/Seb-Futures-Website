@@ -196,26 +196,52 @@ p { color: var(--text-mid); }
 .glow-bg { position: relative; isolation: isolate; }
 
 /* --------------------------------------------------------------------------
-   5. Promo bar
+   5. Promo bar — continuous marquee
+
+   The track holds two identical groups and slides exactly -50%, so the
+   second group lands where the first began and the loop is seamless.
+   Each group is min-width:100vw, which guarantees the bar stays filled on
+   ultrawide screens without needing more copies in the markup.
    -------------------------------------------------------------------------- */
 .promo {
   display: block;
   background: linear-gradient(100deg, var(--purple-deep) 0%, #5d4fa4 50%, var(--purple) 100%);
   color: #fff;
-  padding: 11px 20px;
+  padding-block: 11px;
+  overflow: hidden;
   transition: filter 0.2s;
 }
 
 .promo:hover { filter: brightness(1.07); }
 
-.promo__inner {
+.promo__track {
+  display: flex;
+  width: max-content;
+  animation: promo-scroll 34s linear infinite;
+}
+
+/* Let people read the code without chasing it */
+.promo:hover .promo__track { animation-play-state: paused; }
+
+.promo__group {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  max-width: 1180px;
-  margin-inline: auto;
+  justify-content: space-around;
+  flex-shrink: 0;
+  min-width: 100vw;
+}
+
+.promo__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding-inline: 28px;
+  white-space: nowrap;
+}
+
+@keyframes promo-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .promo__logo {
@@ -1366,8 +1392,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .countdown { grid-template-columns: repeat(2, 1fr); }
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
-  .promo__divider { display: none; }
-  .promo__inner { gap: 6px 10px; }
+  .promo__item { gap: 9px; padding-inline: 20px; }
   .brand__text { font-size: 0.94rem; }
 }
 
@@ -1385,4 +1410,11 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   }
 
   .reveal { opacity: 1; transform: none; }
+
+  /* Park the marquee as a single static, centred message */
+  .promo { overflow: hidden; }
+  .promo__track { animation: none !important; transform: none !important; width: 100%; }
+  .promo__group { min-width: 0; justify-content: center; width: 100%; }
+  .promo__group + .promo__group { display: none; }
+  .promo__item + .promo__item { display: none; }
 }
