@@ -1,44 +1,54 @@
 /* ==========================================================================
    Seb Futures — core stylesheet
-   Palette pulled from the NQ/ES chart screenshot:
-     deep chart chrome, light gray panel, lavender highlight zone,
-     blue long arrow, red short arrow.
+
+   Light "notebook" theme. The page background is the off-white gray taken
+   from the chart panel in the reference screenshot, with a fine graph-paper
+   grid over it. The lavender highlight zone from that same chart is the
+   accent colour.
+
+   Note on the purple tokens: on paper, the pale lavender is only usable as a
+   FILL. Anything that has to be read (links, labels, numbers) uses the
+   deepened --purple-bright / --purple-deep instead.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Surfaces — dark chart chrome */
-  --bg:            #0c0d11;
-  --bg-elev:       #12141a;
-  --surface:       #171a22;
-  --surface-2:     #1d212b;
-  --border:        #272c38;
-  --border-soft:   #1f232d;
+  /* Paper — sampled from the chart's plot background */
+  --bg:            #e5e5e7;
+  --bg-elev:       #eeeef0;
+  --surface:       #fbfbfc;
+  --surface-2:     #ffffff;
+  --border:        #cdced4;
+  --border-soft:   #dcdce1;
 
-  /* The light chart panel + gray shaded zone from the screenshot */
-  --panel-light:   #e5e5e7;
-  --panel-gray:    #a9a9ae;
+  /* Darker paper for grounding the footer */
+  --paper-deep:    #dadade;
 
-  /* Lavender highlight zone — primary accent */
-  --purple:        #8b7fc8;
-  --purple-bright: #a89ade;
-  --purple-deep:   #5d51a0;
-  --purple-glow:   rgba(139, 127, 200, 0.28);
+  /* Lavender — the highlighted zone from the chart */
+  --purple:        #7365b6;  /* fills, marks, borders — also carries white button text */
+  --purple-bright: #54479b;  /* emphasis that must be READ on paper */
+  --purple-deep:   #453a80;  /* deepest — button gradient end */
+  --purple-soft:   #e3dff5;  /* pale tint fills */
+  --purple-line:   #b6acdd;  /* accent borders */
+  --purple-glow:   rgba(115, 101, 182, 0.3);
 
-  /* Order-flow arrows */
+  /* Order-flow colours. *-ink variants are the readable-on-paper versions. */
   --blue:          #2962ff;
-  --red:           #e0455e;
-  --green:         #26a69a;
+  --red:           #d63a54;
+  --red-ink:       #b3243c;
+  --green:         #1e9488;
+  --green-ink:     #14746a;
 
-  /* Type */
-  --text:          #e9eaef;
-  --text-mid:      #a7adbd;
-  --text-dim:      #767d90;
+  /* Ink */
+  --text:          #16171c;
+  --text-mid:      #494c56;
+  --text-dim:      #5c5f68;
 
-  /* Chart grid overlay */
-  --grid:          rgba(255, 255, 255, 0.032);
+  /* Graph paper */
+  --grid:          rgba(22, 23, 28, 0.045);
+  --grid-strong:   rgba(22, 23, 28, 0.07);
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -47,8 +57,10 @@
   --radius-sm: 9px;
   --radius-lg: 20px;
 
-  --shadow:    0 18px 44px -20px rgba(0, 0, 0, 0.85);
-  --shadow-lg: 0 34px 80px -28px rgba(0, 0, 0, 0.9);
+  /* Soft, close shadows — heavy drop shadows kill the paper feel */
+  --shadow-xs: 0 1px 2px rgba(22, 23, 28, 0.05);
+  --shadow:    0 2px 4px rgba(22, 23, 28, 0.04), 0 10px 26px -14px rgba(22, 23, 28, 0.2);
+  --shadow-lg: 0 4px 8px rgba(22, 23, 28, 0.05), 0 22px 48px -20px rgba(22, 23, 28, 0.25);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --nav-h: 68px;
@@ -69,8 +81,13 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Graph-paper grid sits on the body so it shows through every plain section */
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 26px 26px;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -90,7 +107,7 @@ ul, ol { list-style: none; }
 
 ::selection {
   background: var(--purple);
-  color: #0c0d11;
+  color: #fff;
 }
 
 :focus-visible {
@@ -106,6 +123,7 @@ h1, h2, h3, h4 {
   line-height: 1.12;
   letter-spacing: -0.033em;
   font-weight: 700;
+  color: var(--text);
 }
 
 h1 { font-size: clamp(2.4rem, 6vw, 4.1rem); }
@@ -125,8 +143,8 @@ p { color: var(--text-mid); }
   font-variant-numeric: tabular-nums;
 }
 
-.up   { color: var(--green); }
-.down { color: var(--red); }
+.up   { color: var(--green-ink); }
+.down { color: var(--red-ink); }
 
 /* --------------------------------------------------------------------------
    4. Layout
@@ -143,6 +161,7 @@ p { color: var(--text-mid); }
 .section { padding-block: clamp(68px, 9vw, 116px); }
 .section--tight { padding-block: clamp(52px, 6vw, 78px); }
 
+/* Solid band — deliberately covers the graph paper to break up the page */
 .section--alt {
   background: var(--bg-elev);
   border-block: 1px solid var(--border-soft);
@@ -171,8 +190,8 @@ p { color: var(--text-mid); }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--purple-bright);
-  background: rgba(139, 127, 200, 0.1);
-  border: 1px solid rgba(139, 127, 200, 0.26);
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
   border-radius: 100px;
   padding: 6px 14px;
   margin-bottom: 20px;
@@ -183,11 +202,11 @@ p { color: var(--text-mid); }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--purple-bright);
-  box-shadow: 0 0 0 3px var(--purple-glow);
+  background: var(--purple);
+  box-shadow: 0 0 0 3px rgba(115, 101, 182, 0.2);
 }
 
-/* Chart-paper grid backdrop */
+/* Major grid lines over the body's minor grid — proper graph paper */
 .grid-bg { position: relative; isolation: isolate; }
 
 .grid-bg::before {
@@ -196,9 +215,9 @@ p { color: var(--text-mid); }
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 52px 52px;
+    linear-gradient(var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px);
+  background-size: 130px 130px;
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 20%, transparent 78%);
           mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 20%, transparent 78%);
   pointer-events: none;
@@ -208,7 +227,7 @@ p { color: var(--text-mid); }
    5. Ticker strip
    -------------------------------------------------------------------------- */
 .ticker {
-  background: #08090c;
+  background: var(--surface-2);
   border-bottom: 1px solid var(--border-soft);
   overflow: hidden;
   height: 34px;
@@ -249,16 +268,17 @@ p { color: var(--text-mid); }
   top: 0;
   z-index: 100;
   height: var(--nav-h);
-  background: rgba(12, 13, 17, 0.82);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  background: rgba(229, 229, 231, 0.8);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.25s, background 0.25s;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
 }
 
 .nav.is-stuck {
   border-bottom-color: var(--border-soft);
-  background: rgba(12, 13, 17, 0.94);
+  background: rgba(233, 233, 236, 0.94);
+  box-shadow: var(--shadow-xs);
 }
 
 .nav__inner {
@@ -277,6 +297,7 @@ p { color: var(--text-mid); }
   font-size: 1.02rem;
   letter-spacing: -0.02em;
   flex-shrink: 0;
+  color: var(--text);
 }
 
 /* Miniature candlestick logo mark */
@@ -293,7 +314,7 @@ p { color: var(--text-mid); }
 .brand__mark::after {
   content: "";
   position: absolute;
-  background: #0c0d11;
+  background: #fff;
   border-radius: 1px;
 }
 
@@ -302,7 +323,7 @@ p { color: var(--text-mid); }
   height: 13px;
   left: 8px;
   top: 5px;
-  box-shadow: 0 0 0 0 transparent, 7px 3px 0 0 #0c0d11;
+  box-shadow: 7px 3px 0 0 #fff;
 }
 
 .brand__mark::after {
@@ -331,10 +352,10 @@ p { color: var(--text-mid); }
 
 .nav__links > a:not(.btn):hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(22, 23, 28, 0.055);
 }
 
-.nav__links > a.active { color: var(--text); }
+.nav__links > a.active { color: var(--text); font-weight: 600; }
 
 .nav__cta { margin-left: 10px; }
 
@@ -344,6 +365,7 @@ p { color: var(--text-mid); }
   height: 42px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  background: var(--surface-2);
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -385,32 +407,34 @@ p { color: var(--text-mid); }
 .btn:active { transform: translateY(0); }
 
 .btn--primary {
-  background: linear-gradient(165deg, var(--purple-bright), var(--purple));
-  color: #10101a;
-  box-shadow: 0 10px 28px -12px var(--purple-glow);
+  background: linear-gradient(165deg, var(--purple) 0%, var(--purple-deep) 100%);
+  color: #fff;
+  box-shadow: 0 6px 18px -8px var(--purple-glow);
 }
 
 .btn--primary:hover {
-  box-shadow: 0 16px 38px -12px rgba(139, 127, 200, 0.5);
+  box-shadow: 0 14px 30px -10px var(--purple-glow);
 }
 
 .btn--ghost {
   border-color: var(--border);
   color: var(--text);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-2);
 }
 
 .btn--ghost:hover {
   border-color: var(--purple);
-  background: rgba(139, 127, 200, 0.08);
+  background: var(--purple-soft);
+  color: var(--purple-bright);
 }
 
+/* Inverse button — ink on paper */
 .btn--light {
-  background: var(--panel-light);
-  color: #14161c;
+  background: var(--text);
+  color: #fff;
 }
 
-.btn--light:hover { background: #fff; }
+.btn--light:hover { background: #000; }
 
 .btn--sm { padding: 9px 17px; font-size: 0.85rem; }
 .btn--lg { padding: 16px 32px; font-size: 1rem; }
@@ -437,13 +461,13 @@ p { color: var(--text-mid); }
 .hero::after {
   content: "";
   position: absolute;
-  top: -180px;
+  top: -200px;
   left: 50%;
   transform: translateX(-50%);
   width: 900px;
   height: 520px;
-  background: radial-gradient(ellipse at center, var(--purple-glow), transparent 66%);
-  filter: blur(46px);
+  background: radial-gradient(ellipse at center, rgba(115, 101, 182, 0.18), transparent 66%);
+  filter: blur(50px);
   pointer-events: none;
   z-index: -1;
 }
@@ -459,7 +483,7 @@ p { color: var(--text-mid); }
 
 .hero h1 em {
   font-style: normal;
-  background: linear-gradient(115deg, var(--purple-bright) 10%, var(--panel-gray) 90%);
+  background: linear-gradient(115deg, var(--purple-bright) 10%, var(--purple) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -473,7 +497,7 @@ p { color: var(--text-mid); }
   gap: 10px 26px;
   margin-top: 34px;
   padding-top: 26px;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border);
 }
 
 .hero__proof li {
@@ -495,7 +519,7 @@ p { color: var(--text-mid); }
 /* Chart panel visual */
 .chart-panel {
   position: relative;
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
@@ -539,11 +563,11 @@ p { color: var(--text-mid); }
   padding: 3px 8px;
   border-radius: 5px;
   color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(22, 23, 28, 0.05);
 }
 
 .chart-panel__tf span.on {
-  color: #10101a;
+  color: #fff;
   background: var(--purple);
   font-weight: 600;
 }
@@ -586,10 +610,11 @@ p { color: var(--text-mid); }
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: var(--shadow-xs);
 }
 
 .stat {
-  background: var(--bg-elev);
+  background: var(--surface-2);
   padding: 26px 24px;
   text-align: center;
 }
@@ -628,7 +653,8 @@ p { color: var(--text-mid); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 26px;
-  transition: transform 0.28s var(--ease), border-color 0.24s, background 0.24s;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.28s var(--ease), border-color 0.24s, background 0.24s, box-shadow 0.28s;
   overflow: hidden;
 }
 
@@ -636,7 +662,7 @@ p { color: var(--text-mid); }
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent, var(--purple), transparent);
   opacity: 0;
   transition: opacity 0.28s;
@@ -644,8 +670,9 @@ p { color: var(--text-mid); }
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(139, 127, 200, 0.4);
+  border-color: var(--purple-line);
   background: var(--surface-2);
+  box-shadow: var(--shadow);
 }
 
 .card:hover::before { opacity: 1; }
@@ -656,8 +683,8 @@ p { color: var(--text-mid); }
   border-radius: 11px;
   display: grid;
   place-items: center;
-  background: rgba(139, 127, 200, 0.12);
-  border: 1px solid rgba(139, 127, 200, 0.24);
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
   color: var(--purple-bright);
   margin-bottom: 18px;
 }
@@ -681,6 +708,7 @@ p { color: var(--text-mid); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 30px 26px 26px;
+  box-shadow: var(--shadow-xs);
 }
 
 .step::before {
@@ -716,9 +744,9 @@ p { color: var(--text-mid); }
   height: 19px;
   margin-top: 3px;
   border-radius: 50%;
-  background: rgba(139, 127, 200, 0.14);
-  border: 1px solid rgba(139, 127, 200, 0.3);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a89ade' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-color: var(--purple-soft);
+  border: 1px solid var(--purple-line);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2354479b' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: center;
@@ -735,19 +763,22 @@ p { color: var(--text-mid); }
 }
 
 .panel {
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: clamp(24px, 3vw, 34px);
+  box-shadow: var(--shadow-xs);
 }
 
+/* Kept for compatibility — now an inked panel for contrast against paper */
 .panel--light {
-  background: var(--panel-light);
-  color: #14161c;
+  background: var(--text);
+  border-color: var(--text);
 }
 
-.panel--light h3, .panel--light .stat__num { color: #14161c; }
-.panel--light p { color: #4a4f5c; }
+.panel--light h3,
+.panel--light .stat__num { color: #fff; }
+.panel--light p { color: #b9bcc6; }
 
 /* --------------------------------------------------------------------------
    11. Discord channel list
@@ -762,16 +793,17 @@ p { color: var(--text-mid); }
   display: flex;
   gap: 13px;
   align-items: flex-start;
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 18px 20px;
-  transition: border-color 0.22s, background 0.22s;
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s var(--ease);
 }
 
 .channel:hover {
-  border-color: rgba(139, 127, 200, 0.38);
-  background: var(--surface-2);
+  border-color: var(--purple-line);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
 }
 
 .channel__hash {
@@ -834,7 +866,7 @@ p { color: var(--text-mid); }
   color: var(--purple-bright);
   padding-bottom: 14px;
   margin-bottom: 8px;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
 }
 
 .faq-item { border-bottom: 1px solid var(--border-soft); }
@@ -863,7 +895,8 @@ p { color: var(--text-mid); }
   height: 26px;
   border-radius: 50%;
   border: 1px solid var(--border);
-  transition: border-color 0.22s, background 0.22s, transform 0.3s var(--ease);
+  background: var(--surface-2);
+  transition: border-color 0.22s, background 0.22s;
 }
 
 .faq-item__icon::before,
@@ -884,7 +917,7 @@ p { color: var(--text-mid); }
 
 .faq-item.is-open .faq-item__icon {
   border-color: var(--purple);
-  background: rgba(139, 127, 200, 0.14);
+  background: var(--purple-soft);
 }
 
 .faq-item.is-open .faq-item__icon::before,
@@ -910,10 +943,8 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .giveaway {
   position: relative;
-  background:
-    linear-gradient(155deg, rgba(139, 127, 200, 0.14), transparent 52%),
-    var(--surface);
-  border: 1px solid rgba(139, 127, 200, 0.34);
+  background: linear-gradient(155deg, var(--purple-soft), var(--surface-2) 55%);
+  border: 1px solid var(--purple-line);
   border-radius: var(--radius-lg);
   padding: clamp(28px, 4vw, 46px);
   overflow: hidden;
@@ -929,9 +960,9 @@ p { color: var(--text-mid); }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green);
-  background: rgba(38, 166, 154, 0.11);
-  border: 1px solid rgba(38, 166, 154, 0.32);
+  color: var(--green-ink);
+  background: rgba(30, 148, 136, 0.11);
+  border: 1px solid rgba(30, 148, 136, 0.34);
   border-radius: 100px;
   padding: 5px 13px;
   margin-bottom: 20px;
@@ -947,14 +978,15 @@ p { color: var(--text-mid); }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(38, 166, 154, 0.5); }
-  50%      { opacity: 0.7; box-shadow: 0 0 0 5px rgba(38, 166, 154, 0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(30, 148, 136, 0.45); }
+  50%      { opacity: 0.7; box-shadow: 0 0 0 5px rgba(30, 148, 136, 0); }
 }
 
 .giveaway__prize {
   font-size: clamp(1.7rem, 4vw, 2.6rem);
   font-weight: 700;
   letter-spacing: -0.035em;
+  line-height: 1.1;
   margin-bottom: 14px;
 }
 
@@ -975,11 +1007,12 @@ p { color: var(--text-mid); }
 }
 
 .countdown__cell {
-  background: rgba(8, 9, 12, 0.55);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 15px 8px;
   text-align: center;
+  box-shadow: var(--shadow-xs);
 }
 
 .countdown__val {
@@ -1014,7 +1047,8 @@ p { color: var(--text-mid); }
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-xs);
 }
 
 table {
@@ -1033,7 +1067,7 @@ thead th {
   color: var(--text-dim);
   padding: 15px 20px;
   border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.018);
+  background: var(--bg-elev);
   white-space: nowrap;
 }
 
@@ -1045,7 +1079,7 @@ tbody td {
 }
 
 tbody tr:last-child td { border-bottom: 0; }
-tbody tr:hover td { background: rgba(255, 255, 255, 0.016); }
+tbody tr:hover td { background: rgba(115, 101, 182, 0.05); }
 
 td.winner { color: var(--text); font-weight: 600; }
 td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size: 0.85rem; }
@@ -1056,13 +1090,14 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 .cta-band {
   position: relative;
   background:
-    radial-gradient(ellipse 70% 130% at 50% 0%, rgba(139, 127, 200, 0.2), transparent 68%),
-    var(--bg-elev);
+    radial-gradient(ellipse 70% 130% at 50% 0%, var(--purple-soft), transparent 70%),
+    var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: clamp(40px, 6vw, 68px) clamp(26px, 4vw, 48px);
   text-align: center;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .cta-band h2 { margin-bottom: 16px; }
@@ -1074,20 +1109,20 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 .page-head {
   position: relative;
   padding-block: clamp(52px, 7vw, 88px) clamp(34px, 4vw, 52px);
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
 
 .page-head::after {
   content: "";
   position: absolute;
-  top: -220px;
+  top: -240px;
   left: 50%;
   transform: translateX(-50%);
   width: 760px;
   height: 440px;
-  background: radial-gradient(ellipse at center, rgba(139, 127, 200, 0.2), transparent 68%);
-  filter: blur(48px);
+  background: radial-gradient(ellipse at center, rgba(115, 101, 182, 0.18), transparent 68%);
+  filter: blur(50px);
   pointer-events: none;
   z-index: -1;
 }
@@ -1099,11 +1134,12 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
    16. Disclaimer + footer
    -------------------------------------------------------------------------- */
 .disclaimer {
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-left: 3px solid var(--purple);
   border-radius: var(--radius-sm);
   padding: 22px 26px;
+  box-shadow: var(--shadow-xs);
 }
 
 .disclaimer h4 {
@@ -1115,11 +1151,11 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   margin-bottom: 10px;
 }
 
-.disclaimer p { font-size: 0.84rem; line-height: 1.7; color: var(--text-dim); }
+.disclaimer p { font-size: 0.84rem; line-height: 1.7; color: var(--text-mid); }
 
 .footer {
-  background: #08090c;
-  border-top: 1px solid var(--border-soft);
+  background: var(--paper-deep);
+  border-top: 1px solid var(--border);
   padding-block: 56px 30px;
 }
 
@@ -1128,7 +1164,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
   gap: 40px 28px;
   padding-bottom: 40px;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
 }
 
 .footer__about p {
@@ -1150,7 +1186,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 .footer__col a {
   font-size: 0.88rem;
-  color: var(--text-dim);
+  color: var(--text-mid);
   transition: color 0.18s;
 }
 
@@ -1169,14 +1205,15 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   display: grid;
   place-items: center;
   border: 1px solid var(--border);
-  color: var(--text-dim);
+  background: var(--surface-2);
+  color: var(--text-mid);
   transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s var(--ease);
 }
 
 .socials a:hover {
   color: var(--purple-bright);
   border-color: var(--purple);
-  background: rgba(139, 127, 200, 0.09);
+  background: var(--purple-soft);
   transform: translateY(-2px);
 }
 
@@ -1200,9 +1237,11 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   margin-top: 26px;
   font-size: 0.74rem;
   line-height: 1.7;
-  color: #5b6172;
+  color: var(--text-dim);
   max-width: 92ch;
 }
+
+.footer__risk strong { color: var(--text-mid); }
 
 /* --------------------------------------------------------------------------
    17. Scroll reveal
@@ -1239,10 +1278,11 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
     align-items: stretch;
     gap: 6px;
     padding: 20px 24px 28px;
-    background: rgba(12, 13, 17, 0.98);
+    background: rgba(238, 238, 240, 0.98);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
     transform: translateY(-14px);
     opacity: 0;
     visibility: hidden;

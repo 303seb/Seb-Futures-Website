@@ -223,7 +223,7 @@
       var gy = padT + (plotH / 4) * g;
       frag.appendChild(make("line", {
         x1: padL, y1: gy, x2: W - padR, y2: gy,
-        stroke: "rgba(255,255,255,0.045)", "stroke-width": 1
+        stroke: "rgba(22,23,28,0.07)", "stroke-width": 1
       }));
     }
 
@@ -233,8 +233,8 @@
     frag.appendChild(make("rect", {
       x: x(28) - bodyW, y: zoneTop,
       width: W - padR - (x(28) - bodyW), height: zoneBot - zoneTop,
-      fill: "rgba(139,127,200,0.2)",
-      stroke: "rgba(139,127,200,0.42)", "stroke-width": 1, rx: 2
+      fill: "rgba(115,101,182,0.16)",
+      stroke: "rgba(115,101,182,0.5)", "stroke-width": 1, rx: 2
     }));
 
     // --- Gray supply zone up top ---
@@ -243,15 +243,15 @@
     frag.appendChild(make("rect", {
       x: padL, y: supTop,
       width: plotW * 0.52, height: supBot - supTop,
-      fill: "rgba(169,169,174,0.11)",
-      stroke: "rgba(169,169,174,0.24)", "stroke-width": 1, rx: 2
+      fill: "rgba(22,23,28,0.05)",
+      stroke: "rgba(22,23,28,0.16)", "stroke-width": 1, rx: 2
     }));
 
     // --- Dashed trendline across the sell-off ---
     frag.appendChild(make("line", {
       x1: x(10), y1: y(candles[10].h),
       x2: x(31), y2: y(candles[31].l),
-      stroke: "rgba(233,234,239,0.42)", "stroke-width": 1.2,
+      stroke: "rgba(22,23,28,0.42)", "stroke-width": 1.2,
       "stroke-dasharray": "5 4"
     }));
 
@@ -259,7 +259,7 @@
     candles.forEach(function (c, i) {
       var cx = x(i);
       var bull = c.c >= c.o;
-      var color = bull ? "#26a69a" : "#e0455e";
+      var color = bull ? "#1e9488" : "#d63a54";
 
       frag.appendChild(make("line", {
         x1: cx, y1: y(c.h), x2: cx, y2: y(c.l),
@@ -280,7 +280,7 @@
     var sx = x(11), sy = y(candles[11].h) - 12;
     frag.appendChild(make("path", {
       d: "M" + sx + " " + sy + " l4.5 -7 h-9 z",
-      fill: "#e0455e", transform: "rotate(180 " + sx + " " + (sy - 3.5) + ")"
+      fill: "#d63a54", transform: "rotate(180 " + sx + " " + (sy - 3.5) + ")"
     }));
 
     // --- Long arrow at the reversal low ---
@@ -296,16 +296,16 @@
     var ly2 = y(last);
     frag.appendChild(make("line", {
       x1: padL, y1: ly2, x2: W - padR, y2: ly2,
-      stroke: "rgba(139,127,200,0.55)", "stroke-width": 1, "stroke-dasharray": "3 3"
+      stroke: "rgba(115,101,182,0.6)", "stroke-width": 1, "stroke-dasharray": "3 3"
     }));
     frag.appendChild(make("rect", {
       x: W - padR + 4, y: ly2 - 10, width: 52, height: 20,
-      fill: "#8b7fc8", rx: 3
+      fill: "#7365b6", rx: 3
     }));
 
     var tag = make("text", {
       x: W - padR + 30, y: ly2 + 4,
-      "text-anchor": "middle", fill: "#10101a",
+      "text-anchor": "middle", fill: "#ffffff",
       "font-size": "10.5", "font-weight": "600",
       "font-family": "ui-monospace, SFMono-Regular, Menlo, monospace"
     });
