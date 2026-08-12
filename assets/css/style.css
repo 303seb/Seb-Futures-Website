@@ -333,10 +333,10 @@ p { color: var(--text-mid); }
   justify-self: start;
 }
 
-/* Brand mark — assets/logo-mark.svg (small-size variant of logo.svg) */
+/* Brand mark — assets/logo.png (the artwork is portrait, so size by height) */
 .brand__mark {
-  width: 32px;
-  height: 32px;
+  height: 34px;
+  width: auto;
   flex-shrink: 0;
 }
 

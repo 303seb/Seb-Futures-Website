@@ -20,24 +20,24 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 ```
 assets/
-  css/style.css       all styling + design tokens
-  js/main.js          nav, FAQ accordion, countdown, scroll reveal, hero chart
-  logo.svg            full brand mark - hollow bars + bevels, for large use
-  logo-mark.svg       simplified solid version, used for the 32px nav mark
-  favicon.svg         simplified + light plate, for browser tabs
-  alpha-futures.svg   PLACEHOLDER promo logo - replace with the real asset
+  css/style.css          all styling + design tokens
+  js/main.js             nav, FAQ accordion, countdown, scroll reveal, hero chart
+  logo.png               brand mark, transparent - nav + footer
+  favicon.png            256px, browser tabs
+  apple-touch-icon.png   180px, iOS home screen
+  alpha-futures.svg      PLACEHOLDER promo logo - replace with the real asset
 ```
 
-### Why three logo files
+### About the logo files
 
-The mark is three hollow bars over two rails. That hollow slot is roughly
-1px wide once the mark is drawn at nav or tab size, so the dark outline
-swallows it and the whole thing reads black instead of purple. `logo-mark.svg`
-and `favicon.svg` solve that by filling the bars solid. The favicon also
-carries a light plate, because the rails are near-black and would vanish
-against a dark browser tab on a transparent background.
+`logo.png` is the supplied artwork, cropped to its bounding box with the flat
+gray backdrop keyed out. The removal solves for the true colour behind each
+partially-transparent pixel rather than just deleting gray, so the soft edges
+and drop shadows do not carry a gray halo onto the white nav bubble.
 
-Use `logo.svg` anywhere it renders larger than roughly 64px.
+The favicons keep the artwork's own gray backdrop as a plate. That is
+deliberate: the rails in the mark are near-black, and on a transparent
+background they would disappear against a dark browser tab.
 
 ## Palette
 
@@ -89,7 +89,7 @@ Placeholders that need real values:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=8`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=9`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
