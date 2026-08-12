@@ -20,10 +20,24 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 ```
 assets/
-  css/style.css     all styling + design tokens
-  js/main.js        nav, FAQ accordion, countdown, scroll reveal, hero chart
-  favicon.svg
+  css/style.css       all styling + design tokens
+  js/main.js          nav, FAQ accordion, countdown, scroll reveal, hero chart
+  logo.svg            full brand mark - hollow bars + bevels, for large use
+  logo-mark.svg       simplified solid version, used for the 32px nav mark
+  favicon.svg         simplified + light plate, for browser tabs
+  alpha-futures.svg   PLACEHOLDER promo logo - replace with the real asset
 ```
+
+### Why three logo files
+
+The mark is three hollow bars over two rails. That hollow slot is roughly
+1px wide once the mark is drawn at nav or tab size, so the dark outline
+swallows it and the whole thing reads black instead of purple. `logo-mark.svg`
+and `favicon.svg` solve that by filling the bars solid. The favicon also
+carries a light plate, because the rails are near-black and would vanish
+against a dark browser tab on a transparent background.
+
+Use `logo.svg` anywhere it renders larger than roughly 64px.
 
 ## Palette
 
@@ -75,7 +89,7 @@ Placeholders that need real values:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=6`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=8`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
