@@ -223,7 +223,7 @@
       var gy = padT + (plotH / 4) * g;
       frag.appendChild(make("line", {
         x1: padL, y1: gy, x2: W - padR, y2: gy,
-        stroke: "rgba(22,23,28,0.07)", "stroke-width": 1
+        stroke: "rgba(255,255,255,0.06)", "stroke-width": 1
       }));
     }
 
@@ -233,8 +233,8 @@
     frag.appendChild(make("rect", {
       x: x(28) - bodyW, y: zoneTop,
       width: W - padR - (x(28) - bodyW), height: zoneBot - zoneTop,
-      fill: "rgba(115,101,182,0.16)",
-      stroke: "rgba(115,101,182,0.5)", "stroke-width": 1, rx: 2
+      fill: "rgba(168,85,247,0.2)",
+      stroke: "rgba(168,85,247,0.6)", "stroke-width": 1, rx: 2
     }));
 
     // --- Gray supply zone up top ---
@@ -243,15 +243,15 @@
     frag.appendChild(make("rect", {
       x: padL, y: supTop,
       width: plotW * 0.52, height: supBot - supTop,
-      fill: "rgba(22,23,28,0.05)",
-      stroke: "rgba(22,23,28,0.16)", "stroke-width": 1, rx: 2
+      fill: "rgba(255,255,255,0.045)",
+      stroke: "rgba(255,255,255,0.14)", "stroke-width": 1, rx: 2
     }));
 
     // --- Dashed trendline across the sell-off ---
     frag.appendChild(make("line", {
       x1: x(10), y1: y(candles[10].h),
       x2: x(31), y2: y(candles[31].l),
-      stroke: "rgba(22,23,28,0.42)", "stroke-width": 1.2,
+      stroke: "rgba(232,232,238,0.45)", "stroke-width": 1.2,
       "stroke-dasharray": "5 4"
     }));
 
@@ -259,7 +259,7 @@
     candles.forEach(function (c, i) {
       var cx = x(i);
       var bull = c.c >= c.o;
-      var color = bull ? "#1e9488" : "#d63a54";
+      var color = bull ? "#2fd4b4" : "#ff5c78";
 
       frag.appendChild(make("line", {
         x1: cx, y1: y(c.h), x2: cx, y2: y(c.l),
@@ -280,7 +280,7 @@
     var sx = x(11), sy = y(candles[11].h) - 12;
     frag.appendChild(make("path", {
       d: "M" + sx + " " + sy + " l4.5 -7 h-9 z",
-      fill: "#d63a54", transform: "rotate(180 " + sx + " " + (sy - 3.5) + ")"
+      fill: "#ff5c78", transform: "rotate(180 " + sx + " " + (sy - 3.5) + ")"
     }));
 
     // --- Long arrow at the reversal low ---
@@ -288,7 +288,7 @@
     var lx = x(lowIdx), ly = y(candles[lowIdx].l) + 14;
     frag.appendChild(make("path", {
       d: "M" + lx + " " + ly + " l4.5 7 h-9 z",
-      fill: "#2962ff", transform: "rotate(180 " + lx + " " + (ly + 3.5) + ")"
+      fill: "#4d84ff", transform: "rotate(180 " + lx + " " + (ly + 3.5) + ")"
     }));
 
     // --- Last price tag on the right axis ---
@@ -296,16 +296,16 @@
     var ly2 = y(last);
     frag.appendChild(make("line", {
       x1: padL, y1: ly2, x2: W - padR, y2: ly2,
-      stroke: "rgba(115,101,182,0.6)", "stroke-width": 1, "stroke-dasharray": "3 3"
+      stroke: "rgba(192,132,252,0.7)", "stroke-width": 1, "stroke-dasharray": "3 3"
     }));
     frag.appendChild(make("rect", {
       x: W - padR + 4, y: ly2 - 10, width: 52, height: 20,
-      fill: "#7365b6", rx: 3
+      fill: "#a855f7", rx: 3
     }));
 
     var tag = make("text", {
       x: W - padR + 30, y: ly2 + 4,
-      "text-anchor": "middle", fill: "#ffffff",
+      "text-anchor": "middle", fill: "#17171c",
       "font-size": "10.5", "font-weight": "600",
       "font-family": "ui-monospace, SFMono-Regular, Menlo, monospace"
     });

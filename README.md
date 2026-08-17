@@ -11,10 +11,13 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Home — hero, what you get, how it works, about |
-| `discord.html` | Join the Discord — channels, weekly schedule, guidelines |
-| `faq.html` | FAQ — accordion, grouped by category |
-| `giveaways.html` | Giveaways — current prize + countdown, how to enter, past winners, rules |
+| `index.html` | Home — hero, stats, what you get, how it works, about, **FAQ**, CTA |
+| `discord.html` | Discord — channels, weekly schedule, guidelines |
+| `giveaways.html` | Giveaways — current prize + countdown, entry, winners, rules |
+
+The FAQ used to be its own page. It is now a section on the home page
+(`index.html#faq`) and is no longer in the top nav; `faq.html` was deleted.
+Recover it from git history if you ever want it back as a standalone page.
 
 ## Structure
 
@@ -22,7 +25,8 @@ Static HTML/CSS/JS. No build step, no dependencies.
 assets/
   css/style.css          all styling + design tokens
   js/main.js             nav, FAQ accordion, countdown, scroll reveal, hero chart
-  logo.png               brand mark, transparent - nav + footer
+  logo-dark.png          brand mark used on the site (light linework)
+  logo.png               original crop, dark linework - for light backgrounds
   favicon.png            256px, browser tabs
   apple-touch-icon.png   180px, iOS home screen
   alpha-futures.svg      PLACEHOLDER promo logo - replace with the real asset
@@ -32,44 +36,17 @@ assets/
 
 `logo.png` is the supplied artwork, cropped to its bounding box with the flat
 gray backdrop keyed out. The removal solves for the true colour behind each
-partially-transparent pixel rather than just deleting gray, so the soft edges
-and drop shadows do not carry a gray halo onto the white nav bubble.
+partially-transparent pixel rather than just deleting gray, so soft edges and
+drop shadows carry no gray halo.
 
-The favicons keep the artwork's own gray backdrop as a plate. That is
-deliberate: the rails in the mark are near-black, and on a transparent
-background they would disappear against a dark browser tab.
+`logo-dark.png` is what the site actually uses. The rails and outlines in the
+artwork are near-black and disappear on the charcoal background, so the
+**neutral** pixels are luminance-inverted — black linework becomes light,
+white bevels become dark — while the purple, being high-saturation, passes
+through untouched. Regenerate it from `logo.png` if the artwork changes.
 
-## Palette
-
-No background patterns. Depth comes from purple-tinted shadows in the same
-lavender as the accent. The page is the off-white gray sampled from the
-chart's plot area; cards are white so they lift off it.
-
-Surfaces form a three-step ladder — page, band, card:
-
-| Token | Value | Use |
-| --- | --- | --- |
-| `--bg` | `#e5e5e7` | page background (the chart's plot area) |
-| `--bg-elev` | `#eeecf4` | alternating section bands |
-| `--surface` | `#ffffff` | cards, panels, nav bubble |
-| `--paper-deep` | `#dcdbe2` | footer |
-| `--purple` | `#7365b6` | fills, marks — carries white text |
-| `--purple-bright` | `#54479b` | emphasis that must be **read** |
-| `--purple-deep` | `#453a80` | gradient ends |
-| `--purple-soft` | `#ede9fa` | pale tint fills |
-| `--purple-ring` | `rgba(207,200,234,.5)` | even ring around the nav bubble |
-| `--text` | `#16171c` | body ink |
-| `--red` / `--red-ink` | `#d63a54` / `#b3243c` | short signal / red text |
-| `--green` / `--green-ink` | `#1e9488` / `#14746a` | bullish candles / green text |
-
-One constraint worth keeping if you retune these:
-
-- On these light surfaces the pale lavender is only usable as a *fill* — it
-  fails contrast as text. Anything read uses `--purple-bright` or
-  `--purple-deep`; the `*-ink` variants exist for the same reason.
-
-All tokens are at the top of `assets/css/style.css`. The hero chart's colours
-are set in `renderChart()` in `assets/js/main.js`.
+The favicons keep the artwork's own gray backdrop as a plate, so the
+near-black rails stay visible against a dark browser tab.
 
 ## Filling in the content
 
@@ -113,7 +90,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=10`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=11`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=10">
+<link rel="stylesheet" href="assets/css/style.css?v=11">
 </head>
 <body>
 
@@ -84,14 +84,13 @@
 <header class="nav" id="nav">
   <div class="nav__bubble">
     <a class="brand" href="index.html">
-      <img class="brand__mark" src="assets/logo.png" alt="" aria-hidden="true">
-      <span class="brand__text">THE MARKET <span>ELEMENT</span></span>
+      <img class="brand__mark" src="assets/logo-dark.png" alt="" aria-hidden="true">
+      <span class="brand__text"><span>SEB</span> FUTURES</span>
     </a>
 
     <nav class="nav__links" id="navLinks" aria-label="Main">
       <a href="index.html" class="active">Home</a>
       <a href="discord.html">Discord</a>
-      <a href="faq.html">FAQ</a>
       <a href="giveaways.html">Giveaways</a>
     </nav>
 
@@ -284,7 +283,7 @@
         </p>
         <div class="btn-row" style="margin-top:28px">
           <a href="discord.html" class="btn btn--primary">[Button label]</a>
-          <a href="faq.html" class="btn btn--ghost">[Button label]</a>
+          <a href="index.html#faq" class="btn btn--ghost">[Button label]</a>
         </div>
       </div>
 
@@ -297,6 +296,126 @@
           <li><b>[Bold lead-in]</b> — [short supporting detail]</li>
           <li><b>[Bold lead-in]</b> — [short supporting detail]</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================================
+       FAQ — moved here from its own page. Only one answer opens at a time
+       within a group. Add or delete .faq-item blocks freely; the JS picks
+       up whatever is there.
+       ====================================================================== -->
+  <section class="section section--alt" id="faq">
+    <div class="container container--narrow">
+      <div class="section__head section__head--center reveal">
+        <span class="eyebrow">[Section label]</span>
+        <h2>[Section heading — e.g. frequently asked]</h2>
+        <p>[One sentence introducing the questions below.]</p>
+      </div>
+
+      <div class="faq-group reveal">
+        <div class="faq-group__title">[Group 1 heading — e.g. Getting started]</div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 1]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 2]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 3]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 4]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-group reveal">
+        <div class="faq-group__title">[Group 2 heading — e.g. Getting started]</div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 5]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 6]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 7]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q">
+            [Question 8]
+            <span class="faq-item__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-item__a">
+            <div>
+              <p>[Answer. One or two short paragraphs — add another &lt;p&gt; for a second.]</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -328,8 +447,8 @@
     <div class="footer__grid">
       <div class="footer__about">
         <a class="brand" href="index.html">
-          <img class="brand__mark" src="assets/logo.png" alt="" aria-hidden="true">
-          <span class="brand__text">THE MARKET <span>ELEMENT</span></span>
+          <img class="brand__mark" src="assets/logo-dark.png" alt="" aria-hidden="true">
+          <span class="brand__text"><span>SEB</span> FUTURES</span>
         </a>
         <p>[One or two sentences describing the brand. Appears under the logo on every page.]</p>
 
@@ -347,7 +466,7 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="discord.html">Discord</a></li>
-          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="giveaways.html">Giveaways</a></li>
         </ul>
       </div>
@@ -367,7 +486,7 @@
         <ul>
           <li><a href="#">[Your contact email]</a></li>
           <li><a href="#">[Link label]</a></li>
-          <li><a href="faq.html">[Link label]</a></li>
+          <li><a href="index.html#faq">[Link label]</a></li>
         </ul>
       </div>
     </div>
@@ -391,6 +510,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=10"></script>
+<script src="assets/js/main.js?v=11"></script>
 </body>
 </html>
