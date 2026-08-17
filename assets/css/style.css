@@ -5,10 +5,10 @@
    pure black, and depth comes from neon glows in the accent colour.
 
    Two purples, split by role — this split is what keeps the theme readable:
-     --purple        #a855f7  fills, marks, glows. FAILS as text (4.1:1 on
+     --purple        #9333ea  fills, marks, glows. FAILS as text (3.0:1 on
                               cards), so it must never be used for copy.
-     --purple-bright #c084fc  the neon used as TEXT. 6.8:1 on the page,
-                              6.1:1 on cards.
+     --purple-bright #b06ff7  the neon used as TEXT. 5.5:1 on the page,
+                              5.0:1 on cards.
    Titles and key figures are neon; body copy is a light gray so long-form
    reading stays comfortable.
    ========================================================================== */
@@ -27,13 +27,13 @@
   --paper-deep:    #121216;
 
   /* Neon purple */
-  --purple:        #a855f7;  /* fills, marks, glow — never text */
-  --purple-bright: #c084fc;  /* the neon, used as text */
+  --purple:        #9333ea;  /* fills, marks, glow — never text */
+  --purple-bright: #b06ff7;  /* the neon, used as text */
   --purple-deep:   #7c3aed;  /* gradient ends */
-  --purple-soft:   rgba(168, 85, 247, 0.13);
-  --purple-line:   rgba(168, 85, 247, 0.38);
-  --purple-ring:   rgba(168, 85, 247, 0.34);
-  --purple-glow:   rgba(168, 85, 247, 0.5);
+  --purple-soft:   rgba(147, 51, 234, 0.18);
+  --purple-line:   rgba(147, 51, 234, 0.46);
+  --purple-ring:   rgba(147, 51, 234, 0.44);
+  --purple-glow:   rgba(147, 51, 234, 0.55);
 
   /* Order-flow colours */
   --blue:          #4d84ff;
@@ -60,12 +60,12 @@
   --shadow:    0 6px 20px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6);
 
-  --glow-sm:   0 0 12px rgba(168, 85, 247, 0.35);
-  --glow-md:   0 0 22px rgba(168, 85, 247, 0.45);
-  --glow-lg:   0 0 42px rgba(168, 85, 247, 0.38);
+  --glow-sm:   0 0 12px rgba(147, 51, 234, 0.45);
+  --glow-md:   0 0 22px rgba(147, 51, 234, 0.55);
+  --glow-lg:   0 0 42px rgba(147, 51, 234, 0.48);
 
   /* The neon "lit" look on type */
-  --glow-text: 0 0 16px rgba(192, 132, 252, 0.5), 0 0 34px rgba(168, 85, 247, 0.28);
+  --glow-text: 0 0 16px rgba(176, 111, 247, 0.52), 0 0 34px rgba(147, 51, 234, 0.32);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -106,7 +106,7 @@ ul, ol { list-style: none; }
 
 ::selection {
   background: var(--purple);
-  color: #12121a;
+  color: #fff;
 }
 
 :focus-visible {
@@ -223,14 +223,14 @@ p { color: var(--text-mid); }
   display: block;
   background: linear-gradient(180deg, #23202c 0%, #1b1a22 100%);
   border-bottom: 1px solid var(--purple-line);
-  box-shadow: 0 0 26px rgba(168, 85, 247, 0.22);
+  box-shadow: 0 0 26px rgba(147, 51, 234, 0.28);
   color: var(--purple-bright);
   padding-block: 11px;
   overflow: hidden;
   transition: box-shadow 0.25s;
 }
 
-.promo:hover { box-shadow: 0 0 38px rgba(168, 85, 247, 0.34); }
+.promo:hover { box-shadow: 0 0 38px rgba(147, 51, 234, 0.4); }
 
 .promo__track {
   display: flex;
@@ -328,7 +328,7 @@ p { color: var(--text-mid); }
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px var(--purple-ring),
-    0 0 26px 2px rgba(168, 85, 247, 0.3),
+    0 0 26px 2px rgba(147, 51, 234, 0.38),
     0 10px 30px -6px rgba(0, 0, 0, 0.7);
   transition: box-shadow 0.3s var(--ease);
 }
@@ -337,7 +337,7 @@ p { color: var(--text-mid); }
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px var(--purple-ring),
-    0 0 20px 1px rgba(168, 85, 247, 0.24),
+    0 0 20px 1px rgba(147, 51, 234, 0.32),
     0 8px 24px -6px rgba(0, 0, 0, 0.75);
 }
 
@@ -415,7 +415,7 @@ p { color: var(--text-mid); }
 }
 
 .nav__social a:hover {
-  color: #12121a;
+  color: #fff;
   background: var(--purple);
   transform: translateY(-2px);
   box-shadow: var(--glow-md);
@@ -470,10 +470,11 @@ p { color: var(--text-mid); }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-/* Charcoal ink on neon — the lit-sign look, and 4.5:1 either end */
+/* White ink on the darker neon — charcoal drops to 3.3:1 on #9333ea.
+   Gradient runs fill -> deep so both ends clear 5:1 against white. */
 .btn--primary {
-  background: linear-gradient(135deg, var(--purple-bright) 0%, var(--purple) 100%);
-  color: #17171c;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+  color: #fff;
   box-shadow: var(--glow-md), 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
@@ -530,7 +531,7 @@ p { color: var(--text-mid); }
   transform: translateX(-50%);
   width: 960px;
   height: 560px;
-  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.26), transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.3), transparent 68%);
   filter: blur(70px);
   pointer-events: none;
   z-index: -1;
@@ -555,32 +556,6 @@ p { color: var(--text-mid); }
 
 .hero .lede { margin-bottom: 32px; }
 
-.hero__proof {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 26px;
-  margin-top: 34px;
-  padding-top: 26px;
-  border-top: 1px solid var(--border);
-}
-
-.hero__proof li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.83rem;
-  color: var(--text-dim);
-}
-
-.hero__proof li::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--purple);
-  box-shadow: var(--glow-sm);
-}
-
 /* Chart panel visual */
 .chart-panel {
   position: relative;
@@ -588,7 +563,7 @@ p { color: var(--text-mid); }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(168, 85, 247, 0.14);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(147, 51, 234, 0.18);
 }
 
 .chart-panel__bar {
@@ -629,7 +604,7 @@ p { color: var(--text-mid); }
 }
 
 .chart-panel__tf span.on {
-  color: #17171c;
+  color: #fff;
   background: var(--purple);
   font-weight: 600;
   box-shadow: var(--glow-sm);
@@ -804,7 +779,7 @@ p { color: var(--text-mid); }
   border-radius: 50%;
   background-color: var(--purple-soft);
   border: 1px solid var(--purple-line);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c084fc' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b06ff7' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: center;
@@ -989,7 +964,7 @@ p { color: var(--text-mid); }
 }
 
 .faq-item.is-open .faq-item__icon::before,
-.faq-item.is-open .faq-item__icon::after { background: #17171c; }
+.faq-item.is-open .faq-item__icon::after { background: #fff; }
 .faq-item.is-open .faq-item__icon::after { transform: translate(-50%, -50%) rotate(0deg); }
 
 .faq-item__a {
@@ -1023,7 +998,7 @@ p { color: var(--text-mid); }
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(168, 85, 247, 0.22), transparent 62%);
+  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(147, 51, 234, 0.26), transparent 62%);
   pointer-events: none;
 }
 
@@ -1183,7 +1158,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 70% 120% at 50% 0%, rgba(168, 85, 247, 0.24), transparent 68%);
+  background: radial-gradient(ellipse 70% 120% at 50% 0%, rgba(147, 51, 234, 0.28), transparent 68%);
   pointer-events: none;
 }
 
@@ -1209,7 +1184,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   transform: translateX(-50%);
   width: 840px;
   height: 490px;
-  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.24), transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.28), transparent 68%);
   filter: blur(70px);
   pointer-events: none;
   z-index: -1;
@@ -1298,7 +1273,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 .socials a:hover {
-  color: #17171c;
+  color: #fff;
   background: var(--purple);
   border-color: var(--purple);
   transform: translateY(-3px);
@@ -1390,7 +1365,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
     border-radius: 20px;
     box-shadow:
       0 0 0 1px var(--purple-ring),
-      0 0 26px 2px rgba(168, 85, 247, 0.3),
+      0 0 26px 2px rgba(147, 51, 234, 0.38),
       0 12px 30px -6px rgba(0, 0, 0, 0.75);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;

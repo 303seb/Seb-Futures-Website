@@ -233,8 +233,8 @@
     frag.appendChild(make("rect", {
       x: x(28) - bodyW, y: zoneTop,
       width: W - padR - (x(28) - bodyW), height: zoneBot - zoneTop,
-      fill: "rgba(168,85,247,0.2)",
-      stroke: "rgba(168,85,247,0.6)", "stroke-width": 1, rx: 2
+      fill: "rgba(147,51,234,0.24)",
+      stroke: "rgba(147,51,234,0.65)", "stroke-width": 1, rx: 2
     }));
 
     // --- Gray supply zone up top ---
@@ -296,11 +296,11 @@
     var ly2 = y(last);
     frag.appendChild(make("line", {
       x1: padL, y1: ly2, x2: W - padR, y2: ly2,
-      stroke: "rgba(192,132,252,0.7)", "stroke-width": 1, "stroke-dasharray": "3 3"
+      stroke: "rgba(176,111,247,0.7)", "stroke-width": 1, "stroke-dasharray": "3 3"
     }));
     frag.appendChild(make("rect", {
       x: W - padR + 4, y: ly2 - 10, width: 52, height: 20,
-      fill: "#a855f7", rx: 3
+      fill: "#9333ea", rx: 3
     }));
 
     var tag = make("text", {
