@@ -642,7 +642,9 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* auto-fit, so the row adapts to however many .stat blocks exist
+     (home has 3, Discord has 4) instead of leaving an empty column */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 14px;
 }
 
@@ -1332,8 +1334,11 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .hero__grid { grid-template-columns: 1fr; }
   .hero__visual { order: -1; }
   .giveaway__body { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 820px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 880px) {
