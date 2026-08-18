@@ -79,18 +79,17 @@ Edit the wording freely, but think twice before removing them.
 
 ### Links still to fill in
 
-- **Discord invite** — `href="#"` on the Discord page buttons
 - **Alpha Futures affiliate link** — `href="#"` on the promo bar
 - **Alpha Futures logo** — `assets/alpha-futures.svg` is a placeholder mark,
   not their real logo. Replace the file, keep the name
-- **Discord and X** in the footer socials (Instagram and YouTube are wired up)
+- **X/Twitter** in the footer socials (Discord, Instagram and YouTube are wired up)
 - **Contact email** in the footer
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=14`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=15`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
