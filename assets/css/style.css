@@ -68,6 +68,10 @@
   --glow-text: 0 0 16px rgba(176, 111, 247, 0.52), 0 0 34px rgba(147, 51, 234, 0.32);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Height of the sticky promo bar. main.js measures the real value
+     and overwrites this, so the nav always parks directly beneath it. */
+  --promo-h: 46px;
 }
 
 /* --------------------------------------------------------------------------
@@ -81,7 +85,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 120px;
+  scroll-padding-top: calc(var(--promo-h) + 90px);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -221,16 +225,18 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .promo {
   display: block;
-  background: linear-gradient(180deg, #23202c 0%, #1b1a22 100%);
-  border-bottom: 1px solid var(--purple-line);
-  box-shadow: 0 0 26px rgba(147, 51, 234, 0.28);
-  color: var(--purple-bright);
+  position: sticky;
+  top: 0;
+  z-index: 101;              /* above the nav, which parks beneath it */
+  background: linear-gradient(100deg, #7c3aed 0%, #9333ea 55%, #7c3aed 100%);
+  box-shadow: 0 2px 30px rgba(147, 51, 234, 0.55);
+  color: #fff;
   padding-block: 11px;
   overflow: hidden;
   transition: box-shadow 0.25s;
 }
 
-.promo:hover { box-shadow: 0 0 38px rgba(147, 51, 234, 0.4); }
+.promo:hover { box-shadow: 0 2px 42px rgba(147, 51, 234, 0.7); }
 
 .promo__track {
   display: flex;
@@ -272,19 +278,19 @@ p { color: var(--text-mid); }
   font-weight: 700;
   font-size: 0.86rem;
   letter-spacing: 0.02em;
-  color: var(--text);
+  color: #fff;
 }
 
 .promo__divider {
   width: 1px;
   height: 15px;
-  background: var(--border);
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .promo__text {
   font-size: 0.86rem;
   letter-spacing: 0.01em;
-  color: var(--text-mid);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .promo__code {
@@ -292,13 +298,12 @@ p { color: var(--text-mid); }
   font-weight: 700;
   font-size: 0.86rem;
   letter-spacing: 0.08em;
-  color: var(--purple-bright);
-  background: var(--purple-soft);
-  border: 1px solid var(--purple-line);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 6px;
   padding: 2px 9px;
   margin-left: 2px;
-  text-shadow: var(--glow-text);
 }
 
 /* --------------------------------------------------------------------------
@@ -306,7 +311,7 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .nav {
   position: sticky;
-  top: 16px;
+  top: var(--promo-h);       /* sits right below the sticky promo bar */
   z-index: 100;
   padding: 16px 24px 0;
 }
@@ -1342,7 +1347,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 @media (max-width: 880px) {
-  .nav { top: 12px; padding-top: 12px; }
+  .nav { top: var(--promo-h); padding-top: 12px; }
 
   /* Bubble collapses to brand | socials | burger, links become a dropdown */
   .nav__bubble {

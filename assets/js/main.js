@@ -8,6 +8,36 @@
   "use strict";
 
   /* ----------------------------------------------------------------------
+     Sticky promo bar
+
+     Both the promo bar and the nav are sticky, so the nav has to park at
+     exactly the bar's height or they overlap. That height depends on font
+     loading and the viewport, so it is measured rather than hard-coded and
+     published as --promo-h for the CSS to use.
+     ---------------------------------------------------------------------- */
+  function initStickyTop() {
+    var promo = document.querySelector(".promo");
+    if (!promo) return;
+
+    var apply = function () {
+      document.documentElement.style.setProperty(
+        "--promo-h", promo.offsetHeight + "px"
+      );
+    };
+
+    apply();
+    window.addEventListener("resize", apply);
+
+    // Catches the reflow when the web fonts finish loading
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(apply);
+    }
+    if (window.ResizeObserver) {
+      new ResizeObserver(apply).observe(promo);
+    }
+  }
+
+  /* ----------------------------------------------------------------------
      Mobile navigation
      ---------------------------------------------------------------------- */
   function initNav() {
@@ -326,6 +356,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initStickyTop();
     initNav();
     initFaq();
     initCountdown();
