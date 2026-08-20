@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=19">
+<link rel="stylesheet" href="assets/css/style.css?v=20">
 </head>
 <body>
 
@@ -112,11 +112,53 @@
   <!-- ======================================================================
        PAGE HEADER
        ====================================================================== -->
-  <section class="page-head glow-bg">
+  <section class="page-head page-head--center glow-bg">
     <div class="container">
       <h1>Enter the Giveaway</h1>
-      <!-- TODO: link "Google form" to your form URL once you have it -->
       <p class="lede">Use my code at any prop firm and fill out the Google form to enter.</p>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ENTRY — tabbed: Giveaway / Rules. Panels are driven by initTabs() in
+       main.js, which also honours #giveaway and #rules in the URL.
+       ====================================================================== -->
+  <section class="section--tight">
+    <div class="container container--narrow">
+
+      <div class="tabs" role="tablist" aria-label="Giveaway information" data-tabs>
+        <button class="tab" id="tab-giveaway" role="tab" aria-selected="true" aria-controls="giveaway">Giveaway</button>
+        <button class="tab" id="tab-rules" role="tab" aria-selected="false" aria-controls="rules" tabindex="-1">Rules</button>
+      </div>
+
+      <div class="tab-panel" id="giveaway" role="tabpanel" aria-labelledby="tab-giveaway">
+        <div class="panel entry-panel">
+          <h3 class="entry-lead">Every eval purchased with code SEB or NQSEB = 1 entry*</h3>
+
+          <div class="entry-actions">
+            <!-- TODO: if you have a dedicated Discord-connect URL, swap it in here -->
+            <a class="btn btn--discord btn--lg btn--block" href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4l-.25.5a12.6 12.6 0 0 1 3.6 1.85 15.9 15.9 0 0 0-13.1 0A12.6 12.6 0 0 1 9.05 4.5L8.8 4a16.5 16.5 0 0 0-4.07 1.33C2.1 9.27 1.4 13.1 1.75 16.87a16.6 16.6 0 0 0 5.05 2.58l1.1-1.72c-.6-.23-1.18-.5-1.73-.83l.42-.33a11.8 11.8 0 0 0 10.82 0l.42.33c-.55.33-1.13.6-1.73.83l1.1 1.72a16.6 16.6 0 0 0 5.05-2.58c.42-4.37-.7-8.17-2.98-11.54zM8.55 14.65c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2zm6.9 0c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2z"/></svg> Connect Discord to Enter</a>
+            <!-- TODO: point this at your Google Form -->
+            <a class="btn btn--primary btn--lg btn--block" href="#">Fill Out Form to Enter</a>
+          </div>
+
+          <p class="entry-note">*See the <a href="#rules">rules</a> for full details.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="rules" role="tabpanel" aria-labelledby="tab-rules" hidden>
+        <div class="panel">
+          <h3 style="margin-bottom:20px">How the giveaway works</h3>
+          <ul class="check-list">
+            <li>Buy an evaluation from <b>Alpha Futures</b> or <b>FundedNext</b> using code <b>NQSEB</b> or <b>SEB</b>.</li>
+            <li>Connect your Discord and submit your order ID on the Google Form. Each verified eval = 1 entry — the more entries you have, the better your odds.</li>
+            <li>Winners are announced in The Market Element Discord.</li>
+            <li>One Discord account per person — no multi-accounting.</li>
+            <li>You must be a member of The Market Element Discord to enter and receive prizes.</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -207,6 +249,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=19"></script>
+<script src="assets/js/main.js?v=20"></script>
 </body>
 </html>

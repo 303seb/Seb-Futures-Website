@@ -1,6 +1,6 @@
 /* ==========================================================================
    The Market Element — site behaviour
-   Sticky header, mobile nav, FAQ accordion, giveaway countdown,
+   Sticky header, mobile nav, tabs, FAQ accordion, giveaway countdown,
    and scroll reveal.
    ========================================================================== */
 
@@ -69,6 +69,62 @@
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
     }
+  }
+
+  /* ----------------------------------------------------------------------
+     Tab switcher
+
+     Panels are plain [hidden] siblings, so the content is in the DOM and
+     indexable whichever tab is showing. Also honours a matching #hash on
+     load, which is what makes the "see the rules" link work.
+     ---------------------------------------------------------------------- */
+  function initTabs() {
+    var lists = document.querySelectorAll("[data-tabs]");
+    if (!lists.length) return;
+
+    lists.forEach(function (list) {
+      var tabs = Array.prototype.slice.call(list.querySelectorAll(".tab"));
+      if (!tabs.length) return;
+
+      function select(tab, focus) {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute("aria-selected", String(on));
+          t.tabIndex = on ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute("aria-controls"));
+          if (panel) panel.hidden = !on;
+        });
+        if (focus) tab.focus();
+      }
+
+      list.addEventListener("click", function (e) {
+        var t = e.target.closest(".tab");
+        if (t) select(t);
+      });
+
+      // Left/right arrows move between tabs, as expected of a tablist
+      list.addEventListener("keydown", function (e) {
+        var i = tabs.indexOf(document.activeElement);
+        if (i < 0) return;
+        var step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        select(tabs[(i + step + tabs.length) % tabs.length], true);
+      });
+
+      // Deep link: /giveaways.html#rules opens the Rules tab
+      function fromHash() {
+        var id = window.location.hash.slice(1);
+        if (!id) return;
+        var match = tabs.filter(function (t) {
+          return t.getAttribute("aria-controls") === id;
+        })[0];
+        if (match) select(match);
+      }
+
+      fromHash();
+      window.addEventListener("hashchange", fromHash);
+    });
   }
 
   /* ----------------------------------------------------------------------
@@ -193,6 +249,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initStickyTop();
     initNav();
+    initTabs();
     initFaq();
     initCountdown();
     initReveal();

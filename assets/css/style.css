@@ -522,6 +522,18 @@ p { color: var(--text-mid); }
   box-shadow: var(--glow-sm);
 }
 
+/* Discord blurple — white text clears 4.6:1 on it */
+.btn--discord {
+  background: #5865f2;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(88, 101, 242, 0.45), 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.btn--discord:hover {
+  background: #4752c4;
+  box-shadow: 0 0 32px rgba(88, 101, 242, 0.6), 0 8px 22px rgba(0, 0, 0, 0.5);
+}
+
 .btn--light {
   background: var(--text);
   color: #17171c;
@@ -1152,6 +1164,79 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 .page-head h1 { margin-bottom: 18px; }
 .page-head .lede { margin-bottom: 4px; }
+
+/* --------------------------------------------------------------------------
+   15b. Tabs + giveaway entry panel
+   -------------------------------------------------------------------------- */
+.page-head--center { text-align: center; }
+.page-head--center .lede { margin-inline: auto; }
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto clamp(26px, 4vw, 38px);
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+}
+
+.tab {
+  padding: 10px 30px;
+  border-radius: 100px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s, box-shadow 0.25s;
+}
+
+.tab:hover { color: var(--purple-bright); }
+
+.tab[aria-selected="true"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+  box-shadow: var(--glow-sm);
+}
+
+.tab-panel[hidden] { display: none; }
+
+.entry-panel { text-align: center; }
+
+.entry-lead {
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  line-height: 1.35;
+  margin-bottom: 26px;
+}
+
+.entry-actions {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.entry-note {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.entry-note a {
+  color: var(--purple-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Rules stay left-aligned even though the entry panel above is centred */
+#rules .check-list { text-align: left; }
+
+@media (max-width: 460px) {
+  .tab { padding: 10px 20px; font-size: 0.86rem; }
+}
 
 /* --------------------------------------------------------------------------
    16. Disclaimer + footer
