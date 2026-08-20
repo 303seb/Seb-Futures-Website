@@ -33,8 +33,9 @@ assets/
   js/main.js             sticky header, nav, FAQ, countdown, scroll reveal
   logo-dark.png          the mark used on the site - nav, footer, hero
   logo.png               same crop with the original dark linework
-  favicon.png            256px, the dark mark on a charcoal plate
-  apple-touch-icon.png   180px, same treatment
+  icon-32.png            32px tab icon, rendered at size
+  icon-256.png           256px icon
+  icon-180.png           180px, iOS home screen
   alpha-futures.svg      PLACEHOLDER promo logo - replace with the real asset
 ```
 
