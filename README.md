@@ -9,15 +9,21 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 ## Pages
 
-| File | Purpose |
+| File | Sections currently live |
 | --- | --- |
-| `index.html` | Home — hero, stats, what you get, how it works, about, **FAQ**, CTA |
-| `discord.html` | Discord — channels, weekly schedule, guidelines |
-| `giveaways.html` | Giveaways — current prize + countdown, entry, winners, rules |
+| `index.html` | Hero, stats |
+| `discord.html` | Header, stats, safety notice |
+| `giveaways.html` | Header, scam warning + terms |
 
-The FAQ used to be its own page. It is now a section on the home page
-(`index.html#faq`) and is no longer in the top nav; `faq.html` was deleted.
-Recover it from git history if you ever want it back as a standalone page.
+Every remaining section holds real copy — there are no placeholders left in
+any page. The template sections (cards, steps, about, FAQ, channels,
+schedule, guidelines, giveaway card, how-to-enter, prize pool, winners
+table, rules, closing CTAs) were removed rather than shipped half-written.
+
+**Their CSS is deliberately still in `style.css`.** To bring a section back,
+recover its markup from git history — `git show <commit>:index.html` — and
+paste it in; it will style itself with no CSS work. The commit before the
+strip is the one to look at.
 
 ## Structure
 
@@ -48,20 +54,11 @@ through untouched. Regenerate it from `logo.png` if the artwork changes.
 The favicons keep the artwork's own gray backdrop as a plate, so the
 near-black rails stay visible against a dark browser tab.
 
-## Filling in the content
+## Adding content back
 
-Every piece of copy is a placeholder written in square brackets describing
-what belongs in that slot, e.g. `[Put how many active members are in the
-group]`. The layout, styling and JavaScript are finished — only the words
-are missing.
-
-To find what is left, search the HTML files for `[`. When a page returns no
-matches, that page is done.
-
-Structural comments mark each section (`<!-- STATS -->`, `<!-- CHANNELS -->`
-and so on) so you can work one section at a time. Repeated blocks — cards,
-steps, channels, FAQ items, table rows — can be duplicated or deleted freely;
-the JavaScript picks up whatever is there.
+Sections are marked with banner comments (`<!-- HERO -->`, `<!-- STATS -->`).
+Repeated blocks — cards, steps, stat boxes — can be duplicated or deleted
+freely; the grids auto-fit and the JavaScript picks up whatever is present.
 
 ### Text that is NOT a placeholder
 
@@ -89,7 +86,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=16`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=17`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

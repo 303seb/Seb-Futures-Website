@@ -401,6 +401,29 @@ p { color: var(--text-mid); }
   text-shadow: var(--glow-text);
 }
 
+/* Highlighted nav item — a slow neon pulse ringing the link so the
+   giveaway reads as the standout action without shouting. */
+.nav__links > a.nav__hl {
+  color: var(--purple-bright);
+  font-weight: 600;
+  background: var(--purple-soft);
+  animation: nav-hl 2.6s ease-in-out infinite;
+}
+
+@keyframes nav-hl {
+  0%, 100% {
+    box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(147, 51, 234, 0.3);
+    text-shadow: 0 0 10px rgba(176, 111, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(147, 51, 234, 0.75);
+    text-shadow: var(--glow-text);
+  }
+}
+
+/* Hold the pulse while the pointer is on it, so it is easy to read */
+.nav__links > a.nav__hl:hover { animation-play-state: paused; }
+
 /* Right column — socials */
 .nav__social {
   display: flex;
@@ -1230,7 +1253,8 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 .footer__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  /* auto-fit so the footer adapts to however many columns remain */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px 28px;
   padding-bottom: 40px;
   border-bottom: 1px solid var(--border-soft);
@@ -1423,6 +1447,13 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   }
 
   .reveal { opacity: 1; transform: none; }
+
+  /* Hold the highlighted nav item lit rather than frozen mid-pulse */
+  .nav__links > a.nav__hl {
+    animation: none !important;
+    box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(147, 51, 234, 0.5);
+    text-shadow: var(--glow-text);
+  }
 
   /* Park the marquee as a single static, centred message */
   .promo { overflow: hidden; }
