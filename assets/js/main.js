@@ -1,7 +1,7 @@
 /* ==========================================================================
    The Market Element — site behaviour
-   Mobile nav, sticky header, FAQ accordion, giveaway countdown,
-   scroll reveal, and the hero candlestick chart.
+   Sticky header, mobile nav, FAQ accordion, giveaway countdown,
+   and scroll reveal.
    ========================================================================== */
 
 (function () {
@@ -182,171 +182,6 @@
   }
 
   /* ----------------------------------------------------------------------
-     Hero candlestick chart
-     Draws a downtrend into a reversal off the highlighted demand zone —
-     the same structure as the NQ chart the palette came from.
-     ---------------------------------------------------------------------- */
-  function initChart() {
-    var svg = document.getElementById("heroChart");
-    if (!svg) return;
-
-    var W = 620, H = 330;
-    var padL = 12, padR = 62, padT = 14, padB = 22;
-    var NS = "http://www.w3.org/2000/svg";
-
-    // Deterministic pseudo-random so the chart is identical on every load
-    var seed = 20260810;
-    function rand() {
-      seed = (seed * 1664525 + 1013904223) % 4294967296;
-      return seed / 4294967296;
-    }
-
-    // Build an OHLC series: drift down, base out, then reverse up
-    var candles = [];
-    var price = 76;
-    var count = 44;
-
-    for (var i = 0; i < count; i++) {
-      var drift;
-      if (i < 10) drift = 0.18;          // chop at the highs
-      else if (i < 30) drift = -1.15;    // the sell-off
-      else drift = 1.05;                 // reversal off the zone
-
-      var open = price;
-      var move = drift + (rand() - 0.5) * 2.4;
-      var close = open + move;
-      var wick = 0.5 + rand() * 1.7;
-
-      candles.push({
-        o: open,
-        c: close,
-        h: Math.max(open, close) + wick,
-        l: Math.min(open, close) - wick
-      });
-
-      price = close;
-    }
-
-    var lows = candles.map(function (c) { return c.l; });
-    var highs = candles.map(function (c) { return c.h; });
-    var min = Math.min.apply(null, lows) - 2;
-    var max = Math.max.apply(null, highs) + 2;
-
-    var plotW = W - padL - padR;
-    var plotH = H - padT - padB;
-    var stepX = plotW / count;
-    var bodyW = Math.max(3, stepX * 0.6);
-
-    var x = function (i) { return padL + i * stepX + stepX / 2; };
-    var y = function (v) { return padT + (max - v) / (max - min) * plotH; };
-
-    function make(tag, attrs) {
-      var node = document.createElementNS(NS, tag);
-      Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
-      return node;
-    }
-
-    var frag = document.createDocumentFragment();
-
-    // --- Horizontal grid lines ---
-    for (var g = 0; g <= 4; g++) {
-      var gy = padT + (plotH / 4) * g;
-      frag.appendChild(make("line", {
-        x1: padL, y1: gy, x2: W - padR, y2: gy,
-        stroke: "rgba(255,255,255,0.06)", "stroke-width": 1
-      }));
-    }
-
-    // --- The lavender demand zone (index 28 through the end) ---
-    var zoneTop = y(candles[28].h + 1);
-    var zoneBot = y(min + 1.5);
-    frag.appendChild(make("rect", {
-      x: x(28) - bodyW, y: zoneTop,
-      width: W - padR - (x(28) - bodyW), height: zoneBot - zoneTop,
-      fill: "rgba(147,51,234,0.24)",
-      stroke: "rgba(147,51,234,0.65)", "stroke-width": 1, rx: 2
-    }));
-
-    // --- Gray supply zone up top ---
-    var supTop = y(max - 2.5);
-    var supBot = y(candles[9].l);
-    frag.appendChild(make("rect", {
-      x: padL, y: supTop,
-      width: plotW * 0.52, height: supBot - supTop,
-      fill: "rgba(255,255,255,0.045)",
-      stroke: "rgba(255,255,255,0.14)", "stroke-width": 1, rx: 2
-    }));
-
-    // --- Dashed trendline across the sell-off ---
-    frag.appendChild(make("line", {
-      x1: x(10), y1: y(candles[10].h),
-      x2: x(31), y2: y(candles[31].l),
-      stroke: "rgba(232,232,238,0.45)", "stroke-width": 1.2,
-      "stroke-dasharray": "5 4"
-    }));
-
-    // --- Candles ---
-    candles.forEach(function (c, i) {
-      var cx = x(i);
-      var bull = c.c >= c.o;
-      var color = bull ? "#2fd4b4" : "#ff5c78";
-
-      frag.appendChild(make("line", {
-        x1: cx, y1: y(c.h), x2: cx, y2: y(c.l),
-        stroke: color, "stroke-width": 1
-      }));
-
-      var top = y(Math.max(c.o, c.c));
-      var height = Math.max(1.4, Math.abs(y(c.o) - y(c.c)));
-
-      frag.appendChild(make("rect", {
-        x: cx - bodyW / 2, y: top,
-        width: bodyW, height: height,
-        fill: color, rx: 0.8
-      }));
-    });
-
-    // --- Short arrow at the top of the range ---
-    var sx = x(11), sy = y(candles[11].h) - 12;
-    frag.appendChild(make("path", {
-      d: "M" + sx + " " + sy + " l4.5 -7 h-9 z",
-      fill: "#ff5c78", transform: "rotate(180 " + sx + " " + (sy - 3.5) + ")"
-    }));
-
-    // --- Long arrow at the reversal low ---
-    var lowIdx = 30;
-    var lx = x(lowIdx), ly = y(candles[lowIdx].l) + 14;
-    frag.appendChild(make("path", {
-      d: "M" + lx + " " + ly + " l4.5 7 h-9 z",
-      fill: "#4d84ff", transform: "rotate(180 " + lx + " " + (ly + 3.5) + ")"
-    }));
-
-    // --- Last price tag on the right axis ---
-    var last = candles[count - 1].c;
-    var ly2 = y(last);
-    frag.appendChild(make("line", {
-      x1: padL, y1: ly2, x2: W - padR, y2: ly2,
-      stroke: "rgba(176,111,247,0.7)", "stroke-width": 1, "stroke-dasharray": "3 3"
-    }));
-    frag.appendChild(make("rect", {
-      x: W - padR + 4, y: ly2 - 10, width: 52, height: 20,
-      fill: "#9333ea", rx: 3
-    }));
-
-    var tag = make("text", {
-      x: W - padR + 30, y: ly2 + 4,
-      "text-anchor": "middle", fill: "#17171c",
-      "font-size": "10.5", "font-weight": "600",
-      "font-family": "ui-monospace, SFMono-Regular, Menlo, monospace"
-    });
-    tag.textContent = (29600 + last * 1.6).toFixed(2);
-    frag.appendChild(tag);
-
-    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-    svg.appendChild(frag);
-  }
-
-  /* ----------------------------------------------------------------------
      Misc
      ---------------------------------------------------------------------- */
   function initYear() {
@@ -361,7 +196,6 @@
     initFaq();
     initCountdown();
     initReveal();
-    initChart();
     initYear();
   });
 })();

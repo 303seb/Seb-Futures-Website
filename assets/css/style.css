@@ -584,86 +584,16 @@ p { color: var(--text-mid); }
 
 .hero .lede { margin-bottom: 32px; }
 
-/* Chart panel visual */
-.chart-panel {
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(147, 51, 234, 0.18);
+/* Hero logo — replaces the old chart panel. The glow is a drop-shadow so it
+   follows the artwork's silhouette rather than boxing it. */
+.hero__logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 380px;
+  margin-inline: auto;
+  filter: drop-shadow(0 0 42px rgba(147, 51, 234, 0.45));
 }
-
-.chart-panel__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 4px 13px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--border-soft);
-}
-
-.chart-panel__sym {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-dim);
-}
-
-.chart-panel__sym b {
-  font-size: 0.86rem;
-  color: var(--text);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.chart-panel__tf { display: flex; gap: 5px; }
-
-.chart-panel__tf span {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  padding: 3px 8px;
-  border-radius: 6px;
-  color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.chart-panel__tf span.on {
-  color: #fff;
-  background: var(--purple);
-  font-weight: 600;
-  box-shadow: var(--glow-sm);
-}
-
-.chart-panel__svg { width: 100%; height: auto; }
-
-.chart-panel__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  padding-top: 13px;
-  margin-top: 10px;
-  border-top: 1px solid var(--border-soft);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-}
-
-.chart-panel__foot span { display: inline-flex; align-items: center; gap: 7px; }
-
-.swatch {
-  width: 9px;
-  height: 9px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.swatch--zone { background: var(--purple); box-shadow: var(--glow-sm); }
-.swatch--long { background: var(--blue); }
-.swatch--short { background: var(--red); }
 
 /* --------------------------------------------------------------------------
    9. Stat strip

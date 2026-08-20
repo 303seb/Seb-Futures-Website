@@ -30,11 +30,11 @@ strip is the one to look at.
 ```
 assets/
   css/style.css          all styling + design tokens
-  js/main.js             nav, FAQ accordion, countdown, scroll reveal, hero chart
-  logo-dark.png          brand mark used on the site (light linework)
-  logo.png               original crop, dark linework - for light backgrounds
-  favicon.png            256px, browser tabs
-  apple-touch-icon.png   180px, iOS home screen
+  js/main.js             sticky header, nav, FAQ, countdown, scroll reveal
+  logo-dark.png          the mark used on the site - nav, footer, hero
+  logo.png               same crop with the original dark linework
+  favicon.png            256px, the dark mark on a charcoal plate
+  apple-touch-icon.png   180px, same treatment
   alpha-futures.svg      PLACEHOLDER promo logo - replace with the real asset
 ```
 
@@ -86,7 +86,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=17`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=18`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
