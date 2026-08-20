@@ -18,13 +18,13 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
-  --bg:            #141419;
-  --bg-elev:       #1a1a20;
-  --surface:       #1e1e25;
-  --surface-2:     #25252e;
-  --border:        #33333f;
-  --border-soft:   #2a2a34;
-  --paper-deep:    #0f0f13;
+  --bg:            #0a0a0e;
+  --bg-elev:       #101015;
+  --surface:       #15151b;
+  --surface-2:     #1c1c24;
+  --border:        #2a2a35;
+  --border-soft:   #20202a;
+  --paper-deep:    #060609;
 
   /* Neon purple */
   --purple:        #9d3fef;  /* fills, marks, glow — never text */
@@ -563,20 +563,15 @@ p { color: var(--text-mid); }
 /* --------------------------------------------------------------------------
    7b. Head card
 
-   Page titles sit on a panel darker than the page with a neon border, rather
-   than floating on the background. Glowing type over a soft radial glow was
-   the readability problem — this puts a defined, darker ground under it and
-   lifts the title from 7.6:1 to 8.0:1.
+   Centres and constrains each page's title block. No border or panel fill —
+   readability now comes from the darker page ground, which puts the title at
+   8.2:1 on its own.
    -------------------------------------------------------------------------- */
 .head-card {
   max-width: 720px;
   margin-inline: auto;
   text-align: center;
-  background: rgba(8, 8, 11, 0.55);
-  border: 1px solid var(--purple-line);
-  border-radius: var(--radius-lg);
-  padding: clamp(30px, 5vw, 52px) clamp(22px, 4vw, 46px);
-  box-shadow: 0 0 46px rgba(157, 63, 239, 0.16), var(--shadow-lg);
+  padding-block: clamp(8px, 2vw, 20px);
 }
 
 .head-card--hero { max-width: 780px; }
@@ -618,17 +613,6 @@ p { color: var(--text-mid); }
 }
 
 .hero .lede { margin-bottom: 32px; }
-
-/* Hero logo — replaces the old chart panel. The glow is a drop-shadow so it
-   follows the artwork's silhouette rather than boxing it. */
-.hero__logo {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  max-height: 380px;
-  margin-inline: auto;
-  filter: drop-shadow(0 0 42px rgba(157, 63, 239, 0.5));
-}
 
 /* --------------------------------------------------------------------------
    9. Stat strip
