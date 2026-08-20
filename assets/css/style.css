@@ -5,10 +5,10 @@
    pure black, and depth comes from neon glows in the accent colour.
 
    Two purples, split by role — this split is what keeps the theme readable:
-     --purple        #9333ea  fills, marks, glows. FAILS as text (3.0:1 on
+     --purple        #9d3fef  fills, marks, glows. FAILS as text (3.5:1 on
                               cards), so it must never be used for copy.
-     --purple-bright #b06ff7  the neon used as TEXT. 5.5:1 on the page,
-                              5.0:1 on cards.
+     --purple-bright #c98cff  the neon used as TEXT. 7.6:1 on the page,
+                              6.8:1 on cards.
    Titles and key figures are neon; body copy is a light gray so long-form
    reading stays comfortable.
    ========================================================================== */
@@ -18,22 +18,22 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
-  --bg:            #17171c;
-  --bg-elev:       #1c1c22;
-  --surface:       #202027;
-  --surface-2:     #262630;
-  --border:        #2e2e39;
-  --border-soft:   #26262f;
-  --paper-deep:    #121216;
+  --bg:            #141419;
+  --bg-elev:       #1a1a20;
+  --surface:       #1e1e25;
+  --surface-2:     #25252e;
+  --border:        #33333f;
+  --border-soft:   #2a2a34;
+  --paper-deep:    #0f0f13;
 
   /* Neon purple */
-  --purple:        #9333ea;  /* fills, marks, glow — never text */
-  --purple-bright: #b06ff7;  /* the neon, used as text */
+  --purple:        #9d3fef;  /* fills, marks, glow — never text */
+  --purple-bright: #c98cff;  /* the neon, used as text */
   --purple-deep:   #7c3aed;  /* gradient ends */
-  --purple-soft:   rgba(147, 51, 234, 0.18);
-  --purple-line:   rgba(147, 51, 234, 0.46);
-  --purple-ring:   rgba(147, 51, 234, 0.44);
-  --purple-glow:   rgba(147, 51, 234, 0.55);
+  --purple-soft:   rgba(157, 63, 239, 0.18);
+  --purple-line:   rgba(157, 63, 239, 0.46);
+  --purple-ring:   rgba(157, 63, 239, 0.44);
+  --purple-glow:   rgba(157, 63, 239, 0.6);
 
   /* Order-flow colours */
   --blue:          #4d84ff;
@@ -43,9 +43,9 @@
   --green-ink:     #4fe3c6;
 
   /* Ink */
-  --text:          #e8e8ee;
-  --text-mid:      #a8a8bc;
-  --text-dim:      #8a8a9e;
+  --text:          #f4f4f8;
+  --text-mid:      #c8c8d8;
+  --text-dim:      #9a9ab0;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -60,12 +60,12 @@
   --shadow:    0 6px 20px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6);
 
-  --glow-sm:   0 0 12px rgba(147, 51, 234, 0.45);
-  --glow-md:   0 0 22px rgba(147, 51, 234, 0.55);
-  --glow-lg:   0 0 42px rgba(147, 51, 234, 0.48);
+  --glow-sm:   0 0 12px rgba(157, 63, 239, 0.5);
+  --glow-md:   0 0 22px rgba(157, 63, 239, 0.6);
+  --glow-lg:   0 0 42px rgba(157, 63, 239, 0.55);
 
   /* The neon "lit" look on type */
-  --glow-text: 0 0 16px rgba(176, 111, 247, 0.52), 0 0 34px rgba(147, 51, 234, 0.32);
+  --glow-text: 0 0 18px rgba(201, 140, 255, 0.55), 0 0 38px rgba(157, 63, 239, 0.35);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -125,9 +125,9 @@ ul, ol { list-style: none; }
    still reads when a page has a dozen card headings.
    -------------------------------------------------------------------------- */
 h1, h2, h3, h4 {
-  line-height: 1.14;
-  letter-spacing: -0.03em;
-  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.032em;
+  font-weight: 800;
   color: var(--purple-bright);
 }
 
@@ -140,8 +140,9 @@ h3 { font-size: clamp(1.12rem, 1.9vw, 1.32rem); letter-spacing: -0.02em; }
 p { color: var(--text-mid); }
 
 .lede {
-  font-size: clamp(1.02rem, 1.6vw, 1.16rem);
-  color: var(--text-mid);
+  font-size: clamp(1.04rem, 1.6vw, 1.2rem);
+  font-weight: 500;
+  color: var(--text);
   max-width: 62ch;
 }
 
@@ -228,15 +229,15 @@ p { color: var(--text-mid); }
   position: sticky;
   top: 0;
   z-index: 101;              /* above the nav, which parks beneath it */
-  background: linear-gradient(100deg, #7c3aed 0%, #9333ea 55%, #7c3aed 100%);
-  box-shadow: 0 2px 30px rgba(147, 51, 234, 0.55);
+  background: linear-gradient(100deg, #7c3aed 0%, #8b34e8 55%, #7c3aed 100%);
+  box-shadow: 0 2px 30px rgba(157, 63, 239, 0.6);
   color: #fff;
   padding-block: 11px;
   overflow: hidden;
   transition: box-shadow 0.25s;
 }
 
-.promo:hover { box-shadow: 0 2px 42px rgba(147, 51, 234, 0.7); }
+.promo:hover { box-shadow: 0 2px 42px rgba(157, 63, 239, 0.7); }
 
 .promo__track {
   display: flex;
@@ -261,7 +262,11 @@ p { color: var(--text-mid); }
   gap: 11px;
   padding-inline: 28px;
   white-space: nowrap;
+  color: inherit;
+  transition: opacity 0.18s;
 }
+
+.promo__item:hover { opacity: 0.82; }
 
 @keyframes promo-scroll {
   from { transform: translateX(0); }
@@ -275,8 +280,8 @@ p { color: var(--text-mid); }
 }
 
 .promo__brand {
-  font-weight: 700;
-  font-size: 0.86rem;
+  font-weight: 800;
+  font-size: 0.88rem;
   letter-spacing: 0.02em;
   color: #fff;
 }
@@ -288,9 +293,10 @@ p { color: var(--text-mid); }
 }
 
 .promo__text {
-  font-size: 0.86rem;
+  font-size: 0.88rem;
+  font-weight: 500;
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .promo__code {
@@ -333,7 +339,7 @@ p { color: var(--text-mid); }
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px var(--purple-ring),
-    0 0 26px 2px rgba(147, 51, 234, 0.38),
+    0 0 26px 2px rgba(157, 63, 239, 0.38),
     0 10px 30px -6px rgba(0, 0, 0, 0.7);
   transition: box-shadow 0.3s var(--ease);
 }
@@ -342,7 +348,7 @@ p { color: var(--text-mid); }
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px var(--purple-ring),
-    0 0 20px 1px rgba(147, 51, 234, 0.32),
+    0 0 20px 1px rgba(157, 63, 239, 0.32),
     0 8px 24px -6px rgba(0, 0, 0, 0.75);
 }
 
@@ -384,7 +390,7 @@ p { color: var(--text-mid); }
   padding: 8px 15px;
   border-radius: 11px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-mid);
   transition: color 0.18s, background 0.18s, text-shadow 0.18s;
 }
@@ -412,11 +418,11 @@ p { color: var(--text-mid); }
 
 @keyframes nav-hl {
   0%, 100% {
-    box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(147, 51, 234, 0.3);
+    box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(157, 63, 239, 0.3);
     text-shadow: 0 0 10px rgba(176, 111, 247, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(147, 51, 234, 0.75);
+    box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(157, 63, 239, 0.75);
     text-shadow: var(--glow-text);
   }
 }
@@ -487,8 +493,8 @@ p { color: var(--text-mid); }
   gap: 9px;
   padding: 13px 24px;
   border-radius: var(--radius-sm);
-  font-size: 0.925rem;
-  font-weight: 600;
+  font-size: 0.94rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
   border: 1px solid transparent;
@@ -498,7 +504,7 @@ p { color: var(--text-mid); }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-/* White ink on the darker neon — charcoal drops to 3.3:1 on #9333ea.
+/* White ink on the neon fill — charcoal ink fails there.
    Gradient runs fill -> deep so both ends clear 5:1 against white. */
 .btn--primary {
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
@@ -536,7 +542,7 @@ p { color: var(--text-mid); }
 
 .btn--light {
   background: var(--text);
-  color: #17171c;
+  color: #141419;
 }
 
 .btn--light:hover { background: #fff; }
@@ -571,7 +577,7 @@ p { color: var(--text-mid); }
   transform: translateX(-50%);
   width: 960px;
   height: 560px;
-  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.3), transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(157, 63, 239, 0.3), transparent 68%);
   filter: blur(70px);
   pointer-events: none;
   z-index: -1;
@@ -604,7 +610,7 @@ p { color: var(--text-mid); }
   max-width: 100%;
   max-height: 380px;
   margin-inline: auto;
-  filter: drop-shadow(0 0 42px rgba(147, 51, 234, 0.45));
+  filter: drop-shadow(0 0 42px rgba(157, 63, 239, 0.5));
 }
 
 /* --------------------------------------------------------------------------
@@ -635,8 +641,8 @@ p { color: var(--text-mid); }
 
 .stat__num {
   font-family: var(--font-mono);
-  font-size: clamp(1.5rem, 3vw, 2.05rem);
-  font-weight: 600;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--purple-bright);
   text-shadow: var(--glow-text);
@@ -645,10 +651,11 @@ p { color: var(--text-mid); }
 
 .stat__label {
   margin-top: 7px;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-mid);
 }
 
 /* --------------------------------------------------------------------------
@@ -738,7 +745,7 @@ p { color: var(--text-mid); }
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   color: var(--text-mid);
 }
 
@@ -780,7 +787,7 @@ p { color: var(--text-mid); }
   border-color: var(--text);
 }
 
-.panel--light h3 { color: #17171c; text-shadow: none; }
+.panel--light h3 { color: #141419; text-shadow: none; }
 .panel--light p { color: #4a4d57; }
 
 /* --------------------------------------------------------------------------
@@ -890,8 +897,8 @@ p { color: var(--text-mid); }
   gap: 20px;
   padding: 21px 0;
   text-align: left;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.02rem;
+  font-weight: 700;
   letter-spacing: -0.015em;
   color: var(--text);
   transition: color 0.18s, text-shadow 0.18s;
@@ -970,7 +977,7 @@ p { color: var(--text-mid); }
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(147, 51, 234, 0.26), transparent 62%);
+  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(157, 63, 239, 0.26), transparent 62%);
   pointer-events: none;
 }
 
@@ -1130,7 +1137,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 70% 120% at 50% 0%, rgba(147, 51, 234, 0.28), transparent 68%);
+  background: radial-gradient(ellipse 70% 120% at 50% 0%, rgba(157, 63, 239, 0.28), transparent 68%);
   pointer-events: none;
 }
 
@@ -1156,7 +1163,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   transform: translateX(-50%);
   width: 840px;
   height: 490px;
-  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.28), transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(157, 63, 239, 0.28), transparent 68%);
   filter: blur(70px);
   pointer-events: none;
   z-index: -1;
@@ -1414,7 +1421,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
     border-radius: 20px;
     box-shadow:
       0 0 0 1px var(--purple-ring),
-      0 0 26px 2px rgba(147, 51, 234, 0.38),
+      0 0 26px 2px rgba(157, 63, 239, 0.38),
       0 12px 30px -6px rgba(0, 0, 0, 0.75);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;
@@ -1466,7 +1473,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   /* Hold the highlighted nav item lit rather than frozen mid-pulse */
   .nav__links > a.nav__hl {
     animation: none !important;
-    box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(147, 51, 234, 0.5);
+    box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(157, 63, 239, 0.5);
     text-shadow: var(--glow-text);
   }
 

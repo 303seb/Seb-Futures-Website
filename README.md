@@ -36,7 +36,6 @@ assets/
   icon-32.png            32px tab icon, rendered at size
   icon-256.png           256px icon
   icon-180.png           180px, iOS home screen
-  alpha-futures.svg      PLACEHOLDER promo logo - replace with the real asset
 ```
 
 ### About the logo files
@@ -77,9 +76,8 @@ Edit the wording freely, but think twice before removing them.
 
 ### Links still to fill in
 
-- **Alpha Futures affiliate link** — `href="#"` on the promo bar
-- **Alpha Futures logo** — `assets/alpha-futures.svg` is a placeholder mark,
-  not their real logo. Replace the file, keep the name
+- **Affiliate links** — `href="#"` on each `.promo__item` (Alpha Futures and FundedNext)
+- **Google Form** — `href="#"` on the giveaway entry button
 - **X/Twitter** in the footer socials (Discord, Instagram and YouTube are wired up)
 - **Contact email** in the footer
 - **Giveaway closing date** — the `data-countdown` attribute on
@@ -87,7 +85,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=20`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=21`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
