@@ -407,6 +407,19 @@ p { color: var(--text-mid); }
   text-shadow: var(--glow-text);
 }
 
+.nav__links > a.nav__cta {
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+  box-shadow: var(--glow-sm);
+  margin-left: 4px;
+}
+
+.nav__links > a.nav__cta:hover {
+  color: #fff;
+  box-shadow: var(--glow-md);
+}
+
 /* Highlighted nav item — a slow neon pulse ringing the link so the
    giveaway reads as the standout action without shouting. */
 .nav__links > a.nav__hl {
@@ -613,6 +626,115 @@ p { color: var(--text-mid); }
 }
 
 .hero .lede { margin-bottom: 32px; }
+
+/* --------------------------------------------------------------------------
+   8b. Partner strip + testimonial carousel
+
+   Both reuse the marquee from the promo bar: two identical groups sliding
+   exactly -50%, so the second lands where the first began and the loop has
+   no seam. The duplicate group is aria-hidden so it is not read twice.
+   -------------------------------------------------------------------------- */
+.partners__label {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 22px;
+}
+
+.partners { overflow: hidden; }
+
+.partners__track {
+  display: flex;
+  width: max-content;
+  animation: promo-scroll 38s linear infinite;
+}
+
+.partners__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(44px, 7vw, 88px);
+  padding-right: clamp(44px, 7vw, 88px);
+  flex-shrink: 0;
+}
+
+.partner {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.quotes { overflow: hidden; }
+
+.quotes__track {
+  display: flex;
+  width: max-content;
+  animation: promo-scroll 70s linear infinite;
+}
+
+/* Hold still so a quote can actually be read */
+.quotes:hover .quotes__track { animation-play-state: paused; }
+
+.quotes__group {
+  display: flex;
+  gap: 18px;
+  padding-right: 18px;
+  flex-shrink: 0;
+}
+
+.quote {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+}
+
+.quote blockquote {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--text-mid);
+}
+
+.quote__who {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.quote__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
+  color: var(--purple-bright);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.quote__name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Three-up variant for the highlight row */
+.card-grid--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
 /* --------------------------------------------------------------------------
    9. Stat strip

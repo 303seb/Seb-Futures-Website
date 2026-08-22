@@ -9,21 +9,14 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 ## Pages
 
-| File | Sections currently live |
+| File | Sections |
 | --- | --- |
-| `index.html` | Hero, stats |
+| `index.html` | Hero, partners, stats, highlights, about, features, testimonials, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
-| `giveaways.html` | Header, scam warning + terms |
+| `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 
-Every remaining section holds real copy — there are no placeholders left in
-any page. The template sections (cards, steps, about, FAQ, channels,
-schedule, guidelines, giveaway card, how-to-enter, prize pool, winners
-table, rules, closing CTAs) were removed rather than shipped half-written.
-
-**Their CSS is deliberately still in `style.css`.** To bring a section back,
-recover its markup from git history — `git show <commit>:index.html` — and
-paste it in; it will style itself with no CSS work. The commit before the
-strip is the one to look at.
+The home page follows a single-page layout with anchor sections. Nav links
+resolve to `index.html#about` etc. so they work from any page.
 
 ## Structure
 
@@ -53,6 +46,15 @@ through untouched. Regenerate it from `logo.png` if the artwork changes.
 
 The favicons keep the artwork's own gray backdrop as a plate, so the
 near-black rails stay visible against a dark browser tab.
+
+## Marquees
+
+Three components scroll: the promo bar, the partner strip and the testimonial
+carousel. All use the same trick — two identical groups in a track sliding
+exactly `-50%`, so the second lands where the first began and the loop has no
+seam. **If you add or remove an item, change both groups**, or the loop will
+jump. The duplicate group carries `aria-hidden` so screen readers hear the
+content once.
 
 ## Adding content back
 
@@ -85,7 +87,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=23`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=24`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
