@@ -82,8 +82,17 @@ Four things are real text, left in on purpose:
 
 Edit the wording freely, but think twice before removing them.
 
+The **FAQ answers** are also real copy, not placeholders. Two of them make
+claims that have to stay true: that the markets traded are NQ and ES, and that
+no private or live signals are provided. If either ever changes, change the
+answer — a stale "we don't give signals" is the kind of thing that gets a
+trading site in trouble.
+
 ### Links still to fill in
 
+- **Premium checkout** and **1-on-1 application form** — `href="#"` on two of the
+  three `Get Access` buttons in the pricing section
+- **View more testimonials** — `href="#"` below the quote carousel
 - **Affiliate links** — `href="#"` on each `.promo__item` (Alpha Futures and FundedNext)
 - **Google Form** — `href="#"` on the giveaway entry button
 - **X/Twitter** in the footer socials (Discord, Instagram and YouTube are wired up)
@@ -93,7 +102,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=27`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=28`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
