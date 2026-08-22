@@ -102,7 +102,7 @@ trading site in trouble.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=28`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=29`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

@@ -4,11 +4,17 @@
    Charcoal + neon purple. The background is a lifted charcoal rather than
    pure black, and depth comes from neon glows in the accent colour.
 
-   Two purples, split by role — this split is what keeps the theme readable:
-     --purple        #9d3fef  fills, marks, glows. FAILS as text (3.5:1 on
-                              cards), so it must never be used for copy.
-     --purple-bright #c98cff  the neon used as TEXT. 7.6:1 on the page,
-                              6.8:1 on cards.
+   ONE purple, three lightnesses. All three sit on hue 272 — if you add a
+   shade, match that hue or the theme visibly drifts blue. Split by role,
+   which is what keeps it readable:
+     --purple        #9d3fef  L59  fills, marks, glows. FAILS as text
+                              (3.5:1 on cards), so never use it for copy.
+     --purple-bright #c98cff  L78  the neon used as TEXT. 7.6:1 on the
+                              page, 6.8:1 on cards.
+     --purple-deep   #7c12d9  L46  the dark end of every gradient.
+   Never hard-code a purple hex outside this block. The rgba(157, 63, 239)
+   values below are --purple at partial alpha; rgba(201, 140, 255) is
+   --purple-bright.
    Titles and key figures are neon; body copy is a light gray so long-form
    reading stays comfortable.
    ========================================================================== */
@@ -29,7 +35,7 @@
   /* Neon purple */
   --purple:        #9d3fef;  /* fills, marks, glow — never text */
   --purple-bright: #c98cff;  /* the neon, used as text */
-  --purple-deep:   #7c3aed;  /* gradient ends */
+  --purple-deep:   #7c12d9;  /* gradient ends — same hue as --purple, darker */
   --purple-soft:   rgba(157, 63, 239, 0.18);
   --purple-line:   rgba(157, 63, 239, 0.46);
   --purple-ring:   rgba(157, 63, 239, 0.44);
@@ -237,7 +243,7 @@ p { color: var(--text-mid); }
   position: sticky;
   top: 0;
   z-index: 101;              /* above the nav, which parks beneath it */
-  background: linear-gradient(100deg, #7c3aed 0%, #8b34e8 55%, #7c3aed 100%);
+  background: linear-gradient(100deg, var(--purple-deep) 0%, var(--purple) 55%, var(--purple-deep) 100%);
   box-shadow: 0 2px 30px rgba(157, 63, 239, 0.6);
   color: #fff;
   padding-block: 11px;
@@ -440,7 +446,7 @@ p { color: var(--text-mid); }
 @keyframes nav-hl {
   0%, 100% {
     box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(157, 63, 239, 0.3);
-    text-shadow: 0 0 10px rgba(176, 111, 247, 0.3);
+    text-shadow: 0 0 10px rgba(201, 140, 255, 0.3);
   }
   50% {
     box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(157, 63, 239, 0.75);
