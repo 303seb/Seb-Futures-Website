@@ -1,7 +1,7 @@
 /* ==========================================================================
    The Market Element — site behaviour
-   Sticky header, mobile nav, tabs, FAQ accordion, giveaway countdown,
-   and scroll reveal.
+   Sticky header, mobile nav, typing animation, tabs, FAQ accordion,
+   giveaway countdown, and scroll reveal.
    ========================================================================== */
 
 (function () {
@@ -69,6 +69,61 @@
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
     }
+  }
+
+  /* ----------------------------------------------------------------------
+     Typing animation
+
+     Types a word out, holds, erases it letter by letter, moves to the next.
+     Word list comes from the data-typer attribute as JSON.
+     ---------------------------------------------------------------------- */
+  function initTyper() {
+    var host = document.querySelector("[data-typer]");
+    if (!host) return;
+
+    var out = host.querySelector(".typer__text");
+    if (!out) return;
+
+    var words;
+    try {
+      words = JSON.parse(host.getAttribute("data-typer"));
+    } catch (e) {
+      return;
+    }
+    if (!Array.isArray(words) || !words.length) return;
+
+    // Reduced motion: show the first word and stop
+    var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq && mq.matches) {
+      out.textContent = words[0];
+      return;
+    }
+
+    var TYPE = 78, ERASE = 38, HOLD = 1500, GAP = 320;
+    var i = 0, pos = 0, erasing = false;
+
+    (function tick() {
+      var word = words[i];
+
+      if (!erasing) {
+        pos += 1;
+        out.textContent = word.slice(0, pos);
+        if (pos >= word.length) {
+          erasing = true;
+          return setTimeout(tick, HOLD);
+        }
+        return setTimeout(tick, TYPE);
+      }
+
+      pos -= 1;
+      out.textContent = word.slice(0, pos);
+      if (pos <= 0) {
+        erasing = false;
+        i = (i + 1) % words.length;
+        return setTimeout(tick, GAP);
+      }
+      setTimeout(tick, ERASE);
+    })();
   }
 
   /* ----------------------------------------------------------------------
@@ -249,6 +304,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initStickyTop();
     initNav();
+    initTyper();
     initTabs();
     initFaq();
     initCountdown();

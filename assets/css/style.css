@@ -615,17 +615,82 @@ p { color: var(--text-mid); }
   z-index: -1;
 }
 
-.hero h1 { margin-bottom: 22px; }
+/* Hero title: "Trade Smarter," white, the rest in the heading neon.
+   Bigger and a step lighter than the global heading weight. */
+.hero h1 {
+  font-size: clamp(2.6rem, 6.6vw, 4.6rem);
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: none;
+  margin-bottom: 16px;
+}
 
 .hero h1 em {
   font-style: normal;
-  background: linear-gradient(115deg, #e9d5ff 0%, var(--purple) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: none;
+  color: var(--purple-bright);
+  text-shadow: var(--glow-text);
+}
+
+/* Bold, white — sits between the title and the lede */
+.hero__kicker {
+  font-size: clamp(1.05rem, 2vw, 1.32rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 14px;
 }
 
 .hero .lede { margin-bottom: 32px; }
+
+/* --------------------------------------------------------------------------
+   8a. Typing animation
+
+   The animated word is aria-hidden and a static .sr-only list carries the
+   same content, so a screen reader hears the words once instead of being
+   interrupted on every keystroke.
+   -------------------------------------------------------------------------- */
+.typer {
+  color: var(--purple-bright);
+  font-weight: 700;
+  text-shadow: var(--glow-text);
+  white-space: nowrap;
+}
+
+.typer__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.14em;
+  background: var(--purple-bright);
+  box-shadow: var(--glow-sm);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* The full stop belongs to the sentence, not the typed word */
+.typer__stop {
+  color: var(--text);
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* --------------------------------------------------------------------------
    8b. Partner strip + testimonial carousel
@@ -1590,6 +1655,9 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   }
 
   .reveal { opacity: 1; transform: none; }
+
+  /* Caret sits solid; initTyper() also skips the animation entirely */
+  .typer__caret { animation: none !important; opacity: 1; }
 
   /* Hold the highlighted nav item lit rather than frozen mid-pulse */
   .nav__links > a.nav__hl {
