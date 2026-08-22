@@ -186,6 +186,14 @@ p { color: var(--text-mid); }
 
 .section__head p { margin-top: 16px; }
 
+/* Split heading — plain lead word, neon payoff, echoing the hero title */
+.h2--split { color: var(--text); text-shadow: none; }
+.h2--split em {
+  font-style: normal;
+  color: var(--purple-bright);
+  text-shadow: var(--glow-text);
+}
+
 /* Eyebrow label */
 .eyebrow {
   display: inline-flex;
@@ -1016,24 +1024,25 @@ p { color: var(--text-mid); }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-mid);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
+  color: #fff;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+  border: 1px solid transparent;
   border-radius: 100px;
   padding: 6px 14px;
   margin-bottom: 20px;
+  box-shadow: 0 0 14px rgba(157, 63, 239, 0.45);
 }
 
+/* Scaling from the left edge keeps it anchored to the card, and transform
+   costs no layout, so the tier heading below never shifts. */
 .tier__badge--pulse {
-  color: #fff;
-  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
-  border-color: transparent;
-  animation: tier-pulse 2.4s ease-in-out infinite;
+  transform-origin: left center;
+  animation: tier-zoom 2.6s var(--ease) infinite;
 }
 
-@keyframes tier-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(157, 63, 239, 0.5), 0 0 10px rgba(157, 63, 239, 0.4); }
-  50%      { box-shadow: 0 0 0 8px rgba(157, 63, 239, 0), 0 0 24px rgba(157, 63, 239, 0.85); }
+@keyframes tier-zoom {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 14px rgba(157, 63, 239, 0.45); }
+  50%      { transform: scale(1.16); box-shadow: 0 0 26px rgba(157, 63, 239, 0.8); }
 }
 
 .tier__name {
@@ -1782,7 +1791,8 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
   .tier__badge--pulse {
     animation: none !important;
-    box-shadow: 0 0 16px rgba(157, 63, 239, 0.6);
+    transform: scale(1.16);
+    box-shadow: 0 0 26px rgba(157, 63, 239, 0.8);
   }
 
   /* Hold the highlighted nav item lit rather than frozen mid-pulse */

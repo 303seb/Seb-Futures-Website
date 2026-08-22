@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=26">
+<link rel="stylesheet" href="assets/css/style.css?v=27">
 </head>
 <body>
 
@@ -178,29 +178,46 @@
   </section>
 
   <!-- ======================================================================
-       HIGHLIGHTS — three short cards
+       FEATURES — six cards, each mirroring a headline item from the
+       pricing tiers below. Keep the two in sync when a tier changes.
        ====================================================================== -->
-  <section class="section section--alt">
+  <section class="section section--alt" id="features">
     <div class="container">
       <div class="section__head section__head--center reveal">
-        <h2>[Section heading — what the community gives you]</h2>
-        <p>[One sentence introducing the three cards.]</p>
+        <span class="eyebrow">Our Features</span>
+        <h2 class="h2--split">The Market Element. <em>Unleashed.</em></h2>
+        <p>Everything you need to take your trading to the next level.</p>
       </div>
-      <div class="card-grid card-grid--3">
+      <div class="card-grid">
         <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-          <h3>[Highlight 1]</h3>
-          <p>[One sentence on what members get from this.]</p>
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <h3>A–Z Video Library</h3>
+          <p>A complete path from zero to payout. Every concept in order, so you always know what to learn next.</p>
         </article>
         <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <h3>[Highlight 2]</h3>
-          <p>[One sentence on what members get from this.]</p>
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"/><path d="M12 2v7"/><path d="m8 6 4-4 4 4"/><path d="M4.22 10.22l1.42 1.42M1 18h2M21 18h2M18.36 11.64l1.42-1.42"/><path d="M23 22H1"/></svg></div>
+          <h3>Daily Premarket Analysis</h3>
+          <p>Levels, bias and the plan posted before the open — so you sit down knowing where you care.</p>
         </article>
         <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <h3>[Highlight 3]</h3>
-          <p>[One sentence on what members get from this.]</p>
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Daily Market Commentary</h3>
+          <p>Live read on what price is doing and why, through the session. Context you can’t get from a chart alone.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Personal Risk Management Plan</h3>
+          <p>Your own sizing, loss limits and rules, built around your account and your temperament.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7"/></svg></div>
+          <h3>Custom Trading Journal</h3>
+          <p>A journal built for futures traders. Log the trade, find the leak, fix it before it costs you again.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div>
+          <h3>Session Recordings &amp; Recaps</h3>
+          <p>Miss a session? Watch it back. Every trade broken down after the close — entry, management and exit.</p>
         </article>
       </div>
     </div>
@@ -230,7 +247,7 @@
             <li>Weekly Q&amp;As</li>
             <li>Access to a full A–Z set of videos to take you from zero to payout</li>
           </ul>
-          <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--ghost btn--block">Get Access</a>
+          <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--primary btn--block">Get Access</a>
         </article>
 
         <article class="tier tier--featured reveal">
@@ -241,8 +258,10 @@
             <span class="tier__amount">$199</span>
             <span class="tier__per">/ month</span>
           </div>
-          <p class="tier__note">Everything in Free, plus:</p>
           <ul class="check-list tier__list">
+            <li>A high-quality trading community of like-minded traders</li>
+            <li>Weekly Q&amp;As</li>
+            <li>Access to a full A–Z set of videos to take you from zero to payout</li>
             <li>Daily market commentary</li>
             <li>Daily premarket analysis</li>
             <li>Private trading community</li>
@@ -258,8 +277,16 @@
           <span class="tier__badge">Elite Access Only</span>
           <h3 class="tier__name">Exclusive 1-on-1 Mentorship <span class="tier__sub">(Invite Only)</span></h3>
           <div class="tier__price"><span class="tier__amount tier__amount--text">Extremely exclusive,<br>application only</span></div>
-          <p class="tier__note">Everything in Free and Premium, plus:</p>
           <ul class="check-list tier__list">
+            <li>A high-quality trading community of like-minded traders</li>
+            <li>Weekly Q&amp;As</li>
+            <li>Access to a full A–Z set of videos to take you from zero to payout</li>
+            <li>Daily market commentary</li>
+            <li>Daily premarket analysis</li>
+            <li>Private trading community</li>
+            <li>Session recordings and in-depth trade recaps</li>
+            <li>Personal risk management plan</li>
+            <li>A custom journal</li>
             <li>Direct access to Seb for any questions or concerns</li>
             <li>Lifetime access</li>
             <li>Execution feedback and trade reviews</li>
@@ -267,53 +294,9 @@
             <li>Faster responses</li>
           </ul>
           <!-- TODO: point at your application form -->
-          <a href="#" class="btn btn--ghost btn--block">Get Access</a>
+          <a href="#" class="btn btn--primary btn--block">Get Access</a>
         </article>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       FEATURES — six cards
-       ====================================================================== -->
-  <section class="section section--alt" id="features">
-    <div class="container">
-      <div class="section__head section__head--center reveal">
-        <h2>[Features heading]</h2>
-        <p>[One or two sentences introducing what is inside.]</p>
-      </div>
-      <div class="card-grid">
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-          <h3>[Feature 1]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <h3>[Feature 2]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <h3>[Feature 3]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></div>
-          <h3>[Feature 4]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>[Feature 5]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-          <h3>[Feature 6]</h3>
-          <p>[Two short sentences on what this is and why it matters.]</p>
-        </article>
       </div>
     </div>
   </section>
@@ -322,7 +305,7 @@
        TESTIMONIALS — scrolling carousel, pauses on hover.
        PLACEHOLDERS ONLY. Paste real member messages; never invent these.
        ====================================================================== -->
-  <section class="section" id="testimonials">
+  <section class="section section--alt" id="testimonials">
     <div class="container">
       <div class="section__head section__head--center reveal">
         <h2>[Testimonials heading]</h2>
@@ -412,7 +395,7 @@
   <!-- ======================================================================
        FAQ
        ====================================================================== -->
-  <section class="section section--alt" id="faq">
+  <section class="section" id="faq">
     <div class="container container--narrow">
       <div class="section__head section__head--center reveal">
         <h2>[FAQ heading]</h2>
@@ -484,7 +467,7 @@
   <!-- ======================================================================
        CLOSING CTA
        ====================================================================== -->
-  <section class="section">
+  <section class="section section--alt">
     <div class="container">
       <div class="cta-band reveal">
         <h2>[Closing headline]</h2>
@@ -549,6 +532,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=26"></script>
+<script src="assets/js/main.js?v=27"></script>
 </body>
 </html>

@@ -11,12 +11,18 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 | File | Sections |
 | --- | --- |
-| `index.html` | Hero, partners, stats, highlights, pricing, features, testimonials, FAQ, CTA |
+| `index.html` | Hero, partners, stats, features, pricing, testimonials, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 
 The home page follows a single-page layout with anchor sections. Nav links
 resolve to `index.html#pricing` etc. so they work from any page.
+
+The six feature cards each mirror a headline item from the pricing tiers.
+**Change a tier and change the matching card**, or the page promises one thing
+and sells another. The tiers list every item in full rather than saying
+"everything in Free, plus" — deliberately, so each column reads as a complete
+offer.
 
 ## Structure
 
@@ -87,7 +93,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=26`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=27`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
