@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=25">
+<link rel="stylesheet" href="assets/css/style.css?v=26">
 </head>
 <body>
 
@@ -83,7 +83,7 @@
     </a>
 
     <nav class="nav__links" id="navLinks" aria-label="Main">
-      <a href="index.html#about">About</a>
+      <a href="index.html#pricing">Pricing</a>
       <a href="index.html#features">Features</a>
       <a href="index.html#faq">FAQ</a>
       <a href="giveaways.html" class="nav__hl">Enter Giveaway</a>
@@ -111,7 +111,7 @@
       <div class="head-card head-card--hero">
         <span class="eyebrow">Premium Trading Community</span>
 
-        <h1>Trade Smarter, <em>Change your life.</em></h1>
+        <h1>Trade Smarter<br><em>Change your life.</em></h1>
 
         <p class="hero__kicker">My students trade smarter. Then they get paid.</p>
 
@@ -122,7 +122,7 @@
         </p>
 
         <div class="btn-row btn-row--center">
-          <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--primary btn--lg">Join the FREE Community</a>
+          <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--primary btn--lg">Join Now</a>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@
         </div>
         <div class="stat">
           <div class="stat__num">$0</div>
-          <div class="stat__label">Cost to join</div>
+          <div class="stat__label">Barrier to entry</div>
         </div>
         <div class="stat">
           <div class="stat__num">$10,000+</div>
@@ -207,24 +207,69 @@
   </section>
 
   <!-- ======================================================================
-       ABOUT
+       PRICING — replaces the old About block. Three tiers; the middle one
+       is the featured card and its badge pulses.
        ====================================================================== -->
-  <section class="section" id="about">
-    <div class="container container--narrow">
+  <section class="section" id="pricing">
+    <div class="container">
       <div class="section__head section__head--center reveal">
-        <h2>[About heading]</h2>
+        <span class="eyebrow">Pricing</span>
+        <h2>Choose Your Plan</h2>
+        <p>Flexible options tailored to your commitment level.</p>
       </div>
-      <div class="panel reveal">
-        <p class="lede" style="text-align:center">
-          [Two or three sentences on what the community is built around — the approach,
-          the discipline, what a member's week actually looks like.]
-        </p>
-        <ul class="check-list" style="margin-top:26px">
-          <li><b>[Point]</b> — [short supporting detail]</li>
-          <li><b>[Point]</b> — [short supporting detail]</li>
-          <li><b>[Point]</b> — [short supporting detail]</li>
-          <li><b>[Point]</b> — [short supporting detail]</li>
-        </ul>
+
+      <div class="tiers">
+
+        <article class="tier reveal">
+          <span class="tier__badge">Free</span>
+          <h3 class="tier__name">Free Community</h3>
+          <div class="tier__price"><span class="tier__amount">Free</span></div>
+          <ul class="check-list tier__list">
+            <li>A high-quality trading community of like-minded traders</li>
+            <li>Occasional market commentary</li>
+            <li>Weekly Q&amp;As</li>
+            <li>Access to a full A–Z set of videos to take you from zero to payout</li>
+          </ul>
+          <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--ghost btn--block">Get Access</a>
+        </article>
+
+        <article class="tier tier--featured reveal">
+          <span class="tier__badge tier__badge--pulse">Most Popular</span>
+          <h3 class="tier__name">Premium Community</h3>
+          <div class="tier__price">
+            <span class="tier__was">$499</span>
+            <span class="tier__amount">$199</span>
+            <span class="tier__per">/ month</span>
+          </div>
+          <p class="tier__note">Everything in Free, plus:</p>
+          <ul class="check-list tier__list">
+            <li>Daily market commentary</li>
+            <li>Daily premarket analysis</li>
+            <li>Private trading community</li>
+            <li>Session recordings and in-depth trade recaps</li>
+            <li>Personal risk management plan</li>
+            <li>A custom journal</li>
+          </ul>
+          <!-- TODO: point at your Premium checkout link -->
+          <a href="#" class="btn btn--primary btn--block">Get Access</a>
+        </article>
+
+        <article class="tier reveal">
+          <span class="tier__badge">Elite Access Only</span>
+          <h3 class="tier__name">Exclusive 1-on-1 Mentorship <span class="tier__sub">(Invite Only)</span></h3>
+          <div class="tier__price"><span class="tier__amount tier__amount--text">Extremely exclusive,<br>application only</span></div>
+          <p class="tier__note">Everything in Free and Premium, plus:</p>
+          <ul class="check-list tier__list">
+            <li>Direct access to Seb for any questions or concerns</li>
+            <li>Lifetime access</li>
+            <li>Execution feedback and trade reviews</li>
+            <li>Priority support</li>
+            <li>Faster responses</li>
+          </ul>
+          <!-- TODO: point at your application form -->
+          <a href="#" class="btn btn--ghost btn--block">Get Access</a>
+        </article>
+
       </div>
     </div>
   </section>
@@ -504,6 +549,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=25"></script>
+<script src="assets/js/main.js?v=26"></script>
 </body>
 </html>

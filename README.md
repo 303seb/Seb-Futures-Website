@@ -11,12 +11,12 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 | File | Sections |
 | --- | --- |
-| `index.html` | Hero, partners, stats, highlights, about, features, testimonials, FAQ, CTA |
+| `index.html` | Hero, partners, stats, highlights, pricing, features, testimonials, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 
 The home page follows a single-page layout with anchor sections. Nav links
-resolve to `index.html#about` etc. so they work from any page.
+resolve to `index.html#pricing` etc. so they work from any page.
 
 ## Structure
 
@@ -87,7 +87,7 @@ Edit the wording freely, but think twice before removing them.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=25`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=26`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.
