@@ -14,9 +14,16 @@ Static HTML/CSS/JS. No build step, no dependencies.
 | `index.html` | Hero, partners, stats, features, pricing, testimonials, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
+| `testimonials.html` | The full quote wall. **Unlisted** — see below |
 
 The home page follows a single-page layout with anchor sections. Nav links
 resolve to `index.html#pricing` etc. so they work from any page.
+
+`testimonials.html` is deliberately absent from the nav: the only link to it is
+the **View more testimonials** button under the home page carousel, and it
+carries `robots: noindex, nofollow` so it stays out of search results. That
+makes it unlisted, **not private** — anyone who has or guesses the URL can open
+it, so do not put anything on it you would not show a stranger.
 
 The six feature cards each mirror a headline item from the pricing tiers.
 **Change a tier and change the matching card**, or the page promises one thing
@@ -112,10 +119,22 @@ trading site in trouble.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=30`). **Bump that number on
-every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
-so without it, returning visitors keep the stale file and the change looks
-like it never deployed.
+Asset URLs carry a version query (`style.css?v=31`). **Bump it on every CSS or
+JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
+it, returning visitors keep the stale file and the change looks like it never
+deployed.
+
+Use the script, not a manual find-and-replace:
+
+```
+./bump.sh          # next version
+./bump.sh 42       # a specific one
+```
+
+Replacing the *current* number by hand silently skips any page already behind,
+which is exactly how `discord.html` and `giveaways.html` sat on `v=24` for six
+releases while `index.html` moved on. `bump.sh` rewrites whatever number it
+finds, so the pages cannot drift apart.
 
 ## Local preview
 
