@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Giveaways — The Market Element</title>
-<meta name="description" content="Enter the giveaway. Use my code at any prop firm and fill out the Google form to enter.">
+<title>Testimonials — The Market Element</title>
+<meta name="description" content="Real messages from verified members of The Market Element.">
+<!-- Unlisted: reachable only from the home page testimonials button, and
+     kept out of search results. This is not access control — anyone with
+     the URL can open it. -->
+<meta name="robots" content="noindex, nofollow">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png?v=19">
@@ -108,7 +112,7 @@
       <a href="index.html#pricing">Pricing</a>
       <a href="index.html#features">Features</a>
       <a href="index.html#faq">FAQ</a>
-      <a href="giveaways.html" class="nav__hl active">Enter Giveaway</a>
+      <a href="giveaways.html" class="nav__hl">Enter Giveaway</a>
       <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="nav__cta">Join Now</a>
     </nav>
 
@@ -123,95 +127,107 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <!-- ======================================================================
        PAGE HEADER
        ====================================================================== -->
   <section class="page-head page-head--center glow-bg">
     <div class="container">
+      <p class="back-row">
+        <a href="index.html#testimonials" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          Back to the site
+        </a>
+      </p>
       <div class="head-card">
-        <h1>Enter the Giveaway</h1>
-        <p class="lede">Use my code at any prop firm and fill out the Google form to enter.</p>
+        <h1>Testimonials</h1>
+        <p class="lede">Real messages from verified members of The Market Element.</p>
       </div>
     </div>
   </section>
 
   <!-- ======================================================================
-       ENTRY — tabbed: Giveaway / Rules. Panels are driven by initTabs() in
-       main.js, which also honours #giveaway and #rules in the URL.
+       THE WALL
+
+       PLACEHOLDERS ONLY. Paste real member messages; never invent these.
+       Add or remove <figure class="quote"> blocks freely — the wall is a
+       column layout, so it reflows on its own.
        ====================================================================== -->
-  <section class="section--tight">
-    <div class="container container--narrow">
-
-      <div class="tabs" role="tablist" aria-label="Giveaway information" data-tabs>
-        <button class="tab" id="tab-giveaway" role="tab" aria-selected="true" aria-controls="giveaway">Giveaway</button>
-        <button class="tab" id="tab-rules" role="tab" aria-selected="false" aria-controls="rules" tabindex="-1">Rules</button>
-      </div>
-
-      <div class="tab-panel" id="giveaway" role="tabpanel" aria-labelledby="tab-giveaway">
-        <div class="panel entry-panel">
-          <h3 class="entry-lead">Every eval purchased with code SEB or NQSEB = 1 entry*</h3>
-
-          <div class="entry-actions">
-            <!-- TODO: if you have a dedicated Discord-connect URL, swap it in here -->
-            <a class="btn btn--discord btn--lg btn--block" href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4l-.25.5a12.6 12.6 0 0 1 3.6 1.85 15.9 15.9 0 0 0-13.1 0A12.6 12.6 0 0 1 9.05 4.5L8.8 4a16.5 16.5 0 0 0-4.07 1.33C2.1 9.27 1.4 13.1 1.75 16.87a16.6 16.6 0 0 0 5.05 2.58l1.1-1.72c-.6-.23-1.18-.5-1.73-.83l.42-.33a11.8 11.8 0 0 0 10.82 0l.42.33c-.55.33-1.13.6-1.73.83l1.1 1.72a16.6 16.6 0 0 0 5.05-2.58c.42-4.37-.7-8.17-2.98-11.54zM8.55 14.65c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2zm6.9 0c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2z"/></svg> Connect Discord to Enter</a>
-            <!-- TODO: point this at your Google Form -->
-            <a class="btn btn--primary btn--lg btn--block" href="https://docs.google.com/forms/d/e/1FAIpQLSeNdPjQACams_h7HT6_wm3-Dd3yNlGx0CSsXTzIWYsicGOtqQ/viewform?usp=publish-editor" target="_blank" rel="noopener">Fill Out Form to Enter</a>
-          </div>
-
-          <p class="entry-note">*See the <a href="#rules">rules</a> for full details.</p>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="rules" role="tabpanel" aria-labelledby="tab-rules" hidden>
-        <div class="panel">
-          <h3 style="margin-bottom:20px">How the giveaway works</h3>
-          <ul class="check-list">
-            <li>Buy an evaluation from <b>Alpha Futures</b> or <b>FundedNext</b> using code <b>NQSEB</b> or <b>SEB</b>.</li>
-            <li>Connect your Discord and submit your order ID on the Google Form. Each verified eval = 1 entry — the more entries you have, the better your odds.</li>
-            <li>Winners are announced in The Market Element Discord.</li>
-            <li>One Discord account per person — no multi-accounting.</li>
-            <li>You must be a member of The Market Element Discord to enter and receive prizes.</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-
-
-
-
-
-  <!-- ======================================================================
-       SCAM WARNING + TERMS — real content, kept deliberately. "No purchase
-       necessary" wording matters for giveaway compliance in many places.
-       ====================================================================== -->
-  <section class="section--tight">
+  <section class="section">
     <div class="container">
-      <div class="disclaimer reveal">
-        <h4>Scam warning</h4>
-        <p>
-          You will never be asked to pay a fee, send crypto, or provide banking details to claim a
-          prize. Winners are announced publicly in the server and claim through the official
-          channel. If someone contacts you claiming you have won and asks for money or
-          credentials, it is a scam. Block them and report it to a moderator.
-        </p>
+      <div class="quote-wall reveal">
+        <figure class="quote">
+          <blockquote>[Member quote 1 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 2 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 3 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 4 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 5 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 6 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 7 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 8 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>[Member quote 9 — paste a real message or review here.]</blockquote>
+          <figcaption class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">[?]</span>
+            <span class="quote__name">[@member]</span>
+          </figcaption>
+        </figure>
       </div>
 
-      <div class="disclaimer reveal" style="margin-top:16px">
-        <h4>Terms</h4>
-        <p>
-          No purchase necessary to enter or win. Giveaways are run independently and are not
-          sponsored, endorsed or administered by Discord, X, Instagram, YouTube, or any prop firm
-          unless explicitly stated in the giveaway post. Prizes covering evaluation fees do not
-          guarantee passing an evaluation or receiving a payout. Full terms are posted alongside
-          each giveaway in the server.
-        </p>
-      </div>
+      <p class="back-row back-row--end">
+        <a href="index.html#testimonials" class="btn btn--ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          Back to the site
+        </a>
+      </p>
     </div>
   </section>
 

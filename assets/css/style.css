@@ -815,6 +815,42 @@ p { color: var(--text-mid); }
   color: var(--text);
 }
 
+/* --------------------------------------------------------------------------
+   Testimonial wall (testimonials.html)
+
+   Columns rather than grid, so cards of different lengths pack without
+   leaving the ragged gaps a row-based grid would. Overrides the carousel's
+   fixed card width.
+   -------------------------------------------------------------------------- */
+.quote-wall {
+  column-width: 330px;
+  column-gap: 20px;
+}
+
+.quote-wall .quote {
+  width: auto;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  margin-bottom: 20px;
+}
+
+.back-row { margin-bottom: 22px; }
+.back-row--end { margin: 34px 0 0; text-align: center; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  transition: color 0.18s;
+}
+
+.back-link:hover { color: var(--purple-bright); }
+.back-link svg { width: 17px; height: 17px; }
+.back-row--end .btn svg { width: 17px; height: 17px; }
+
 /* Three-up variant for the highlight row */
 .card-grid--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
