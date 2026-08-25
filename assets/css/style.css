@@ -1934,13 +1934,120 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 @media (max-width: 560px) {
   .container { padding-inline: 18px; }
   .nav { padding-inline: 14px; }
-  .stats { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; gap: 30px; }
   .countdown { grid-template-columns: repeat(2, 1fr); }
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
   .promo__item { gap: 9px; padding-inline: 20px; }
   .brand__text { font-size: 0.9rem; }
+}
+
+/* --------------------------------------------------------------------------
+   18b. Phones
+
+   Everything here lives inside a max-width query, so the desktop layout is
+   untouched. The goal is the same design at phone scale rather than a
+   different one: the desktop rhythm is built for a 1080px column and simply
+   scaling it down leaves a page that is mostly empty space, so the vertical
+   padding, card padding and type sizes all come down together. Nothing is
+   hidden and no screenshot is cropped — only the spacing around them.
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+
+  /* --- vertical rhythm: the single biggest win on scroll length ---------- */
+  .section        { padding-block: 46px; }
+  .section--tight { padding-block: 32px; }
+  .section__head  { margin-bottom: 26px; }
+  .section__head p { margin-top: 10px; }
+  .hero           { padding-block: 26px 38px; }
+  .page-head      { padding-block: 26px 22px; }
+  .container      { padding-inline: 16px; }
+
+  /* --- type: clamp floors are tuned for desktop and stay too big here ---- */
+  h1            { font-size: 2.05rem; }
+  h2            { font-size: 1.44rem; }
+  h3            { font-size: 1.04rem; }
+
+  /* Where a heading is still too long for the column, break it into two even
+     lines instead of leaving one orphan word on its own. */
+  h1, h2, .lede { text-wrap: balance; }
+  .hero h1      { font-size: 2.3rem; margin-bottom: 12px; }
+  .hero__kicker { font-size: 1.02rem; margin-bottom: 10px; }
+  .lede         { font-size: 0.97rem; }
+  .hero .lede   { margin-bottom: 24px; }
+  .eyebrow      { font-size: 0.64rem; padding: 5px 12px; margin-bottom: 12px; }
+
+  /* Two short lines beat one wrapping awkwardly mid-phrase */
+  .h2--split em { display: block; }
+
+  /* --- buttons: full width, so the tap target is the whole row ---------- */
+  .btn            { padding: 12px 20px; font-size: 0.9rem; }
+  .btn--lg        { padding: 14px 22px; font-size: 0.94rem; }
+  .btn-row        { gap: 10px; }
+  .btn-row .btn   { flex: 1 1 100%; }
+
+  /* --- stats: keep all three on one row; stacked they ate a whole screen - */
+  .stats       { grid-template-columns: repeat(auto-fit, minmax(94px, 1fr)); gap: 8px; }
+  .stat        { padding: 14px 8px; }
+  .stat__num   { font-size: 1.15rem; }
+  .stat__label { font-size: 0.66rem; line-height: 1.35; margin-top: 4px; }
+
+  /* --- cards ------------------------------------------------------------- */
+  .card-grid   { gap: 12px; }
+  .card        { padding: 20px 18px; }
+  .card__icon  { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 13px; }
+  .card p      { font-size: 0.9rem; }
+
+  /* --- pricing ----------------------------------------------------------- */
+  .tiers            { gap: 14px; }
+  .tier             { padding: 24px 20px 22px; }
+  .tier__badge      { font-size: 0.62rem; padding: 5px 12px; margin-bottom: 14px; }
+  .tier__name       { margin-bottom: 10px; }
+  .tier__price      { min-height: 0; margin-bottom: 4px; }
+  .tier__list       { margin: 14px 0 22px; gap: 10px; }
+  .check-list li    { font-size: 0.9rem; gap: 10px; }
+  .tier__tape       { font-size: 0.72rem; letter-spacing: 0.16em; padding: 12px 8px; }
+
+  /* --- FAQ --------------------------------------------------------------- */
+  .faq-group    { padding-inline: 18px; margin-bottom: 14px; }
+  .faq-item__q  { padding: 16px 0; font-size: 0.95rem; gap: 14px; }
+  .faq-item__a p { font-size: 0.9rem; }
+
+  /* --- testimonials ------------------------------------------------------ */
+  .quotes__group  { gap: 12px; padding-right: 12px; }
+  .quotes .shot   { width: min(78vw, 320px); }
+  .quotes__more   { margin-top: 24px; }
+  .quote-wall     { column-gap: 14px; }
+  .quote-wall .shot { margin-bottom: 14px; }
+  .shot__who      { padding: 10px 13px; }
+  .shot__avatar   { width: 26px; height: 26px; font-size: 0.7rem; }
+  .shot__name     { font-size: 0.8rem; }
+
+  /* --- closing CTA + footer ---------------------------------------------- */
+  .cta-band       { padding: 32px 20px; }
+  .cta-band p     { margin-bottom: 22px; }
+  .footer         { padding-block: 38px 24px; }
+  .footer__grid   { gap: 26px; padding-bottom: 26px; }
+  .disclaimer     { padding: 16px 18px; }
+  .disclaimer p   { font-size: 0.8rem; }
+
+  /* --- promo marquee ----------------------------------------------------- */
+  .promo          { padding-block: 9px; }
+  .promo__item    { gap: 8px; padding-inline: 16px; }
+  .promo__brand   { font-size: 0.79rem; }
+  .promo__text    { font-size: 0.79rem; }
+  .promo__code    { font-size: 0.76rem; padding: 2px 7px; }
+  .partners__label { margin-bottom: 14px; }
+}
+
+/* Small phones — 360px and below */
+@media (max-width: 380px) {
+  .hero h1     { font-size: 2.05rem; }
+  h2           { font-size: 1.36rem; }
+  .stat__num   { font-size: 1.02rem; }
+  .stat__label { font-size: 0.61rem; }
+  .stat        { padding: 12px 6px; }
+  .container   { padding-inline: 14px; }
 }
 
 /* --------------------------------------------------------------------------

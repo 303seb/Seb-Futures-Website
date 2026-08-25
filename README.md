@@ -127,9 +127,30 @@ trading site in trouble.
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
+## Mobile
+
+Section 18b of the stylesheet is the phone layer. **Everything in it lives
+inside a `max-width` media query, so the desktop layout is untouched** — keep
+it that way when editing: no rule for phones belongs outside those blocks.
+
+It is a scale-down of the same design, not a different one. The desktop rhythm
+is built for a 1080px column, so at 390px the `clamp()` floors (section padding
+68px, card padding 28px, heading floors) leave a page that is mostly empty
+space. The phone layer brings padding, card insets and type sizes down together.
+
+Two decisions worth knowing before changing them:
+
+- **The three stats stay on one row.** Stacked they filled most of a phone
+  screen on their own. The labels wrap to two lines at that width; that is the
+  trade for not burning a screen of scroll on three numbers.
+- **Testimonial cards do not shrink.** They are screenshots of small chat text,
+  so a narrower card means smaller, less legible text. They stay at
+  `min(78vw, 320px)` — close to desktop size, just a bigger share of the
+  viewport.
+
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=33`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=34`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
