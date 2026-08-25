@@ -64,6 +64,16 @@ content once.
 
 ## Adding content back
 
+### Locked pricing tiers
+
+The two paid tiers carry `tier--locked` plus a `.tier__lock` cover reading
+**Restricted Access**, because neither is built yet. The cover fills the card so
+nothing behind it is clickable, and those two `Get Access` controls are `<span>`
+not `<a>`, so nothing behind it is tabbable either. **To open a tier up: delete
+its `tier--locked` class and its `.tier__lock` div, and turn the `<span>` back
+into an `<a>` with a real href.** Do all three or you ship a live-looking button
+that goes nowhere.
+
 Sections are marked with banner comments (`<!-- HERO -->`, `<!-- STATS -->`).
 Repeated blocks — cards, steps, stat boxes — can be duplicated or deleted
 freely; the grids auto-fit and the JavaScript picks up whatever is present.
@@ -72,7 +82,7 @@ freely; the grids auto-fit and the JavaScript picks up whatever is present.
 
 Four things are real text, left in on purpose:
 
-- **The promo bar** — Alpha Futures / code `NQSEB`, on every page.
+- **The promo bar** — the three partner offers, on every page.
 - **The risk disclosure** in every footer. A trading education site should
   carry one; have it reviewed for your jurisdiction rather than deleted.
 - **The impersonation warning** on the Discord page. Scam DMs are the
@@ -90,11 +100,11 @@ trading site in trouble.
 
 ### Links still to fill in
 
-- **Premium checkout** and **1-on-1 application form** — `href="#"` on two of the
-  three `Get Access` buttons in the pricing section
+- **Premium checkout** and **1-on-1 application form** — the two paid tiers are
+  taped off (see below), so there is nothing to link yet
 - **View more testimonials** — `href="#"` below the quote carousel
-- **Affiliate links** — `href="#"` on each `.promo__item` (Alpha Futures and FundedNext)
-- **Google Form** — `href="#"` on the giveaway entry button
+- **Affiliate links** — `href="#"` on each `.promo__item` (Alpha Futures,
+  FundedNext, LVLUP Futures)
 - **X/Twitter** in the footer socials (Discord, Instagram and YouTube are wired up)
 - **Contact email** in the footer
 - **Giveaway closing date** — the `data-countdown` attribute on
@@ -102,7 +112,7 @@ trading site in trouble.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=29`). **Bump that number on
+Asset URLs carry a version query (`style.css?v=30`). **Bump that number on
 every CSS or JS change** — GitHub Pages serves with `cache-control: max-age=600`,
 so without it, returning visitors keep the stale file and the change looks
 like it never deployed.

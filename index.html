@@ -13,14 +13,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=29">
+<link rel="stylesheet" href="assets/css/style.css?v=30">
 </head>
 <body>
 
 <!-- ==========================================================================
      PROMO BAR — scrolls continuously across the top of every page.
-     Two offers alternate. TODO: point each promo__item href at the matching
-     affiliate link (Alpha Futures / FundedNext).
+     Three offers rotate, listed twice per group so the bar stays full on
+     wide screens. TODO: point each promo__item href at the matching affiliate
+     link (Alpha Futures / FundedNext / LVLUP Futures). Both groups must stay
+     identical or the loop jumps.
      ========================================================================== -->
 <div class="promo">
   <div class="promo__track">
@@ -36,12 +38,22 @@
         <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
       </a>
       <a class="promo__item" href="#" rel="sponsored noopener">
+        <span class="promo__brand">LVLUP Futures</span>
+        <span class="promo__divider"></span>
+        <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
+      </a>
+      <a class="promo__item" href="#" rel="sponsored noopener">
         <span class="promo__brand">Alpha Futures</span>
         <span class="promo__divider"></span>
         <span class="promo__text">Use code <span class="promo__code">NQSEB</span></span>
       </a>
       <a class="promo__item" href="#" rel="sponsored noopener">
         <span class="promo__brand">FundedNext</span>
+        <span class="promo__divider"></span>
+        <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
+      </a>
+      <a class="promo__item" href="#" rel="sponsored noopener">
+        <span class="promo__brand">LVLUP Futures</span>
         <span class="promo__divider"></span>
         <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
       </a>
@@ -58,12 +70,22 @@
         <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
       </a>
       <a class="promo__item" href="#" rel="sponsored noopener">
+        <span class="promo__brand">LVLUP Futures</span>
+        <span class="promo__divider"></span>
+        <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
+      </a>
+      <a class="promo__item" href="#" rel="sponsored noopener">
         <span class="promo__brand">Alpha Futures</span>
         <span class="promo__divider"></span>
         <span class="promo__text">Use code <span class="promo__code">NQSEB</span></span>
       </a>
       <a class="promo__item" href="#" rel="sponsored noopener">
         <span class="promo__brand">FundedNext</span>
+        <span class="promo__divider"></span>
+        <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
+      </a>
+      <a class="promo__item" href="#" rel="sponsored noopener">
+        <span class="promo__brand">LVLUP Futures</span>
         <span class="promo__divider"></span>
         <span class="promo__text">Use code <span class="promo__code">SEB</span></span>
       </a>
@@ -138,18 +160,18 @@
     <div class="partners__group">
       <span class="partner">Alpha Futures</span>
       <span class="partner">FundedNext</span>
+      <span class="partner">LVLUP Futures</span>
       <span class="partner">Alpha Futures</span>
       <span class="partner">FundedNext</span>
-      <span class="partner">Alpha Futures</span>
-      <span class="partner">FundedNext</span>
+      <span class="partner">LVLUP Futures</span>
     </div>
     <div class="partners__group" aria-hidden="true">
       <span class="partner">Alpha Futures</span>
       <span class="partner">FundedNext</span>
+      <span class="partner">LVLUP Futures</span>
       <span class="partner">Alpha Futures</span>
       <span class="partner">FundedNext</span>
-      <span class="partner">Alpha Futures</span>
-      <span class="partner">FundedNext</span>
+      <span class="partner">LVLUP Futures</span>
     </div>
       </div>
     </div>
@@ -250,7 +272,7 @@
           <a href="https://discord.gg/FgjrZAj9vb" target="_blank" rel="noopener" class="btn btn--primary btn--block">Get Access</a>
         </article>
 
-        <article class="tier tier--featured reveal">
+        <article class="tier tier--featured tier--locked reveal">
           <span class="tier__badge tier__badge--pulse">Most Popular</span>
           <h3 class="tier__name">Premium Community</h3>
           <div class="tier__price">
@@ -269,11 +291,15 @@
             <li>Personal risk management plan</li>
             <li>A custom journal</li>
           </ul>
-          <!-- TODO: point at your Premium checkout link -->
-          <a href="#" class="btn btn--primary btn--block">Get Access</a>
+          <!-- TODO: swap for a real checkout link, then drop tier--locked
+               and this cover to open the tier up -->
+          <span class="btn btn--primary btn--block" aria-disabled="true">Get Access</span>
+          <div class="tier__lock">
+            <p class="tier__tape">Restricted Access</p>
+          </div>
         </article>
 
-        <article class="tier reveal">
+        <article class="tier tier--locked reveal">
           <span class="tier__badge">Elite Access Only</span>
           <h3 class="tier__name">Exclusive 1-on-1 Mentorship <span class="tier__sub">(Invite Only)</span></h3>
           <div class="tier__price"><span class="tier__amount tier__amount--text">Extremely exclusive,<br>application only</span></div>
@@ -293,8 +319,12 @@
             <li>Priority support</li>
             <li>Faster responses</li>
           </ul>
-          <!-- TODO: point at your application form -->
-          <a href="#" class="btn btn--primary btn--block">Get Access</a>
+          <!-- TODO: swap for a real application form, then drop tier--locked
+               and this cover to open the tier up -->
+          <span class="btn btn--primary btn--block" aria-disabled="true">Get Access</span>
+          <div class="tier__lock">
+            <p class="tier__tape">Restricted Access</p>
+          </div>
         </article>
 
       </div>
@@ -530,6 +560,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=29"></script>
+<script src="assets/js/main.js?v=30"></script>
 </body>
 </html>

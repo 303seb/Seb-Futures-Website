@@ -1118,6 +1118,75 @@ p { color: var(--text-mid); }
 .tier .btn { margin-top: auto; }
 
 /* --------------------------------------------------------------------------
+   Locked tiers
+
+   The paid plans are taped off until they exist. The cover fills the card so
+   nothing behind it is clickable, and their Get Access control is a <span>
+   rather than an <a>, so nothing behind it is tabbable either. Removing
+   .tier--locked and the .tier__lock element opens a tier back up.
+   -------------------------------------------------------------------------- */
+.tier--locked {
+  position: relative;
+  overflow: hidden;
+}
+
+/* No lift, and no pulsing badge shimmering away under the cover */
+.tier--locked:hover { transform: none; }
+.tier--locked .tier__badge--pulse { animation: none; }
+
+.tier__lock {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  cursor: not-allowed;
+  background: rgba(8, 8, 12, 0.74);
+  -webkit-backdrop-filter: blur(3px) saturate(0.45);
+  backdrop-filter: blur(3px) saturate(0.45);
+}
+
+/* Slung across the card. Hazard stripes ride the band's edges so it reads as
+   cordoned off while the label itself stays on a flat, legible ground. */
+.tier__tape {
+  position: relative;
+  width: 132%;
+  padding: 15px 12px;
+  transform: rotate(-8deg);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--purple-bright);
+  text-shadow: var(--glow-text);
+  background: rgba(12, 12, 17, 0.97);
+  box-shadow: 0 0 30px rgba(157, 63, 239, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.tier__tape::before,
+.tier__tape::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(-45deg,
+    var(--purple) 0 7px, rgba(157, 63, 239, 0.16) 7px 14px);
+}
+
+.tier__tape::before { top: 0; }
+.tier__tape::after  { bottom: 0; }
+
+/* Any button rendered as a disabled span */
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
    11. Discord channel list
    -------------------------------------------------------------------------- */
 .channels {
