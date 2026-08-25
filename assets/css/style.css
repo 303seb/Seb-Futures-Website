@@ -758,9 +758,6 @@ p { color: var(--text-mid); }
   animation: promo-scroll 70s linear infinite;
 }
 
-/* Hold still so a quote can actually be read */
-.quotes:hover .quotes__track { animation-play-state: paused; }
-
 /* Sits below the full-bleed carousel, back on the container grid */
 .quotes__more { margin-top: 34px; }
 
