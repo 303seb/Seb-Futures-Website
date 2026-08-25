@@ -37,6 +37,7 @@ offer.
 assets/
   css/style.css          all styling + design tokens
   js/main.js             sticky header, nav, FAQ, countdown, scroll reveal
+  testimonials/          member screenshots, t-01..t-16
   logo-dark.png          the mark used on the site - nav, footer, hero
   logo.png               same crop with the original dark linework
   icon-32.png            32px tab icon, rendered at size
@@ -99,6 +100,15 @@ Four things are real text, left in on purpose:
 
 Edit the wording freely, but think twice before removing them.
 
+The **testimonial screenshots** are real member messages. Two of them had a
+student's prop-firm account number visible (`t-02`, `t-07`); those regions are
+blurred beyond recovery in the exported files. **Check any new screenshot for
+account numbers, order IDs and real names before adding it** — the originals
+are unedited in the source images, so a careless re-export puts them back.
+Every screenshot carries `width`/`height` so the column layout does not reflow
+as images load. Six cards read "Community member" because no name was visible;
+they are marked with a TODO.
+
 The **FAQ answers** are also real copy, not placeholders. Two of them make
 claims that have to stay true: that the markets traded are NQ and ES, and that
 no private or live signals are provided. If either ever changes, change the
@@ -119,7 +129,7 @@ trading site in trouble.
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=31`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=32`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

@@ -766,6 +766,7 @@ p { color: var(--text-mid); }
 
 .quotes__group {
   display: flex;
+  align-items: flex-start;   /* screenshots differ in height; don't stretch */
   gap: 18px;
   padding-right: 18px;
   flex-shrink: 0;
@@ -827,11 +828,71 @@ p { color: var(--text-mid); }
   column-gap: 20px;
 }
 
-.quote-wall .quote {
+.quote-wall .quote,
+.quote-wall .shot {
   width: auto;
   break-inside: avoid;
   -webkit-column-break-inside: avoid;
   margin-bottom: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Screenshot testimonial
+
+   The image is the testimonial, so it is never cropped — width/height on the
+   <img> reserve the right box while it loads, which stops the column layout
+   reflowing under the reader.
+   -------------------------------------------------------------------------- */
+.shot {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.quotes .shot { width: 320px; flex-shrink: 0; }
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.shot__who {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 16px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.shot__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
+  color: var(--purple-bright);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.shot__name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Results disclaimer under the wall */
+.wall-note {
+  margin-top: 26px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  text-align: center;
 }
 
 .back-row { margin-bottom: 22px; }
