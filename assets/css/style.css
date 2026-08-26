@@ -25,12 +25,12 @@
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
   --bg:            #0a0a0e;
-  --bg-elev:       #101015;
+  --bg-elev:       #101015;  /* unused while section banding is off */
   --surface:       #15151b;
   --surface-2:     #1c1c24;
   --border:        #2a2a35;
   --border-soft:   #20202a;
-  --paper-deep:    #060609;
+  --paper-deep:    #060609;  /* unused: the footer sits on --bg now */
 
   /* Neon purple */
   --purple:        #9d3fef;  /* fills, marks, glow — never text */
@@ -175,10 +175,12 @@ p { color: var(--text-mid); }
 .section { padding-block: clamp(68px, 9vw, 116px); }
 .section--tight { padding-block: clamp(52px, 6vw, 78px); }
 
-.section--alt {
-  background: var(--bg-elev);
-  border-block: 1px solid var(--border-soft);
-}
+/* Section banding is off: the whole page sits on one flat --bg. The class is
+   still on the markup, so restoring the alternating bands is this rule alone:
+     background: var(--bg-elev);
+     border-block: 1px solid var(--border-soft);
+   Cards keep their own --surface fill, which is what separates content now. */
+.section--alt { background: transparent; }
 
 .section__head {
   max-width: 720px;
@@ -1758,7 +1760,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 .disclaimer p { font-size: 0.84rem; line-height: 1.7; color: var(--text-mid); }
 
 .footer {
-  background: var(--paper-deep);
+  background: var(--bg);          /* same ground as the rest of the page */
   border-top: 1px solid var(--border-soft);
   padding-block: 56px 30px;
 }

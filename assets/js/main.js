@@ -284,7 +284,13 @@
         entry.target.classList.add("is-visible");
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+      // threshold must be 0, not a fraction. A fraction is a share of the
+      // ELEMENT, so an element taller than the viewport can never reach it and
+      // stays stuck at opacity 0 forever. The testimonial wall is one .reveal
+      // about 7000px tall on a phone: 12% of that is 844px, more than the
+      // screen, so the page rendered blank. rootMargin does the same job
+      // safely, since it is measured against the viewport.
+    }, { threshold: 0, rootMargin: "0px 0px -60px 0px" });
 
     targets.forEach(function (t, i) {
       t.style.transitionDelay = Math.min(i % 4, 3) * 70 + "ms";
