@@ -258,7 +258,7 @@ p { color: var(--text-mid); }
 .promo__track {
   display: flex;
   width: max-content;
-  animation: promo-scroll 34s linear infinite;
+  animation: promo-scroll-right 34s linear infinite;
 }
 
 /* Let people read the code without chasing it */
@@ -287,6 +287,13 @@ p { color: var(--text-mid); }
 @keyframes promo-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* Same trick mirrored: start a group's width to the left and travel back to
+   zero, so the bar reads right-to-left with no seam. */
+@keyframes promo-scroll-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 .promo__logo {
@@ -2060,6 +2067,23 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .footer__foot   { justify-content: center; text-align: center; margin-top: 14px; }
   .disclaimer     { padding: 16px 18px; }
   .disclaimer p   { font-size: 0.8rem; }
+
+  /* --- the hard purple line under the nav --------------------------------
+     The desktop glow is a 960px ellipse positioned so its bright core sits
+     20px below the hero's top edge. On a wide screen the ellipse is narrower
+     than the hero, so overflow:hidden only nicks its corners and the cut fades
+     out at both ends. At phone width the same ellipse is 2.5x wider than the
+     screen, so the clip runs straight across the full width at near-peak
+     brightness — and because the blur is applied to the element before the
+     parent clips it, nothing softens that edge. Refit so the gradient has
+     already faded to transparent at every boundary it gets clipped on.
+     ---------------------------------------------------------------------- */
+  .hero::after {
+    top: -60px;
+    width: 140vw;
+    height: 460px;
+    filter: blur(56px);
+  }
 
   /* --- top bar ----------------------------------------------------------- */
   .nav              { padding: 10px 14px 0; }
