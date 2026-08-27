@@ -120,8 +120,8 @@ trading site in trouble.
 - **Premium checkout** and **1-on-1 application form** — the two paid tiers are
   taped off (see below), so there is nothing to link yet
 - **View more testimonials** — `href="#"` below the quote carousel
-- **Affiliate links** — `href="#"` on the Alpha Futures and LVLUP Futures
-  `.promo__item`s. FundedNext is wired to `https://fundednext.com/?fpr=SEB`.
+- **Affiliate links** — only LVLUP Futures is still on `href="#"`. Alpha
+  Futures and FundedNext are wired up.
 
   Note: that URL 307-redirects to `/usa` for US visitors and the redirect
   drops the query string, so `fpr=SEB` never reaches the landing page. Check
@@ -155,7 +155,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=37`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=38`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
