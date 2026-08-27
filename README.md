@@ -92,7 +92,11 @@ Four things are real text, left in on purpose:
 
 - **The promo bar** — the three partner offers, on every page.
 - **The risk disclosure** in every footer. A trading education site should
-  carry one; have it reviewed for your jurisdiction rather than deleted.
+  carry one; have it reviewed for your jurisdiction rather than deleted. It is
+  a `<details>` so the footer stays small — the headline warning is the
+  always-visible `<summary>` and the full text is still in the DOM, so
+  collapsing it hides nothing from crawlers. Do not trim the wording to save
+  space; collapse is the space saving.
 - **The impersonation warning** on the Discord page. Scam DMs are the
   standard attack on trading communities.
 - **The scam warning and giveaway terms** on the Giveaways page. The "no
@@ -128,7 +132,6 @@ trading site in trouble.
   the FundedNext dashboard registers a click before relying on it; the
   workaround is a link whose destination does not redirect.
 - **X/Twitter** in the footer socials (Discord, Instagram and YouTube are wired up)
-- **Contact email** in the footer
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
@@ -155,7 +158,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=38`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=39`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

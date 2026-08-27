@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=38">
+<link rel="stylesheet" href="assets/css/style.css?v=39">
 </head>
 <body>
 
@@ -222,51 +222,54 @@
      ========================================================================== -->
 <footer class="footer">
   <div class="container">
-    <div class="footer__grid">
-      <div class="footer__about">
-        <a class="brand" href="index.html">
-          <img class="brand__mark" src="assets/logo-dark.png" alt="" aria-hidden="true">
-          <span class="brand__text"><span>SEB</span> FUTURES</span>
-        </a>
-        <div class="socials">
-          <!-- TODO: add your Discord invite URL and X/Twitter URL -->
-          <a href="https://discord.gg/Vd5TMtZhse" target="_blank" rel="noopener" aria-label="Discord" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4l-.25.5a12.6 12.6 0 0 1 3.6 1.85 15.9 15.9 0 0 0-13.1 0A12.6 12.6 0 0 1 9.05 4.5L8.8 4a16.5 16.5 0 0 0-4.07 1.33C2.1 9.27 1.4 13.1 1.75 16.87a16.6 16.6 0 0 0 5.05 2.58l1.1-1.72c-.6-.23-1.18-.5-1.73-.83l.42-.33a11.8 11.8 0 0 0 10.82 0l.42.33c-.55.33-1.13.6-1.73.83l1.1 1.72a16.6 16.6 0 0 0 5.05-2.58c.42-4.37-.7-8.17-2.98-11.54zM8.55 14.65c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2zm6.9 0c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2z"/></svg></a>
-          <a href="#" aria-label="X (Twitter)" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23zm-1.16 17.52h1.83L7.02 4.13H5.05l12.03 15.64z"/></svg></a>
-          <a href="https://www.instagram.com/sebfutures/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://www.youtube.com/channel/UCqoX5u7JuLRHNYKvhphdm8Q/videos" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.85-.46-5.58a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.15 1 12 1 12s0 3.85.46 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.85 23 12 23 12zM9.75 15.27V8.73L15.5 12l-5.75 3.27z"/></svg></a>
-        </div>
+
+    <div class="footer__bar">
+      <a class="brand brand--sm" href="index.html">
+        <img class="brand__mark" src="assets/logo-dark.png" alt="" aria-hidden="true">
+        <span class="brand__text"><span>SEB</span> FUTURES</span>
+      </a>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="discord.html">Discord</a>
+        <a href="giveaways.html">Giveaways</a>
+      </nav>
+
+      <div class="socials">
+        <!-- TODO: add your X/Twitter URL -->
+        <a href="https://discord.gg/Vd5TMtZhse" target="_blank" rel="noopener" aria-label="Discord" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4l-.25.5a12.6 12.6 0 0 1 3.6 1.85 15.9 15.9 0 0 0-13.1 0A12.6 12.6 0 0 1 9.05 4.5L8.8 4a16.5 16.5 0 0 0-4.07 1.33C2.1 9.27 1.4 13.1 1.75 16.87a16.6 16.6 0 0 0 5.05 2.58l1.1-1.72c-.6-.23-1.18-.5-1.73-.83l.42-.33a11.8 11.8 0 0 0 10.82 0l.42.33c-.55.33-1.13.6-1.73.83l1.1 1.72a16.6 16.6 0 0 0 5.05-2.58c.42-4.37-.7-8.17-2.98-11.54zM8.55 14.65c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2zm6.9 0c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2 1.8.9 1.79 2c0 1.1-.79 2-1.79 2z"/></svg></a>
+        <a href="#" aria-label="X (Twitter)" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23zm-1.16 17.52h1.83L7.02 4.13H5.05l12.03 15.64z"/></svg></a>
+        <a href="https://www.instagram.com/sebfutures/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCqoX5u7JuLRHNYKvhphdm8Q/videos" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.85-.46-5.58a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.15 1 12 1 12s0 3.85.46 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.85 23 12 23 12zM9.75 15.27V8.73L15.5 12l-5.75 3.27z"/></svg></a>
       </div>
-
-      <div class="footer__col">
-        <h5>Pages</h5>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="discord.html">Discord</a></li>
-          <li><a href="giveaways.html">Giveaways</a></li>
-        </ul>
-      </div>
-
-
     </div>
 
-    <div class="footer__legal">
-      <p>&copy; <span data-year>2026</span> The Market Element. All rights reserved.</p>
+    <div class="footer__foot">
+      <p class="footer__copy">&copy; <span data-year>2026</span> The Market Element</p>
+
+      <!-- Risk disclosure: REAL text, left in deliberately. Collapsed to keep
+           the footer small, but the headline warning is the always-visible
+           summary and every word is still in the DOM for crawlers. Have it
+           reviewed for your jurisdiction rather than deleted. -->
+      <details class="footer__risk">
+        <summary><strong>Risk disclosure</strong> — trading futures involves substantial risk of loss.</summary>
+        <p>
+          Trading futures and other leveraged products involves substantial risk of loss and is not
+          suitable for every investor. Past performance is not indicative of future results. All
+          content on this site is provided for educational purposes only and does not constitute
+          financial, investment, or trading advice. Nothing here is a recommendation to buy or sell
+          any instrument. You are solely responsible for your own trading decisions. Never trade
+          with money you cannot afford to lose.
+        </p>
+      </details>
     </div>
 
-    <!-- Risk disclosure: REAL text, left in deliberately. A trading education
-         site should carry one. Have it reviewed for your jurisdiction rather
-         than deleted. -->
-    <p class="footer__risk">
-      <strong>Risk disclosure:</strong> Trading futures and other leveraged products involves
-      substantial risk of loss and is not suitable for every investor. Past performance is not
-      indicative of future results. All content on this site is provided for educational purposes
-      only and does not constitute financial, investment, or trading advice. Nothing here is a
-      recommendation to buy or sell any instrument. You are solely responsible for your own trading
-      decisions. Never trade with money you cannot afford to lose.
-    </p>
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=38"></script>
+<script src="assets/js/main.js?v=39"></script>
 </body>
 </html>

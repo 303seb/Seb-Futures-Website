@@ -1759,56 +1759,54 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 .disclaimer p { font-size: 0.84rem; line-height: 1.7; color: var(--text-mid); }
 
+/* --------------------------------------------------------------------------
+   Footer
+
+   Deliberately no border-top: the page ground already runs edge to edge, so a
+   rule would be the only seam left on the site. Separation comes from the last
+   section's own padding instead.
+
+   One wrapping row — brand | links | socials — then a single small line. The
+   risk disclosure is collapsed rather than trimmed: the headline warning is
+   the always-visible summary, and the full text stays in the DOM.
+   -------------------------------------------------------------------------- */
 .footer {
-  background: var(--bg);          /* same ground as the rest of the page */
-  border-top: 1px solid var(--border-soft);
-  padding-block: 56px 30px;
+  background: var(--bg);
+  padding-block: 30px 22px;
 }
 
-.footer__grid {
-  display: grid;
-  /* auto-fit so the footer adapts to however many columns remain */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px 28px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--border-soft);
+.footer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
 }
 
-.footer__about p {
-  font-size: 0.88rem;
-  margin-top: 16px;
-  max-width: 34ch;
+.brand--sm { font-size: 0.9rem; gap: 8px; }
+.brand--sm .brand__mark { height: 26px; }
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 20px;
 }
 
-.footer__col h5 {
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-
-.footer__col li + li { margin-top: 10px; }
-
-.footer__col a {
-  font-size: 0.88rem;
+.footer__nav a {
+  font-size: 0.84rem;
   color: var(--text-mid);
   transition: color 0.18s, text-shadow 0.18s;
 }
 
-.footer__col a:hover { color: var(--purple-bright); text-shadow: var(--glow-text); }
+.footer__nav a:hover { color: var(--purple-bright); text-shadow: var(--glow-text); }
 
-.socials {
-  display: flex;
-  gap: 9px;
-  margin-top: 20px;
-}
+.socials { display: flex; gap: 7px; }
 
 .socials a {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
   display: grid;
   place-items: center;
   background: var(--surface);
@@ -1821,35 +1819,51 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   color: #fff;
   background: var(--purple);
   border-color: var(--purple);
-  transform: translateY(-3px);
-  box-shadow: var(--glow-md);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-sm);
 }
 
-.socials svg { width: 16px; height: 16px; }
+.socials svg { width: 14px; height: 14px; }
 
-.footer__legal {
-  padding-top: 26px;
+.footer__foot {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 26px;
+  align-items: baseline;
   justify-content: space-between;
-  align-items: center;
+  gap: 6px 20px;
+  margin-top: 18px;
 }
 
-.footer__legal p, .footer__legal a {
-  font-size: 0.78rem;
+.footer__copy { font-size: 0.74rem; color: var(--text-dim); }
+
+.footer__risk { font-size: 0.74rem; color: var(--text-dim); max-width: 78ch; }
+
+.footer__risk summary {
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.18s;
+}
+
+.footer__risk summary::-webkit-details-marker { display: none; }
+
+/* Own marker, so the row stays one clean line */
+.footer__risk summary::after {
+  content: "+";
+  margin-left: 7px;
+  font-family: var(--font-mono);
   color: var(--text-dim);
 }
 
-.footer__risk {
-  margin-top: 26px;
-  font-size: 0.74rem;
-  line-height: 1.7;
-  color: var(--text-dim);
-  max-width: 92ch;
-}
+.footer__risk[open] summary::after { content: "\2212"; }
+.footer__risk summary:hover { color: var(--text-mid); }
+.footer__risk summary strong { color: var(--text-mid); }
 
-.footer__risk strong { color: var(--text-mid); }
+.footer__risk p {
+  margin-top: 9px;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
 
 /* --------------------------------------------------------------------------
    17. Scroll reveal
@@ -1875,7 +1889,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 @media (max-width: 960px) {
   .giveaway__body { grid-template-columns: 1fr; }
-  .footer__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 820px) {
@@ -1936,7 +1949,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 @media (max-width: 560px) {
   .container { padding-inline: 18px; }
   .nav { padding-inline: 14px; }
-  .footer__grid { grid-template-columns: 1fr; gap: 30px; }
   .countdown { grid-template-columns: repeat(2, 1fr); }
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
@@ -2028,8 +2040,10 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   /* --- closing CTA + footer ---------------------------------------------- */
   .cta-band       { padding: 32px 20px; }
   .cta-band p     { margin-bottom: 22px; }
-  .footer         { padding-block: 38px 24px; }
-  .footer__grid   { gap: 26px; padding-bottom: 26px; }
+  .footer         { padding-block: 24px 20px; }
+  .footer__bar    { justify-content: center; text-align: center; gap: 12px; }
+  .footer__nav    { gap: 6px 16px; }
+  .footer__foot   { justify-content: center; text-align: center; margin-top: 14px; }
   .disclaimer     { padding: 16px 18px; }
   .disclaimer p   { font-size: 0.8rem; }
 
