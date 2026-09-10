@@ -1887,6 +1887,41 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 /* --------------------------------------------------------------------------
+   Poster page (rejection-block-checklist.html)
+   -------------------------------------------------------------------------- */
+.section--top { padding-block: 0 clamp(56px, 8vw, 96px); }
+
+.poster {
+  max-width: 560px;
+  margin-inline: auto;
+  border: 1px solid var(--purple-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--glow-md), var(--shadow-lg);
+  line-height: 0;              /* no descender gap under the image */
+}
+
+.poster img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s var(--ease);
+}
+
+.poster:hover img { transform: scale(1.015); }
+
+.poster__actions { margin-top: 28px; }
+.poster__actions .btn svg { width: 17px; height: 17px; }
+
+.poster__note {
+  margin: 22px auto 0;
+  max-width: 56ch;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
    18. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1040px) {

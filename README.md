@@ -15,15 +15,28 @@ Static HTML/CSS/JS. No build step, no dependencies.
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 | `testimonials.html` | The full quote wall. **Unlisted** — see below |
+| `rejection-block-checklist.html` | Free-resource poster + PDF. **Unlisted** |
 
 The home page follows a single-page layout with anchor sections. Nav links
 resolve to `index.html#pricing` etc. so they work from any page.
 
-`testimonials.html` is deliberately absent from the nav: the only link to it is
-the **View more testimonials** button under the home page carousel, and it
-carries `robots: noindex, nofollow` so it stays out of search results. That
-makes it unlisted, **not private** — anyone who has or guesses the URL can open
-it, so do not put anything on it you would not show a stranger.
+Two pages are deliberately absent from the nav and both carry
+`robots: noindex, nofollow`:
+
+- `testimonials.html` — the only link to it is the **View more testimonials**
+  button under the home page carousel.
+- `rejection-block-checklist.html` — **nothing** links to it. Shared by URL only.
+
+Unlisted is **not private**: anyone with the URL can open it and pass it on, so
+do not put anything on either page you would not show a stranger. Do not add a
+`robots.txt` to hide them — a disallow rule publishes the very paths it is
+meant to conceal. `noindex` is the right tool and is already in place.
+
+The poster is shown as an image, not an embedded PDF: iOS Safari renders
+`<embed>`/`<iframe>` PDFs as a grey box or forces a download, so most phone
+visitors would see nothing. The PDF is the download button. Both files live in
+`assets/resources/` and are generated from the source artwork — regenerate both
+together if the artwork changes.
 
 The six feature cards each mirror a headline item from the pricing tiers.
 **Change a tier and change the matching card**, or the page promises one thing
@@ -158,7 +171,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=41`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=42`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
