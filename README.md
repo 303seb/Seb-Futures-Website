@@ -11,7 +11,7 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 | File | Sections |
 | --- | --- |
-| `index.html` | Hero, partners, stats, features, pricing, testimonials, FAQ, CTA |
+| `index.html` | Hero, partners, stats, features, pricing, testimonials, discounts, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 | `testimonials.html` | The full quote wall. **Unlisted** — see below |
@@ -76,12 +76,18 @@ near-black rails stay visible against a dark browser tab.
 
 ## Marquees
 
-Three components scroll: the promo bar, the partner strip and the testimonial
-carousel. All use the same trick — two identical groups in a track sliding
+Two components scroll on their own: the partner strip and the testimonial
+carousel. Both use the same trick — two identical groups in a track sliding
 exactly `-50%`, so the second lands where the first began and the loop has no
 seam. **If you add or remove an item, change both groups**, or the loop will
 jump. The duplicate group carries `aria-hidden` so screen readers hear the
 content once.
+
+The **discount carousel** is a different thing: a CSS `scroll-snap` scroller,
+not a marquee and not a JS slider. Touch swiping and keyboard arrows come from
+the browser; `initCarousel()` only wires the two arrow buttons and disables
+them at each end. With JS off it is still a working horizontal scroller. Add or
+remove `.deal` cards freely — nothing is duplicated.
 
 ## Adding content back
 
@@ -103,7 +109,6 @@ freely; the grids auto-fit and the JavaScript picks up whatever is present.
 
 Four things are real text, left in on purpose:
 
-- **The promo bar** — the three partner offers, on every page.
 - **The risk disclosure** in every footer. A trading education site should
   carry one; have it reviewed for your jurisdiction rather than deleted. It is
   a `<details>` so the footer stays small — the headline warning is the
@@ -137,8 +142,12 @@ trading site in trouble.
 - **Premium checkout** and **1-on-1 application form** — the two paid tiers are
   taped off (see below), so there is nothing to link yet
 - **View more testimonials** — `href="#"` below the quote carousel
-- **Affiliate links** — only LVLUP Futures is still on `href="#"`. Alpha
-  Futures and FundedNext are wired up.
+- **Top One Futures** in the discount carousel has no affiliate link, so its
+  button is a disabled `<span>` reading "Link coming soon" rather than a dead
+  `href="#"`. Its code is shown as `SEB` — that was the code on the third slot
+  of the old promo bar, which listed LVLUP Futures; **confirm it before
+  trusting it.** Swap the span for an `<a ... target="_blank"
+  rel="sponsored noopener">` when the link arrives.
 
   Note: that URL 307-redirects to `/usa` for US visitors and the redirect
   drops the query string, so `fpr=SEB` never reaches the landing page. Check
@@ -171,7 +180,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=42`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=44`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

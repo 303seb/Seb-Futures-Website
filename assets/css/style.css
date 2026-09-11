@@ -24,12 +24,12 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
-  --bg:            #0a0a0e;
+  --bg:            #030305;
   --bg-elev:       #101015;  /* unused while section banding is off */
-  --surface:       #15151b;
-  --surface-2:     #1c1c24;
-  --border:        #2a2a35;
-  --border-soft:   #20202a;
+  --surface:       #101015;
+  --surface-2:     #17171e;
+  --border:        #23232d;
+  --border-soft:   #191921;
   --paper-deep:    #060609;  /* unused: the footer sits on --bg now */
 
   /* Neon purple */
@@ -75,9 +75,6 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Height of the sticky promo bar. main.js measures the real value
-     and overwrites this, so the nav always parks directly beneath it. */
-  --promo-h: 46px;
 }
 
 /* --------------------------------------------------------------------------
@@ -91,7 +88,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--promo-h) + 90px);
+  scroll-padding-top: 104px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -213,11 +210,8 @@ p { color: var(--text-mid); }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-mid);
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 6px 14px;
-  margin-bottom: 20px;
+  padding: 0;
+  margin-bottom: 14px;
 }
 
 .eyebrow::before {
@@ -233,106 +227,22 @@ p { color: var(--text-mid); }
 .glow-bg { position: relative; isolation: isolate; }
 
 /* --------------------------------------------------------------------------
-   5. Promo bar — continuous marquee
+   5. Marquee keyframes
 
-   The track holds two identical groups and slides exactly -50%, so the
-   second group lands where the first began and the loop is seamless.
-   Each group is min-width:100vw, which keeps the bar filled on ultrawide
-   screens without more copies in the markup.
+   Two identical groups in a track sliding exactly one group's width, so the
+   second lands where the first began and the loop has no seam. The promo bar
+   that introduced these is gone; the partner strip and the testimonial
+   carousel still use them.
    -------------------------------------------------------------------------- */
-.promo {
-  display: block;
-  position: sticky;
-  top: 0;
-  z-index: 101;              /* above the nav, which parks beneath it */
-  background: linear-gradient(100deg, var(--purple-deep) 0%, var(--purple) 55%, var(--purple-deep) 100%);
-  box-shadow: 0 2px 30px rgba(157, 63, 239, 0.6);
-  color: #fff;
-  padding-block: 11px;
-  overflow: hidden;
-  transition: box-shadow 0.25s;
-}
-
-.promo:hover { box-shadow: 0 2px 42px rgba(157, 63, 239, 0.7); }
-
-.promo__track {
-  display: flex;
-  width: max-content;
-  animation: promo-scroll-right 34s linear infinite;
-}
-
-/* Let people read the code without chasing it */
-.promo:hover .promo__track { animation-play-state: paused; }
-
-.promo__group {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-shrink: 0;
-  min-width: 100vw;
-}
-
-.promo__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 11px;
-  padding-inline: 28px;
-  white-space: nowrap;
-  color: inherit;
-  transition: opacity 0.18s;
-}
-
-.promo__item:hover { opacity: 0.82; }
-
 @keyframes promo-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* Same trick mirrored: start a group's width to the left and travel back to
-   zero, so the bar reads right-to-left with no seam. */
+/* Mirrored, for anything that should travel right */
 @keyframes promo-scroll-right {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
-}
-
-.promo__logo {
-  height: 19px;
-  width: auto;
-  flex-shrink: 0;
-}
-
-.promo__brand {
-  font-weight: 800;
-  font-size: 0.88rem;
-  letter-spacing: 0.02em;
-  color: #fff;
-}
-
-.promo__divider {
-  width: 1px;
-  height: 15px;
-  background: rgba(255, 255, 255, 0.38);
-}
-
-.promo__text {
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: #fff;
-}
-
-.promo__code {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.86rem;
-  letter-spacing: 0.08em;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 6px;
-  padding: 2px 9px;
-  margin-left: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -340,7 +250,7 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .nav {
   position: sticky;
-  top: var(--promo-h);       /* sits right below the sticky promo bar */
+  top: 0;
   z-index: 100;
   padding: 16px 24px 0;
 }
@@ -620,7 +530,7 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  padding-block: clamp(44px, 6vw, 78px) clamp(64px, 9vw, 104px);
+  padding-block: clamp(44px, 6vw, 78px) clamp(28px, 3.4vw, 44px);
   overflow: hidden;
 }
 
@@ -932,20 +842,8 @@ p { color: var(--text-mid); }
   gap: 14px;
 }
 
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-  text-align: center;
-  transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
-}
-
-.stat:hover {
-  transform: translateY(-3px);
-  border-color: var(--purple-line);
-  box-shadow: var(--glow-sm), var(--shadow);
-}
+/* No panel, no border — each figure stands on the page as its own mark */
+.stat { padding: 4px 10px; text-align: center; }
 
 .stat__num {
   font-family: var(--font-mono);
@@ -958,7 +856,7 @@ p { color: var(--text-mid); }
 }
 
 .stat__label {
-  margin-top: 7px;
+  margin-top: 6px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.09em;
@@ -1887,6 +1785,108 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 /* --------------------------------------------------------------------------
+   Discount carousel
+
+   A scroll-snap scroller, not a JS slider. Touch swiping and keyboard arrows
+   come free from the browser, the arrow buttons only nudge scrollLeft, and
+   with JS off it degrades to a plain horizontal scroller that still works.
+   -------------------------------------------------------------------------- */
+.deals {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.deals__track {
+  display: flex;
+  gap: 18px;
+  flex: 1;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 4px;               /* room for the focus ring and card glow */
+  scrollbar-width: none;
+}
+
+.deals__track::-webkit-scrollbar { display: none; }
+.deals__track:focus-visible { outline: 2px solid var(--purple-bright); outline-offset: 2px; }
+
+.deal {
+  flex: 0 0 clamp(255px, 31%, 320px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px 24px;
+  transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
+}
+
+.deal:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple-line);
+  box-shadow: var(--glow-sm), var(--shadow);
+}
+
+.deal__firm {
+  font-size: 1.16rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.deal__code {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.deal__code span {
+  color: var(--purple-bright);
+  font-weight: 700;
+  text-shadow: var(--glow-text);
+  letter-spacing: 0.12em;
+}
+
+.deal__blurb {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  margin-bottom: 22px;
+}
+
+/* Buttons line up across cards regardless of blurb length */
+.deal .btn, .deal > span.btn { margin-top: auto; }
+
+.deals__nav {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.deals__nav:hover:not(:disabled) {
+  color: #fff;
+  background: var(--purple);
+  border-color: var(--purple);
+  box-shadow: var(--glow-sm);
+}
+
+.deals__nav:disabled { opacity: 0.3; cursor: default; }
+.deals__nav svg { width: 18px; height: 18px; }
+
+/* --------------------------------------------------------------------------
    Poster page (rejection-block-checklist.html)
    -------------------------------------------------------------------------- */
 .section--top { padding-block: 0 clamp(56px, 8vw, 96px); }
@@ -1938,7 +1938,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 @media (max-width: 880px) {
-  .nav { top: var(--promo-h); padding-top: 12px; }
+  .nav { padding-top: 12px; }
 
   /* Bubble collapses to brand | socials | burger, links become a dropdown */
   .nav__bubble {
@@ -1994,7 +1994,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .countdown { grid-template-columns: repeat(2, 1fr); }
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
-  .promo__item { gap: 9px; padding-inline: 20px; }
   .brand__text { font-size: 0.9rem; }
 }
 
@@ -2083,6 +2082,12 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .faq-group    { padding-inline: 18px; margin-bottom: 14px; }
   .faq-item__q  { padding: 16px 0; font-size: 1rem; gap: 14px; }
 
+  /* --- discounts: one card per screen, arrows sit under it ---------------- */
+  .deals        { flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .deals__track { order: -1; flex: 1 0 100%; gap: 12px; }
+  .deal         { flex-basis: 86%; padding: 22px 20px 20px; }
+  .deals__nav   { width: 36px; height: 36px; }
+
   /* --- testimonials ------------------------------------------------------ */
   .quotes__group  { gap: 12px; padding-right: 12px; }
   .quotes .shot   { width: min(78vw, 320px); }
@@ -2142,12 +2147,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
       0 8px 20px -6px rgba(0, 0, 0, 0.7);
   }
 
-  /* --- promo marquee ----------------------------------------------------- */
-  .promo          { padding-block: 9px; }
-  .promo__item    { gap: 8px; padding-inline: 16px; }
-  .promo__brand   { font-size: 0.79rem; }
-  .promo__text    { font-size: 0.79rem; }
-  .promo__code    { font-size: 0.76rem; padding: 2px 7px; }
   .partners__label { margin-bottom: 14px; }
 }
 
@@ -2197,10 +2196,4 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
     text-shadow: var(--glow-text);
   }
 
-  /* Park the marquee as a single static, centred message */
-  .promo { overflow: hidden; }
-  .promo__track { animation: none !important; transform: none !important; width: 100%; }
-  .promo__group { min-width: 0; justify-content: center; width: 100%; }
-  .promo__group + .promo__group { display: none; }
-  .promo__item + .promo__item { display: none; }
 }

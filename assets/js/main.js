@@ -8,36 +8,6 @@
   "use strict";
 
   /* ----------------------------------------------------------------------
-     Sticky promo bar
-
-     Both the promo bar and the nav are sticky, so the nav has to park at
-     exactly the bar's height or they overlap. That height depends on font
-     loading and the viewport, so it is measured rather than hard-coded and
-     published as --promo-h for the CSS to use.
-     ---------------------------------------------------------------------- */
-  function initStickyTop() {
-    var promo = document.querySelector(".promo");
-    if (!promo) return;
-
-    var apply = function () {
-      document.documentElement.style.setProperty(
-        "--promo-h", promo.offsetHeight + "px"
-      );
-    };
-
-    apply();
-    window.addEventListener("resize", apply);
-
-    // Catches the reflow when the web fonts finish loading
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(apply);
-    }
-    if (window.ResizeObserver) {
-      new ResizeObserver(apply).observe(promo);
-    }
-  }
-
-  /* ----------------------------------------------------------------------
      Mobile navigation
      ---------------------------------------------------------------------- */
   function initNav() {
@@ -183,6 +153,49 @@
   }
 
   /* ----------------------------------------------------------------------
+     Discount carousel
+
+     The scroller itself is CSS (scroll-snap), so touch swiping and keyboard
+     arrows already work and the markup degrades to a plain scroller without
+     this. All this adds is the two buttons, and disabling them at each end
+     so they do not look broken when there is nowhere left to go.
+     ---------------------------------------------------------------------- */
+  function initCarousel() {
+    document.querySelectorAll("[data-carousel]").forEach(function (root) {
+      var track = root.querySelector("[data-carousel-track]");
+      var prev = root.querySelector("[data-carousel-prev]");
+      var next = root.querySelector("[data-carousel-next]");
+      if (!track || !prev || !next) return;
+
+      // Step by one card plus the gap, read from the DOM so the two cannot
+      // drift apart when the breakpoint changes the card width.
+      function step() {
+        var card = track.querySelector(":scope > *");
+        if (!card) return track.clientWidth;
+        var gap = parseFloat(getComputedStyle(track).columnGap || 0) || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function sync() {
+        var max = track.scrollWidth - track.clientWidth;
+        prev.disabled = track.scrollLeft <= 1;
+        next.disabled = track.scrollLeft >= max - 1;
+      }
+
+      prev.addEventListener("click", function () {
+        track.scrollBy({ left: -step(), behavior: "smooth" });
+      });
+      next.addEventListener("click", function () {
+        track.scrollBy({ left: step(), behavior: "smooth" });
+      });
+
+      track.addEventListener("scroll", sync, { passive: true });
+      window.addEventListener("resize", sync);
+      sync();
+    });
+  }
+
+  /* ----------------------------------------------------------------------
      FAQ accordion — one open at a time within a group
      ---------------------------------------------------------------------- */
   function initFaq() {
@@ -308,10 +321,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    initStickyTop();
     initNav();
     initTyper();
     initTabs();
+    initCarousel();
     initFaq();
     initCountdown();
     initReveal();
