@@ -11,7 +11,7 @@ Static HTML/CSS/JS. No build step, no dependencies.
 
 | File | Sections |
 | --- | --- |
-| `index.html` | Hero, partners, stats, features, pricing, testimonials, discounts, FAQ, CTA |
+| `index.html` | Hero, partners, stats, about, features, pricing, testimonials, discounts, FAQ, CTA |
 | `discord.html` | Header, stats, safety notice |
 | `giveaways.html` | Header, Giveaway/Rules tabs, scam warning + terms |
 | `testimonials.html` | The full quote wall. **Unlisted** — see below |
@@ -157,6 +157,22 @@ trading site in trouble.
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
+## The video slot
+
+`#about` has a 16:9 `.vidbox` placeholder. To drop the real video in, replace
+everything **inside** `.vidbox` with the embed — an `<iframe>` or a `<video>`.
+Both are already absolutely positioned to fill the frame by the CSS, so the
+embed needs no width, height or wrapper of its own.
+
+## The typing animation
+
+`.typer` carries `min-width: 13ch`. That is not cosmetic: the typed word grows
+and shrinks, which moves the line's wrap point and pops the paragraph between
+two and three lines, shoving everything below it up and down on a loop.
+Reserving the longest word's width ("Funded Accounts", 11.6ch) holds the line
+at a constant length. **If you add a longer word to `data-typer`, raise this
+number** or the jump comes back.
+
 ## Mobile
 
 Section 18b of the stylesheet is the phone layer. **Everything in it lives
@@ -180,7 +196,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=44`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=45`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

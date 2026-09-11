@@ -204,10 +204,9 @@ p { color: var(--text-mid); }
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.86rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-mid);
   padding: 0;
@@ -252,37 +251,25 @@ p { color: var(--text-mid); }
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 16px 24px 0;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s;
 }
 
+/* Only once content is actually sliding underneath */
+.nav.is-stuck { border-bottom-color: var(--border-soft); }
+
+/* Same 1080px measure as .container, so the bar's contents line up with the
+   page instead of floating on their own grid. */
 .nav__bubble {
   position: relative;
-  max-width: 1020px;
+  max-width: 1080px;
   margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 18px;
-  background: rgba(24, 24, 30, 0.96);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-radius: 22px;
-  padding: 9px 14px 9px 18px;
-  /* Neon ring + even glow wrapping the whole bubble, over a deep cast shadow */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 0 1px var(--purple-ring),
-    0 0 26px 2px rgba(157, 63, 239, 0.38),
-    0 10px 30px -6px rgba(0, 0, 0, 0.7);
-  transition: box-shadow 0.3s var(--ease);
-}
-
-.nav.is-stuck .nav__bubble {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 0 1px var(--purple-ring),
-    0 0 20px 1px rgba(157, 63, 239, 0.32),
-    0 8px 24px -6px rgba(0, 0, 0, 0.75);
+  padding: 12px 24px;
 }
 
 .brand {
@@ -320,9 +307,9 @@ p { color: var(--text-mid); }
 }
 
 .nav__links > a {
-  padding: 8px 15px;
-  border-radius: 11px;
-  font-size: 0.92rem;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text);
   transition: color 0.18s, background 0.18s, text-shadow 0.18s;
@@ -583,12 +570,23 @@ p { color: var(--text-mid); }
    same content, so a screen reader hears the words once instead of being
    interrupted on every keystroke.
    -------------------------------------------------------------------------- */
+/* The word changes length as it types, which moves the line's wrap point and
+   pops the paragraph between two and three lines, shoving the page down and
+   back. Reserving the width of the longest word keeps the line a constant
+   length, so nothing after it ever rewraps. Measured: "Funded Accounts" is
+   the longest at 11.6ch. */
 .typer {
+  display: inline-block;
+  min-width: 13ch;
+  text-align: left;
   color: var(--purple-bright);
   font-weight: 700;
   text-shadow: var(--glow-text);
   white-space: nowrap;
 }
+
+/* Belt and braces: hold the two lines regardless */
+.hero .lede { min-height: calc(2 * 1.65em); }
 
 .typer__caret {
   display: inline-block;
@@ -674,7 +672,7 @@ p { color: var(--text-mid); }
 .quotes__track {
   display: flex;
   width: max-content;
-  animation: promo-scroll 50s linear infinite;
+  animation: promo-scroll 38s linear infinite;
 }
 
 /* Sits below the full-bleed carousel, back on the container grid */
@@ -846,9 +844,8 @@ p { color: var(--text-mid); }
 .stat { padding: 4px 10px; text-align: center; }
 
 .stat__num {
-  font-family: var(--font-mono);
-  font-size: clamp(1.55rem, 3vw, 2.15rem);
-  font-weight: 700;
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--purple-bright);
   text-shadow: var(--glow-text);
@@ -856,10 +853,10 @@ p { color: var(--text-mid); }
 }
 
 .stat__label {
-  margin-top: 6px;
-  font-size: 0.75rem;
+  margin-top: 7px;
+  font-size: 0.86rem;
   font-weight: 600;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-mid);
 }
@@ -1785,6 +1782,79 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 /* --------------------------------------------------------------------------
+   About — copy left, video right
+   -------------------------------------------------------------------------- */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
+}
+
+.about__copy h2 { margin-bottom: 18px; }
+.about__copy p + p { margin-top: 14px; }
+.about__copy p { font-size: 0.95rem; }
+
+.about__media { min-width: 0; }
+
+/* 16:9 frame. The real embed inherits these dimensions, so whatever goes in
+   needs no sizing of its own. */
+.vidbox {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--purple-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--glow-sm), var(--shadow-lg);
+}
+
+.vidbox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 90% at 50% 50%, rgba(157, 63, 239, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.vidbox > * { position: relative; }
+
+.vidbox iframe,
+.vidbox video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.vidbox__play {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
+  color: var(--purple-bright);
+  box-shadow: var(--glow-md);
+}
+
+.vidbox__play svg { width: 26px; height: 26px; margin-left: 3px; }
+
+.vidbox__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
    Discount carousel
 
    A scroll-snap scroller, not a JS slider. Touch swiping and keyboard arrows
@@ -1938,7 +2008,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 }
 
 @media (max-width: 880px) {
-  .nav { padding-top: 12px; }
 
   /* Bubble collapses to brand | socials | burger, links become a dropdown */
   .nav__bubble {
@@ -1990,7 +2059,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
 
 @media (max-width: 560px) {
   .container { padding-inline: 18px; }
-  .nav { padding-inline: 14px; }
   .countdown { grid-template-columns: repeat(2, 1fr); }
   .faq-group { padding-inline: 18px; }
   .faq-item__a > div { padding-right: 8px; }
@@ -2082,6 +2150,12 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .faq-group    { padding-inline: 18px; margin-bottom: 14px; }
   .faq-item__q  { padding: 16px 0; font-size: 1rem; gap: 14px; }
 
+  /* --- about: copy above the video ---------------------------------------- */
+  .about        { grid-template-columns: 1fr; gap: 24px; }
+  .about__copy p { font-size: 0.875rem; }
+  .vidbox__play { width: 52px; height: 52px; }
+  .vidbox__play svg { width: 22px; height: 22px; }
+
   /* --- discounts: one card per screen, arrows sit under it ---------------- */
   .deals        { flex-wrap: wrap; justify-content: center; gap: 10px; }
   .deals__track { order: -1; flex: 1 0 100%; gap: 12px; }
@@ -2126,8 +2200,7 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   }
 
   /* --- top bar ----------------------------------------------------------- */
-  .nav              { padding: 10px 14px 0; }
-  .nav__bubble      { gap: 8px; padding: 7px 8px 7px 12px; border-radius: 18px; }
+  .nav__bubble      { gap: 8px; padding: 9px 14px; }
   .brand__mark      { height: 26px; }
   .brand__text      { font-size: 0.82rem; }
   .nav__social      { gap: 2px; }
@@ -2136,16 +2209,6 @@ td.prize { color: var(--purple-bright); font-family: var(--font-mono); font-size
   .nav__toggle      { width: 32px; height: 32px; border-radius: 9px; }
   .nav__links       { padding: 10px; border-radius: 16px; top: calc(100% + 9px); }
   .nav__links > a   { padding: 11px 14px; font-size: 0.92rem; }
-
-  /* The desktop glow is sized for a 1020px bubble; at phone width the same
-     spread reads as a purple haze around the whole bar. */
-  .nav__bubble {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 0 1px var(--purple-ring),
-      0 0 14px 1px rgba(157, 63, 239, 0.3),
-      0 8px 20px -6px rgba(0, 0, 0, 0.7);
-  }
 
   .partners__label { margin-bottom: 14px; }
 }
