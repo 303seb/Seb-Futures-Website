@@ -157,6 +157,14 @@ trading site in trouble.
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
+## Typography
+
+**One family, Inter, everywhere.** The site used to set codes, badges, prices
+and labels in JetBrains Mono; that is gone, along with its font request. Do not
+reintroduce a second family — if you want tabular figures for a price or a
+countdown, use `font-variant-numeric: tabular-nums` (the `.mono` utility class
+does exactly that and nothing else).
+
 ## The video slot
 
 `#about` has a 16:9 `.vidbox` placeholder. To drop the real video in, replace
@@ -196,7 +204,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=45`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=46`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
