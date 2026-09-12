@@ -555,15 +555,21 @@ p { color: var(--text-mid); }
    same content, so a screen reader hears the words once instead of being
    interrupted on every keystroke.
    -------------------------------------------------------------------------- */
-/* The word changes length as it types, which moves the line's wrap point and
-   pops the paragraph between two and three lines, shoving the page down and
-   back. Reserving the width of the longest word keeps the line a constant
-   length, so nothing after it ever rewraps. Measured: "Funded Accounts" is
-   the longest at 11.6ch. */
-.typer {
+/* The typed word changes length, which moves the line's wrap point and pops
+   the paragraph between two and three lines, shoving the page up and down on
+   a loop. The reserved width lives on the SLOT, not on the word: the slot
+   holds the line at a constant length while the word, caret and full stop sit
+   flush left inside it, so the stop travels with the last letter instead of
+   parking at a fixed offset. Measured: "Funded Accounts" is the longest at
+   11.6ch — raise this if a longer word is added to data-typer. */
+.typer-slot {
   display: inline-block;
-  min-width: 13ch;
+  min-width: 13.5ch;
   text-align: left;
+  white-space: nowrap;
+}
+
+.typer {
   color: var(--purple-bright);
   font-weight: 700;
   text-shadow: var(--glow-text);
@@ -2023,13 +2029,43 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 @media (max-width: 640px) {
 
   /* --- vertical rhythm: the single biggest win on scroll length ---------- */
-  .section        { padding-block: 46px; }
-  .section--tight { padding-block: 32px; }
-  .section__head  { margin-bottom: 26px; }
-  .section__head p { margin-top: 10px; }
-  .hero           { padding-block: 26px 38px; }
-  .page-head      { padding-block: 26px 22px; }
+  .section        { padding-block: 40px; }
+  .section--tight { padding-block: 26px; }
+  .section__head  { margin-bottom: 22px; }
+  .section__head p { margin-top: 9px; }
+  .hero           { padding-block: 22px 26px; }
+  .page-head      { padding-block: 22px 18px; }
   .container      { padding-inline: 16px; }
+
+  /* Everything on the page is centred, so the about block is too — left-rag
+     copy beside centred headings was the one thing out of step. */
+  .about__copy  { text-align: center; }
+  .about__copy .eyebrow { justify-content: center; }
+
+  /* The longest heading on the site. A step down is what keeps it to two
+     lines instead of three at phone width. */
+  .about__copy h2 { font-size: 1.27rem; }
+
+  /* Sized up on desktop to hold the space the removed panel left; that
+     extra size costs a whole line on a phone. */
+  .cta-band h2 { font-size: 1.9rem; }
+  .cta-band p  { font-size: 1rem; }
+
+  /* The strip only holds three names; the desktop gap leaves it looking like
+     stray words drifting past. */
+  .partners__group { gap: 30px; }
+  .partner { font-size: 0.95rem; }
+
+  /* Both marquees are wider than the screen, so a phone cuts them mid-word at
+     each edge and they read as broken rather than as scrolling. Fading the
+     edges makes the clip deliberate. */
+  .partners, .quotes {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+
+  /* Two lines of a stat label next to one line of another sat unevenly */
+  .stats { align-items: start; }
 
   /* --- type scale -------------------------------------------------------
      A phone is a third the width of the desktop column, so the desktop
@@ -2045,16 +2081,18 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
        hero 2.69x     (desktop 4.97x)
      --------------------------------------------------------------------- */
   h1            { font-size: 1.85rem; }
-  h2            { font-size: 1.75rem; }
+  h2            { font-size: 1.5rem; }
   h3            { font-size: 1.25rem; }
 
   /* Two of the longer h2s still cannot fit one line; balance splits them
      evenly rather than leaving one orphan word. */
   h1, h2, .lede { text-wrap: balance; }
   .hero h1      { font-size: 2.35rem; margin-bottom: 12px; }
-  .hero__kicker { font-size: 1.05rem; margin-bottom: 10px; }
-  .lede         { font-size: 1.05rem; }
-  .hero .lede   { margin-bottom: 24px; }
+  .lede         { font-size: 0.98rem; }
+  .hero .lede   { margin-bottom: 22px; }
+
+  /* The forced break is a desktop nicety; on a phone it costs a whole line */
+  .hero .lede br { display: none; }
   .eyebrow      { font-size: 0.64rem; padding: 5px 12px; margin-bottom: 12px; }
 
   /* Body copy down a step, which is the other half of the ratio */
@@ -2145,10 +2183,12 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 @media (max-width: 380px) {
   .hero h1     { font-size: 2.1rem; }
   h1           { font-size: 1.65rem; }
-  h2           { font-size: 1.58rem; }
+  h2           { font-size: 1.36rem; }
   h3           { font-size: 1.16rem; }
-  .lede        { font-size: 1rem; }
+  .lede        { font-size: 0.94rem; }
   .card p, .faq-item__a p, .check-list li { font-size: 0.85rem; }
+  .about__copy h2 { font-size: 1.18rem; }
+  .cta-band h2 { font-size: 1.72rem; }
   .brand__text { font-size: 0.78rem; }
   .stat__num   { font-size: 1.02rem; }
   .stat__label { font-size: 0.61rem; }
