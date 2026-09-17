@@ -174,12 +174,19 @@ embed needs no width, height or wrapper of its own.
 
 ## The typing animation
 
-`.typer` carries `min-width: 13ch`. That is not cosmetic: the typed word grows
-and shrinks, which moves the line's wrap point and pops the paragraph between
-two and three lines, shoving everything below it up and down on a loop.
-Reserving the longest word's width ("Funded Accounts", 11.6ch) holds the line
-at a constant length. **If you add a longer word to `data-typer`, raise this
-number** or the jump comes back.
+The typed word grows and shrinks, which moves the line's wrap point and can
+pop the paragraph between one line and two, shoving everything below it up and
+down on a loop. That is held off by geometry, not by reserving width: the lede
+is short enough to stay on one line at 375px and up, and below 374px
+`.typer-slot` becomes `display: block` so the word sits on its own line and the
+height is two lines for **every** word.
+
+Reserving a fixed width on the slot also works, but the lede is centred, so a
+short word then leaves the whole line visibly off-centre — 46px at desktop
+width, measured. Do not reintroduce it.
+
+**If you add a longer word to `data-typer`, re-check the wrap** at 375px and at
+desktop width; a word long enough to wrap the line brings the jump back.
 
 ## Mobile
 
@@ -204,7 +211,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=48`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=49`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

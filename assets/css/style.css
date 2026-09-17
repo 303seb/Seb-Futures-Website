@@ -564,8 +564,6 @@ p { color: var(--text-mid); }
    11.6ch — raise this if a longer word is added to data-typer. */
 .typer-slot {
   display: inline-block;
-  min-width: 13.5ch;
-  text-align: left;
   white-space: nowrap;
 }
 
@@ -576,8 +574,6 @@ p { color: var(--text-mid); }
   white-space: nowrap;
 }
 
-/* Belt and braces: hold the two lines regardless */
-.hero .lede { min-height: calc(2 * 1.65em); }
 
 .typer__caret {
   display: inline-block;
@@ -2091,8 +2087,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .lede         { font-size: 0.98rem; }
   .hero .lede   { margin-bottom: 22px; }
 
-  /* The forced break is a desktop nicety; on a phone it costs a whole line */
-  .hero .lede br { display: none; }
   .eyebrow      { font-size: 0.64rem; padding: 5px 12px; margin-bottom: 12px; }
 
   /* Body copy down a step, which is the other half of the ratio */
@@ -2194,6 +2188,15 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .stat__label { font-size: 0.61rem; }
   .stat        { padding: 12px 6px; }
   .container   { padding-inline: 14px; }
+}
+
+/* Narrower than this, the sentence fits on one line for the short words but
+   wraps for the long ones, which brings back the vertical jump the typing
+   animation used to cause. Dropping the word onto its own line makes it two
+   lines for every word, so the height is constant again. Measured: 375px and
+   up is stable on one line, 360px and below is not. */
+@media (max-width: 374px) {
+  .hero .lede .typer-slot { display: block; }
 }
 
 /* --------------------------------------------------------------------------
