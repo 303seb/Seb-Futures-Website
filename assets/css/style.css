@@ -2609,6 +2609,20 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   overflow: hidden;
 }
 
+.gate__suggest {
+  margin-top: 12px;
+  font-size: 0.86rem;
+  color: var(--text-mid);
+}
+
+.gate__fix {
+  font: inherit;
+  font-weight: 700;
+  color: var(--purple-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .gate__error {
   margin-top: 12px;
   font-size: 0.86rem;

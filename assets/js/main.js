@@ -462,6 +462,9 @@
     var input = form.querySelector("#gate-email");
     var nameInput = form.querySelector("#gate-name");
     var button = form.querySelector(".gate__submit");
+    var suggestEl = form.querySelector("[data-gate-suggest]");
+    var fixEl = form.querySelector("[data-gate-fix]");
+    var refused = null;
     var endpoint = (form.getAttribute("data-endpoint") || "").trim();
     var KEY = "me:rb-checklist-unlocked";
     var loadedAt = Date.now();
@@ -486,10 +489,96 @@
       (field || input).focus();
     }
 
-    // Deliberately loose. Anything stricter rejects real addresses, and the
-    // list is unverified either way.
-    function looksLikeEmail(value) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    var IDLE = button.textContent;
+    function busy(on, label) {
+      button.disabled = on;
+      button.textContent = on ? label : IDLE;
+    }
+
+    /* Three checks, cheapest first.
+
+       1. Syntax. Stricter than the usual one-liner: no leading, trailing or
+          doubled dots in the local part, real domain labels, and a TLD of
+          at least two letters.
+       2. The domain. A DNS lookup for an MX record answers "can this domain
+          receive mail at all", which is as far as anyone can get without
+          sending something. It catches invented domains and most typos --
+          gmial.com resolves but has no mail server.
+       3. Throwaway providers, which all have valid MX records and so have
+          to be named.
+
+       None of this proves the mailbox exists. Only sending to it does. */
+    var SYNTAX = /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+
+    var DISPOSABLE = ["mailinator.com", "guerrillamail.com", "sharklasers.com",
+      "temp-mail.org", "tempmail.com", "10minutemail.com", "yopmail.com",
+      "trashmail.com", "dispostable.com", "getnada.com", "maildrop.cc",
+      "throwawaymail.com", "fakeinbox.com", "mailnesia.com", "tempr.email",
+      "moakt.com", "emailondeck.com", "spamgourmet.com", "mytemp.email"];
+
+    var POPULAR = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com",
+      "icloud.com", "aol.com", "live.com", "msn.com", "comcast.net",
+      "proton.me", "protonmail.com", "me.com", "mac.com", "gmx.com",
+      "zoho.com", "yandex.com", "verizon.net", "att.net", "sbcglobal.net",
+      "cox.net", "charter.net", "fastmail.com", "hey.com"];
+
+    // One insertion, deletion or substitution apart.
+    function offByOne(a, b) {
+      if (Math.abs(a.length - b.length) > 1) return false;
+      var i = 0, j = 0, edits = 0;
+      while (i < a.length && j < b.length) {
+        if (a.charAt(i) === b.charAt(j)) { i++; j++; continue; }
+        if (++edits > 1) return false;
+        if (a.length > b.length) i++;
+        else if (b.length > a.length) j++;
+        else { i++; j++; }
+      }
+      return edits + (a.length - i) + (b.length - j) <= 1;
+    }
+
+    // Two neighbouring letters swapped: hotmial, gmial, yahooo are all this.
+    function swapped(a, b) {
+      if (a.length !== b.length) return false;
+      var diff = [];
+      for (var i = 0; i < a.length; i++) {
+        if (a.charAt(i) !== b.charAt(i)) diff.push(i);
+        if (diff.length > 2) return false;
+      }
+      return diff.length === 2 && diff[1] === diff[0] + 1 &&
+             a.charAt(diff[0]) === b.charAt(diff[1]) &&
+             a.charAt(diff[1]) === b.charAt(diff[0]);
+    }
+
+    function suggestDomain(domain) {
+      if (POPULAR.indexOf(domain) !== -1) return null;
+      for (var i = 0; i < POPULAR.length; i++) {
+        if (offByOne(domain, POPULAR[i]) || swapped(domain, POPULAR[i])) return POPULAR[i];
+      }
+      return null;
+    }
+
+    /* Google's DNS-over-HTTPS. No custom headers, so it stays a "simple"
+       request and never needs a preflight. If it cannot be reached the
+       answer is "unknown" and the address is let through -- a DNS outage
+       must not stop real people signing up. The Apps Script checks again
+       on its side, which is also what guards the endpoint against someone
+       posting to it directly. */
+    function domainTakesMail(domain) {
+      if (!window.fetch) return Promise.resolve("unknown");
+      var stop, timer = new Promise(function (resolve) {
+        stop = setTimeout(function () { resolve("unknown"); }, 4000);
+      });
+      var query = fetch("https://dns.google/resolve?type=MX&name=" + encodeURIComponent(domain))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          clearTimeout(stop);
+          if (!data) return "unknown";
+          if (data.Status === 3) return "nodomain";
+          var mx = (data.Answer || []).filter(function (a) { return a.type === 15; });
+          return mx.length ? "ok" : "nomx";
+        })
+        .catch(function () { clearTimeout(stop); return "unknown"; });
+      return Promise.race([query, timer]);
     }
 
     function viaIframe(body) {
@@ -517,25 +606,36 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       errorEl.setAttribute("hidden", "");
+      suggestEl.setAttribute("hidden", "");
 
       var name = nameInput.value.trim();
       if (!name) return fail("Please enter your name.", nameInput);
 
       var email = input.value.trim();
-      if (!looksLikeEmail(email)) return fail("That does not look like an email address.");
+      if (!SYNTAX.test(email)) return fail("That does not look like an email address.");
+
+      var at = email.lastIndexOf("@");
+      var domain = email.slice(at + 1).toLowerCase();
+
+      if (DISPOSABLE.indexOf(domain) !== -1) {
+        return fail("Please use a permanent email address, not a temporary one.");
+      }
+
+      // Offered once. Submitting the same address again accepts it, because
+      // someone may genuinely own the domain that looks like a typo.
+      var better = suggestDomain(domain);
+      if (better && better !== refused) {
+        refused = better;
+        fixEl.textContent = email.slice(0, at + 1) + better;
+        suggestEl.removeAttribute("hidden");
+        return;
+      }
+      suggestEl.setAttribute("hidden", "");
 
       // Honeypot filled, or submitted faster than a person can type: a bot.
       // Both are answered with the success state so it learns nothing.
       var trapped = form.querySelector("#gate-website").value !== "" ||
                     Date.now() - loadedAt < 1200;
-
-      button.disabled = true;
-      button.textContent = "Unlocking...";
-
-      var body = new URLSearchParams();
-      body.append("name", name);
-      body.append("email", email);
-      body.append("source", "rejection-block-checklist");
 
       function done() {
         try {
@@ -543,20 +643,50 @@
         } catch (err) { /* nothing to do */ }
         unlock();
         if (locked) {
-          var heading = locked.querySelector(".poster");
-          if (heading) heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          var poster = locked.querySelector(".poster");
+          if (poster) poster.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }
 
       if (trapped) return done();
 
-      if (window.fetch) {
-        fetch(endpoint, { method: "POST", mode: "no-cors", body: body })
-          .then(done, function () { viaIframe(body); done(); });
-      } else {
-        viaIframe(body);
-        done();
+      function send() {
+        button.textContent = "Unlocking...";
+        var body = new URLSearchParams();
+        body.append("name", name);
+        body.append("email", email);
+        body.append("source", "rejection-block-checklist");
+
+        if (window.fetch) {
+          fetch(endpoint, { method: "POST", mode: "no-cors", body: body })
+            .then(done, function () { viaIframe(body); done(); });
+        } else {
+          viaIframe(body);
+          done();
+        }
       }
+
+      busy(true, "Checking...");
+      domainTakesMail(domain).then(function (verdict) {
+        if (verdict === "nodomain") {
+          busy(false);
+          return fail("There is no such domain. Check the spelling after the @.");
+        }
+        if (verdict === "nomx") {
+          busy(false);
+          return fail("That domain cannot receive email. Check the spelling after the @.");
+        }
+        send();   // "ok", or "unknown" when DNS could not be reached
+      });
+    });
+
+    // Accepting the suggested spelling resubmits straight away.
+    form.querySelector("[data-gate-fix]").addEventListener("click", function () {
+      input.value = fixEl.textContent;
+      suggestEl.setAttribute("hidden", "");
+      refused = null;
+      if (form.requestSubmit) form.requestSubmit();
+      else form.dispatchEvent(new Event("submit", { cancelable: true }));
     });
   }
 
