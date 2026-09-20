@@ -36,7 +36,6 @@
   --purple:        #cabbfb;  /* fills, marks, and text */
   --purple-bright: #cabbfb;
   --purple-deep:   #a58cf8;  /* gradient ends — same hue, one step down */
-  --purple-tint:   #cabbfb;
   --purple-ink:    #16111f;  /* text ON a purple fill: 10.6:1 */
   --purple-soft:   rgba(202, 187, 251, 0.55);
   --purple-line:   rgba(202, 187, 251, 0.62);
@@ -50,10 +49,11 @@
   --green:         #2fd4b4;
   --green-ink:     #4fe3c6;
 
-  /* Ink */
-  --text:          #15141b;
-  --text-mid:      #45444f;
-  --text-dim:      #5f5e6b;
+  /* Ink — all black. The grey hierarchy is gone by request; weight and size
+     carry the hierarchy instead. */
+  --text:          #000000;
+  --text-mid:      #000000;
+  --text-dim:      #000000;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   /* One typeface across the whole site. The old --font-mono is gone; if you
@@ -80,6 +80,76 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
+}
+
+/* --------------------------------------------------------------------------
+   1b. Purple outlines
+
+   The purple is within a hair of the page's brightness (1.27:1), so a purple
+   glyph on its own is barely there. Every one of them carries a thin black
+   stroke to cut it out from the background.
+
+   paint-order puts the stroke BEHIND the fill, so the letterform keeps its
+   full weight instead of the stroke eating inward from both edges. Display
+   type gets a slightly heavier stroke than body-sized type — a stroke that
+   reads as a hairline at 60px turns small text to mush.
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4,
+.h2--split em,
+.hero h1 em,
+.brand__text span,
+.typer,
+.stat__num,
+.tier__amount,
+.step::before,
+.channel__hash,
+.schedule__time,
+.giveaway__prize span,
+.countdown__val,
+.disclaimer h4,
+.deal__code span,
+.quote__avatar,
+.shot__avatar,
+.btn--ghost,
+.entry-note a,
+td.prize,
+.nav__links > a:hover,
+.nav__links > a.active,
+.nav__links > a.nav__hl,
+.back-link:hover,
+.tab:hover,
+.footer__nav a:hover,
+.faq-item.is-open .faq-item__q {
+  /* em, not px, so the stroke stays proportional from a 14px label to a
+     65px headline instead of vanishing on one and clogging the other. */
+  -webkit-text-stroke: 0.055em #000;
+  paint-order: stroke fill;
+}
+
+/* Display sizes need proportionally less to read as a hairline */
+h1, h2,
+.hero h1 em,
+.h2--split em,
+.stat__num,
+.tier__amount { -webkit-text-stroke-width: 0.04em; }
+
+/* The lavender chips and markers are the same brightness problem in shape
+   form, so their rings go black too. */
+.card__icon,
+.vidbox__play,
+.quote__avatar,
+.shot__avatar,
+.faq-item__icon,
+.check-list li::before,
+.eyebrow::before { border-color: #000; }
+
+.eyebrow::before { border: 1px solid #000; }
+
+/* Line icons are drawn in currentColor, so a text stroke cannot reach them.
+   Two tight black drop-shadows ring the strokes instead. */
+.card__icon svg,
+.vidbox__play svg {
+  filter: drop-shadow(0 0 0.7px #000) drop-shadow(0 0 0.7px #000);
 }
 
 /* --------------------------------------------------------------------------
@@ -949,7 +1019,7 @@ p { color: var(--text-mid); }
   border-radius: 50%;
   background-color: var(--purple-soft);
   border: 1px solid var(--purple-line);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b06ff7' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%23000' stroke-width='6.4'/%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%23cabbfb' stroke-width='3.2'/%3E%3C/svg%3E");
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: center;
@@ -1154,7 +1224,7 @@ p { color: var(--text-mid); }
   right: 0;
   height: 6px;
   background: repeating-linear-gradient(-45deg,
-    var(--purple-tint) 0 7px, rgba(202, 187, 251, 0.25) 7px 14px);
+    #000 0 7px, transparent 7px 14px);
 }
 
 .tier__tape::before { top: 0; }

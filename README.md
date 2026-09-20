@@ -159,33 +159,44 @@ trading site in trouble.
 
 ## The palette
 
-Light theme. Page `#dcdcdc`, cards white, ink dark. Purple `#cabbfb`. Both hex
-codes are the client's, specified exactly, and are **deliberately kept even
-though they clash** — this was raised and confirmed.
+Light theme. Page `#dcdcdc`, cards white, **all body ink pure black**, purple
+`#cabbfb`. Both hex codes are the client's, specified exactly.
 
-`#cabbfb` is almost the same brightness as `#dcdcdc`, so anything painted in
-the purple on the page ground scores **1.27:1** (1.75:1 on a white card).
-Headings, the MARKET wordmark, the stat figures, the Enter Giveaway link and
-the typed hero word are all faint by design, not by accident. **Do not
-"fix" this by shifting either colour without asking.**
+The purple is within a hair of the page's brightness (1.27:1), so **every
+purple glyph carries a thin black stroke** to cut it out from the background:
 
-Where the purple still works, and why: as a *fill* under dark text. Buttons,
-badges and the restricted-access tape use `--purple-ink` (`#16111f`) on the
-lavender at 10.6:1, so their labels stay crisp even where the button's own
-outline against the page does not.
+```css
+-webkit-text-stroke: 0.055em #000;   /* 0.04em on display sizes */
+paint-order: stroke fill;
+```
+
+Two things matter here. The stroke is in **em**, so it stays proportional from
+a 14px label to a 65px headline — a fixed px value vanishes on one and clogs
+the other. And `paint-order: stroke fill` puts the stroke *behind* the fill;
+without it the stroke eats inward from both edges and thins the letterform.
+
+The same problem in shape form — lavender chips, the FAQ and check markers,
+the eyebrow dot — is solved the same way, with black rings. Line icons are
+drawn in `currentColor`, which a text stroke cannot reach, so they get two
+tight black `drop-shadow`s instead. The check-list tick is two stacked
+polylines: a wide black one under a narrow lavender one.
+
+**An automated contrast check will still flag the purple at 1.27:1** — the
+formula compares fill against background and cannot see a stroke. That is
+expected. Do not "fix" it by shifting either colour.
 
 | token | value | role |
 | --- | --- | --- |
-| `--purple` | `#cabbfb` | fills, marks, text |
+| `--purple` | `#cabbfb` | fills, marks, text (always stroked) |
 | `--purple-deep` | `#a58cf8` | the deeper end of every gradient |
 | `--purple-ink` | `#16111f` | text on a purple fill — 10.6:1 |
 
-`--glow-text` is `none` and the `--glow-*` tokens are soft shadows. A glow
-needs a dark ground to read as light; on this theme it would be a smudge. If
-the page ever goes dark again, those are the tokens that turn lighting back
-on — and the purple would come back to 11.8:1 with no other change.
+`--glow-text` is `none` and the `--glow-*` tokens are soft shadows; a glow
+needs a dark ground. If the page ever goes dark again, those tokens plus
+removing the strokes is the whole job — the purple returns to 11.8:1 on its
+own.
 
-## Typography## Typography## Typography
+## Typography## Typography## Typography## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
 and labels in JetBrains Mono; that is gone, along with its font request. Do not
@@ -239,7 +250,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=53`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=54`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
