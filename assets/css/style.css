@@ -4,18 +4,15 @@
    Charcoal + neon purple. The background is a lifted charcoal rather than
    pure black, and depth comes from neon glows in the accent colour.
 
-   ONE purple, three lightnesses. All three sit on hue 272 — if you add a
-   shade, match that hue or the theme visibly drifts blue. Split by role,
-   which is what keeps it readable:
-     --purple        #9d3fef  L59  fills, marks, glows. FAILS as text
-                              (3.5:1 on cards), so never use it for copy.
-     --purple-bright #c98cff  L78  the neon used as TEXT. 7.6:1 on the
-                              page, 6.8:1 on cards.
-     --purple-deep   #7c12d9  L46  the dark end of every gradient.
-   Never hard-code a purple hex outside this block. The rgba(157, 63, 239)
-   values below are --purple at partial alpha; rgba(201, 140, 255) is
-   --purple-bright.
-   Titles and key figures are neon; body copy is a light gray so long-form
+   ONE purple, hue 254, and light. Being light it reads straight onto the
+   near-black page as text (11.8:1) — but anything sitting ON it must be dark:
+     --purple      #cabbfb  L86  fills, marks, glows, and text.
+     --purple-deep #a58cf8  L76  the deeper end of every gradient.
+     --purple-ink  #16111f       text on a purple fill. White there is
+                                 1.75:1 and must never be used.
+   Never hard-code a purple hex outside this block. The rgba(202, 187, 251)
+   values below are the purple at partial alpha.
+   Titles and key figures are lavender; body copy is a light gray so long-form
    reading stays comfortable.
    ========================================================================== */
 
@@ -32,14 +29,15 @@
   --border-soft:   #191921;
   --paper-deep:    #060609;  /* unused: the footer sits on --bg now */
 
-  /* Neon purple */
-  --purple:        #9d3fef;  /* fills, marks, glow — never text */
-  --purple-bright: #c98cff;  /* the neon, used as text */
-  --purple-deep:   #7c12d9;  /* gradient ends — same hue as --purple, darker */
-  --purple-soft:   rgba(157, 63, 239, 0.18);
-  --purple-line:   rgba(157, 63, 239, 0.46);
-  --purple-ring:   rgba(157, 63, 239, 0.44);
-  --purple-glow:   rgba(157, 63, 239, 0.6);
+  /* Lavender */
+  --purple:        #cabbfb;  /* fills, marks, glow, and text */
+  --purple-bright: #cabbfb;  /* same colour; kept so existing rules resolve */
+  --purple-deep:   #a58cf8;  /* gradient ends — same hue, one step down */
+  --purple-ink:    #16111f;  /* text ON a purple fill: 10.2:1. White is 1.8:1 */
+  --purple-soft:   rgba(202, 187, 251, 0.14);
+  --purple-line:   rgba(202, 187, 251, 0.38);
+  --purple-ring:   rgba(202, 187, 251, 0.36);
+  --purple-glow:   rgba(202, 187, 251, 0.45);
 
   /* Order-flow colours */
   --blue:          #4d84ff;
@@ -68,12 +66,12 @@
   --shadow:    0 6px 20px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6);
 
-  --glow-sm:   0 0 12px rgba(157, 63, 239, 0.5);
-  --glow-md:   0 0 22px rgba(157, 63, 239, 0.6);
-  --glow-lg:   0 0 42px rgba(157, 63, 239, 0.55);
+  --glow-sm:   0 0 12px rgba(202, 187, 251, 0.5);
+  --glow-md:   0 0 22px rgba(202, 187, 251, 0.6);
+  --glow-lg:   0 0 42px rgba(202, 187, 251, 0.55);
 
   /* The neon "lit" look on type */
-  --glow-text: 0 0 18px rgba(201, 140, 255, 0.55), 0 0 38px rgba(157, 63, 239, 0.35);
+  --glow-text: 0 0 18px rgba(202, 187, 251, 0.55), 0 0 38px rgba(202, 187, 251, 0.35);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -327,7 +325,7 @@ p { color: var(--text-mid); }
 }
 
 .nav__links > a.nav__cta {
-  color: #fff;
+  color: var(--purple-ink);
   font-weight: 700;
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   box-shadow: var(--glow-sm);
@@ -335,7 +333,7 @@ p { color: var(--text-mid); }
 }
 
 .nav__links > a.nav__cta:hover {
-  color: #fff;
+  color: var(--purple-ink);
   box-shadow: var(--glow-md);
 }
 
@@ -350,11 +348,11 @@ p { color: var(--text-mid); }
 
 @keyframes nav-hl {
   0%, 100% {
-    box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(157, 63, 239, 0.3);
-    text-shadow: 0 0 10px rgba(201, 140, 255, 0.3);
+    box-shadow: 0 0 0 1px var(--purple-line), 0 0 9px rgba(202, 187, 251, 0.3);
+    text-shadow: 0 0 10px rgba(202, 187, 251, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(157, 63, 239, 0.75);
+    box-shadow: 0 0 0 1px var(--purple), 0 0 22px 2px rgba(202, 187, 251, 0.75);
     text-shadow: var(--glow-text);
   }
 }
@@ -381,7 +379,7 @@ p { color: var(--text-mid); }
 }
 
 .nav__social a:hover {
-  color: #fff;
+  color: var(--purple-ink);
   background: var(--purple);
   transform: translateY(-2px);
   box-shadow: var(--glow-md);
@@ -436,11 +434,12 @@ p { color: var(--text-mid); }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-/* White ink on the neon fill — charcoal ink fails there.
-   Gradient runs fill -> deep so both ends clear 5:1 against white. */
+/* Dark ink on the lavender fill — the reverse of the old neon. White on
+   #cabbfb is 1.75:1; --purple-ink is 10.2:1 on it and 6.5:1 on the gradient's
+   deeper end. Never put white text on a purple fill. */
 .btn--primary {
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
-  color: #fff;
+  color: var(--purple-ink);
   box-shadow: var(--glow-md), 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
@@ -1014,13 +1013,13 @@ p { color: var(--text-mid); }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--purple-ink);
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   border: 1px solid transparent;
   border-radius: 100px;
   padding: 6px 14px;
   margin-bottom: 20px;
-  box-shadow: 0 0 14px rgba(157, 63, 239, 0.45);
+  box-shadow: 0 0 14px rgba(202, 187, 251, 0.45);
 }
 
 /* Scaling from the left edge keeps it anchored to the card, and transform
@@ -1031,8 +1030,8 @@ p { color: var(--text-mid); }
 }
 
 @keyframes tier-zoom {
-  0%, 100% { transform: scale(1);    box-shadow: 0 0 14px rgba(157, 63, 239, 0.45); }
-  50%      { transform: scale(1.16); box-shadow: 0 0 26px rgba(157, 63, 239, 0.8); }
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 14px rgba(202, 187, 251, 0.45); }
+  50%      { transform: scale(1.16); box-shadow: 0 0 26px rgba(202, 187, 251, 0.8); }
 }
 
 .tier__name {
@@ -1140,7 +1139,7 @@ p { color: var(--text-mid); }
   color: var(--purple-bright);
   text-shadow: var(--glow-text);
   background: rgba(12, 12, 17, 0.97);
-  box-shadow: 0 0 30px rgba(157, 63, 239, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(202, 187, 251, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .tier__tape::before,
@@ -1151,7 +1150,7 @@ p { color: var(--text-mid); }
   right: 0;
   height: 6px;
   background: repeating-linear-gradient(-45deg,
-    var(--purple) 0 7px, rgba(157, 63, 239, 0.16) 7px 14px);
+    var(--purple) 0 7px, rgba(202, 187, 251, 0.16) 7px 14px);
 }
 
 .tier__tape::before { top: 0; }
@@ -1347,7 +1346,7 @@ p { color: var(--text-mid); }
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(157, 63, 239, 0.26), transparent 62%);
+  background: radial-gradient(ellipse 60% 90% at 8% 0%, rgba(202, 187, 251, 0.26), transparent 62%);
   pointer-events: none;
 }
 
@@ -1544,7 +1543,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 .tab:hover { color: var(--purple-bright); }
 
 .tab[aria-selected="true"] {
-  color: #fff;
+  color: var(--purple-ink);
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   box-shadow: var(--glow-sm);
 }
@@ -1663,7 +1662,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 }
 
 .socials a:hover {
-  color: #fff;
+  color: var(--purple-ink);
   background: var(--purple);
   border-color: var(--purple);
   transform: translateY(-2px);
@@ -1761,7 +1760,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 90% at 50% 50%, rgba(157, 63, 239, 0.16), transparent 70%);
+  background: radial-gradient(ellipse 80% 90% at 50% 50%, rgba(202, 187, 251, 0.16), transparent 70%);
   pointer-events: none;
 }
 
@@ -1894,7 +1893,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 }
 
 .deals__nav:hover:not(:disabled) {
-  color: #fff;
+  color: var(--purple-ink);
   background: var(--purple);
   border-color: var(--purple);
   box-shadow: var(--glow-sm);
@@ -1982,7 +1981,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
     border-radius: 20px;
     box-shadow:
       0 0 0 1px var(--purple-ring),
-      0 0 26px 2px rgba(157, 63, 239, 0.38),
+      0 0 26px 2px rgba(202, 187, 251, 0.38),
       0 12px 30px -6px rgba(0, 0, 0, 0.75);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;
@@ -2220,13 +2219,13 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .tier__badge--pulse {
     animation: none !important;
     transform: scale(1.16);
-    box-shadow: 0 0 26px rgba(157, 63, 239, 0.8);
+    box-shadow: 0 0 26px rgba(202, 187, 251, 0.8);
   }
 
   /* Hold the highlighted nav item lit rather than frozen mid-pulse */
   .nav__links > a.nav__hl {
     animation: none !important;
-    box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(157, 63, 239, 0.5);
+    box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(202, 187, 251, 0.5);
     text-shadow: var(--glow-text);
   }
 

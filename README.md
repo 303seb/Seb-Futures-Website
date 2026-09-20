@@ -157,6 +157,18 @@ trading site in trouble.
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
+## The purple
+
+`#cabbfb`, hue 254, lightness 86 — defined once in the token block at the top
+of the stylesheet. **It is light, which inverts the usual rule:** it reads as
+text straight onto the near-black page (11.8:1), but anything sitting *on* a
+purple fill must be dark. White on it is **1.75:1**, so every button, badge,
+nav CTA and active tab uses `--purple-ink` (#16111f, 10.6:1) instead.
+
+If you change the purple again, check both directions — as text on the page,
+and as a ground under `--purple-ink`. The Discord blurple `#5865f2` is a brand
+colour and deliberately keeps its white text.
+
 ## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
@@ -211,7 +223,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=49`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=50`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
