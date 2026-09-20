@@ -1,18 +1,22 @@
 /* ==========================================================================
    Seb Futures — core stylesheet
 
-   Charcoal + neon purple. The background is a lifted charcoal rather than
-   pure black, and depth comes from neon glows in the accent colour.
+   Light grey + violet. Ink is dark on a #dcdcdc ground, cards are white, and
+   depth comes from soft shadows rather than glows — a glow needs a dark
+   ground to read as light, so on this theme they are shadows instead.
 
-   ONE purple, hue 254, and light. Being light it reads straight onto the
-   near-black page as text (11.8:1) — but anything sitting ON it must be dark:
-     --purple      #cabbfb  L86  fills, marks, glows, and text.
-     --purple-deep #a58cf8  L76  the deeper end of every gradient.
-     --purple-ink  #16111f       text on a purple fill. White there is
-                                 1.75:1 and must never be used.
-   Never hard-code a purple hex outside this block. The rgba(202, 187, 251)
-   values below are the purple at partial alpha.
-   Titles and key figures are lavender; body copy is a light gray so long-form
+   ONE purple, hue 254, three lightnesses. On a light ground the accent has to
+   be DARK — #cabbfb, the chosen brand lavender, is lighter than the page and
+   scores 1.27:1 on it, so it survives as a tint only:
+     --purple       #5630cf  fills and buttons. White on it 7.7:1.
+     --purple-bright #4829ae the accent as TEXT. 7.0:1 on the page.
+     --purple-deep  #3a218c  the deeper end of every gradient.
+     --purple-tint  #cabbfb  the brand lavender, used as a soft fill behind
+                             dark text — never as text itself.
+     --purple-ink   #ffffff  text ON a purple fill.
+   Never hard-code a purple hex outside this block. The rgba(86, 48, 207)
+   values below are --purple at partial alpha.
+   Titles and key figures are violet; body copy is a dark gray so long-form
    reading stays comfortable.
    ========================================================================== */
 
@@ -21,23 +25,24 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
-  --bg:            #030305;
-  --bg-elev:       #101015;  /* unused while section banding is off */
-  --surface:       #101015;
-  --surface-2:     #17171e;
-  --border:        #23232d;
-  --border-soft:   #191921;
-  --paper-deep:    #060609;  /* unused: the footer sits on --bg now */
+  --bg:            #dcdcdc;
+  --bg-elev:       #d2d2d6;  /* unused while section banding is off */
+  --surface:       #ffffff;
+  --surface-2:     #f2f2f5;
+  --border:        #c1c1ca;
+  --border-soft:   #cfcfd7;
+  --paper-deep:    #d2d2d6;  /* unused: the footer sits on --bg now */
 
-  /* Lavender */
-  --purple:        #cabbfb;  /* fills, marks, glow, and text */
-  --purple-bright: #cabbfb;  /* same colour; kept so existing rules resolve */
-  --purple-deep:   #a58cf8;  /* gradient ends — same hue, one step down */
-  --purple-ink:    #16111f;  /* text ON a purple fill: 10.2:1. White is 1.8:1 */
-  --purple-soft:   rgba(202, 187, 251, 0.14);
-  --purple-line:   rgba(202, 187, 251, 0.38);
-  --purple-ring:   rgba(202, 187, 251, 0.36);
-  --purple-glow:   rgba(202, 187, 251, 0.45);
+  /* Violet — same hue as the brand lavender, dark enough for a light ground */
+  --purple:        #5630cf;  /* fills and buttons; white on it 7.7:1 */
+  --purple-bright: #4829ae;  /* the accent as TEXT; 7.0:1 on the page */
+  --purple-deep:   #3a218c;  /* gradient ends */
+  --purple-tint:   #cabbfb;  /* the brand lavender, as a fill behind dark ink */
+  --purple-ink:    #ffffff;  /* text ON a purple fill */
+  --purple-soft:   rgba(202, 187, 251, 0.55);
+  --purple-line:   rgba(86, 48, 207, 0.32);
+  --purple-ring:   rgba(86, 48, 207, 0.30);
+  --purple-glow:   rgba(86, 48, 207, 0.28);
 
   /* Order-flow colours */
   --blue:          #4d84ff;
@@ -47,9 +52,9 @@
   --green-ink:     #4fe3c6;
 
   /* Ink */
-  --text:          #f4f4f8;
-  --text-mid:      #c8c8d8;
-  --text-dim:      #9a9ab0;
+  --text:          #15141b;
+  --text-mid:      #45444f;
+  --text-dim:      #5f5e6b;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   /* One typeface across the whole site. The old --font-mono is gone; if you
@@ -60,18 +65,19 @@
   --radius-sm: 11px;
   --radius-lg: 24px;
 
-  /* On charcoal a shadow reads as depth, a glow reads as light */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow:    0 6px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6);
+  /* On a light ground a shadow reads as depth; a glow reads as nothing at
+     all, so the --glow-* tokens are soft violet shadows here, not halos. */
+  --shadow-xs: 0 1px 2px rgba(24, 22, 38, 0.10);
+  --shadow-sm: 0 2px 8px rgba(24, 22, 38, 0.12);
+  --shadow:    0 6px 20px rgba(24, 22, 38, 0.14);
+  --shadow-lg: 0 18px 44px rgba(24, 22, 38, 0.18);
 
-  --glow-sm:   0 0 12px rgba(202, 187, 251, 0.5);
-  --glow-md:   0 0 22px rgba(202, 187, 251, 0.6);
-  --glow-lg:   0 0 42px rgba(202, 187, 251, 0.55);
+  --glow-sm:   0 2px 10px rgba(86, 48, 207, 0.18);
+  --glow-md:   0 4px 18px rgba(86, 48, 207, 0.24);
+  --glow-lg:   0 10px 30px rgba(86, 48, 207, 0.28);
 
-  /* The neon "lit" look on type */
-  --glow-text: 0 0 18px rgba(202, 187, 251, 0.55), 0 0 38px rgba(202, 187, 251, 0.35);
+  /* A lit-type effect needs a dark ground. There is none to give here. */
+  --glow-text: none;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -440,11 +446,11 @@ p { color: var(--text-mid); }
 .btn--primary {
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   color: var(--purple-ink);
-  box-shadow: var(--glow-md), 0 4px 14px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--glow-md), 0 4px 14px rgba(24, 22, 38, 0.18);
 }
 
 .btn--primary:hover {
-  box-shadow: var(--glow-lg), 0 8px 22px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--glow-lg), 0 8px 22px rgba(24, 22, 38, 0.22);
 }
 
 .btn--ghost {
@@ -463,17 +469,17 @@ p { color: var(--text-mid); }
 .btn--discord {
   background: #5865f2;
   color: #fff;
-  box-shadow: 0 0 20px rgba(88, 101, 242, 0.45), 0 4px 14px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.32), 0 2px 8px rgba(24, 22, 38, 0.16);
 }
 
 .btn--discord:hover {
   background: #4752c4;
-  box-shadow: 0 0 32px rgba(88, 101, 242, 0.6), 0 8px 22px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 22px rgba(88, 101, 242, 0.42), 0 4px 14px rgba(24, 22, 38, 0.2);
 }
 
 .btn--light {
   background: var(--text);
-  color: #141419;
+  color: #ffffff;
 }
 
 .btn--light:hover { background: #fff; }
@@ -973,8 +979,8 @@ p { color: var(--text-mid); }
   border-color: var(--text);
 }
 
-.panel--light h3 { color: #141419; text-shadow: none; }
-.panel--light p { color: #4a4d57; }
+.panel--light h3 { color: var(--text); text-shadow: none; }
+.panel--light p { color: var(--text-mid); }
 
 /* --------------------------------------------------------------------------
    10b. Pricing tiers
@@ -1119,7 +1125,7 @@ p { color: var(--text-mid); }
   display: grid;
   place-items: center;
   cursor: not-allowed;
-  background: rgba(8, 8, 12, 0.74);
+  background: rgba(228, 228, 232, 0.76);
   -webkit-backdrop-filter: blur(3px) saturate(0.45);
   backdrop-filter: blur(3px) saturate(0.45);
 }
@@ -1136,10 +1142,9 @@ p { color: var(--text-mid); }
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--purple-bright);
-  text-shadow: var(--glow-text);
-  background: rgba(12, 12, 17, 0.97);
-  box-shadow: 0 0 30px rgba(202, 187, 251, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+  color: var(--purple-ink);
+  background: var(--purple-deep);
+  box-shadow: 0 6px 24px rgba(24, 22, 38, 0.28);
 }
 
 .tier__tape::before,
@@ -1150,7 +1155,7 @@ p { color: var(--text-mid); }
   right: 0;
   height: 6px;
   background: repeating-linear-gradient(-45deg,
-    var(--purple) 0 7px, rgba(202, 187, 251, 0.16) 7px 14px);
+    var(--purple-tint) 0 7px, rgba(202, 187, 251, 0.25) 7px 14px);
 }
 
 .tier__tape::before { top: 0; }
@@ -1411,7 +1416,7 @@ p { color: var(--text-mid); }
 }
 
 .countdown__cell {
-  background: rgba(0, 0, 0, 0.32);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 15px 8px;
@@ -1467,7 +1472,7 @@ thead th {
   color: var(--text-dim);
   padding: 15px 20px;
   border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--surface-2);
   white-space: nowrap;
 }
 
@@ -1588,7 +1593,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
    16. Disclaimer + footer
    -------------------------------------------------------------------------- */
 .disclaimer {
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--surface-2);
   border: 1px solid var(--border);
   border-left: 3px solid var(--purple);
   border-radius: var(--radius-sm);
@@ -1975,14 +1980,14 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
     align-items: stretch;
     gap: 4px;
     padding: 12px;
-    background: rgba(24, 24, 30, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 20px;
     box-shadow:
       0 0 0 1px var(--purple-ring),
       0 0 26px 2px rgba(202, 187, 251, 0.38),
-      0 12px 30px -6px rgba(0, 0, 0, 0.75);
+      0 12px 30px -6px rgba(24, 22, 38, 0.22);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;
     visibility: hidden;

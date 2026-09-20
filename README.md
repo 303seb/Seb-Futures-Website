@@ -157,19 +157,35 @@ trading site in trouble.
 - **Giveaway closing date** — the `data-countdown` attribute on
   `giveaways.html`, ISO 8601 with your UTC offset
 
-## The purple
+## The palette
 
-`#cabbfb`, hue 254, lightness 86 — defined once in the token block at the top
-of the stylesheet. **It is light, which inverts the usual rule:** it reads as
-text straight onto the near-black page (11.8:1), but anything sitting *on* a
-purple fill must be dark. White on it is **1.75:1**, so every button, badge,
-nav CTA and active tab uses `--purple-ink` (#16111f, 10.6:1) instead.
+**Light theme.** Page `#dcdcdc`, cards white, ink dark. Defined once in the
+token block at the top of the stylesheet.
 
-If you change the purple again, check both directions — as text on the page,
-and as a ground under `--purple-ink`. The Discord blurple `#5865f2` is a brand
-colour and deliberately keeps its white text.
+The accent is hue 254 — the same hue as the brand lavender `#cabbfb` — but
+**darkened, because the lavender is lighter than the page and scores 1.27:1
+on it.** It survives as `--purple-tint`, a soft fill sitting behind dark text
+(the giveaway tab chip, avatars, the play button, the hazard stripes), and
+must never be used as text.
 
-## Typography
+| token | value | role |
+| --- | --- | --- |
+| `--purple` | `#5630cf` | fills and buttons; white on it 7.7:1 |
+| `--purple-bright` | `#4829ae` | the accent as text; 7.0:1 on the page |
+| `--purple-deep` | `#3a218c` | the deeper end of every gradient |
+| `--purple-tint` | `#cabbfb` | soft fill behind dark ink, never text |
+| `--purple-ink` | `#ffffff` | text on a purple fill |
+
+**`--glow-text` is `none` and the `--glow-*` tokens are soft violet shadows,
+not halos.** A glow needs a dark ground to read as light; on this theme it
+would just be a smudge. If the site ever goes back to dark, those three tokens
+and `--glow-text` are what turn the lighting back on.
+
+Contrast is verified by walking the rendered DOM and comparing each text
+element's computed colour against its composited background — not by eye.
+All five pages pass AA.
+
+## Typography## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
 and labels in JetBrains Mono; that is gone, along with its font request. Do not
@@ -223,7 +239,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=50`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=51`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
