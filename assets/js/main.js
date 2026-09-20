@@ -153,45 +153,48 @@
   }
 
   /* ----------------------------------------------------------------------
-     Discount carousel
+     Copy a discount code
 
-     The scroller itself is CSS (scroll-snap), so touch swiping and keyboard
-     arrows already work and the markup degrades to a plain scroller without
-     this. All this adds is the two buttons, and disabling them at each end
-     so they do not look broken when there is nowhere left to go.
+     navigator.clipboard needs a secure context and can still be refused, so
+     there is a execCommand fallback and, if both fail, the code stays
+     selectable on screen — nothing about the card depends on this working.
      ---------------------------------------------------------------------- */
-  function initCarousel() {
-    document.querySelectorAll("[data-carousel]").forEach(function (root) {
-      var track = root.querySelector("[data-carousel-track]");
-      var prev = root.querySelector("[data-carousel-prev]");
-      var next = root.querySelector("[data-carousel-next]");
-      if (!track || !prev || !next) return;
+  function initCopyCode() {
+    var buttons = document.querySelectorAll("[data-copy]");
+    if (!buttons.length) return;
 
-      // Step by one card plus the gap, read from the DOM so the two cannot
-      // drift apart when the breakpoint changes the card width.
-      function step() {
-        var card = track.querySelector(":scope > *");
-        if (!card) return track.clientWidth;
-        var gap = parseFloat(getComputedStyle(track).columnGap || 0) || 0;
-        return card.getBoundingClientRect().width + gap;
-      }
+    function fallback(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:-100px;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
 
-      function sync() {
-        var max = track.scrollWidth - track.clientWidth;
-        prev.disabled = track.scrollLeft <= 1;
-        next.disabled = track.scrollLeft >= max - 1;
-      }
+    buttons.forEach(function (btn) {
+      var timer;
+      btn.addEventListener("click", function () {
+        var text = btn.getAttribute("data-copy");
 
-      prev.addEventListener("click", function () {
-        track.scrollBy({ left: -step(), behavior: "smooth" });
+        var done = function () {
+          btn.classList.add("is-copied");
+          clearTimeout(timer);
+          timer = setTimeout(function () { btn.classList.remove("is-copied"); }, 1600);
+        };
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(done, function () {
+            if (fallback(text)) done();
+          });
+        } else if (fallback(text)) {
+          done();
+        }
       });
-      next.addEventListener("click", function () {
-        track.scrollBy({ left: step(), behavior: "smooth" });
-      });
-
-      track.addEventListener("scroll", sync, { passive: true });
-      window.addEventListener("resize", sync);
-      sync();
     });
   }
 
@@ -399,7 +402,7 @@
     initNav();
     initTyper();
     initTabs();
-    initCarousel();
+    initCopyCode();
     initDiscordPanel();
     initFaq();
     initCountdown();

@@ -1130,68 +1130,135 @@ p { color: var(--text-mid); }
   white-space: nowrap;
 }
 
-.quotes { overflow: hidden; }
+/* --------------------------------------------------------------------------
+   Testimonial wall — three vertical marquees
 
-.quotes__track {
-  display: flex;
-  width: max-content;
-  animation: promo-scroll 28s linear infinite;
-}
-
-/* Sits below the full-bleed carousel, back on the container grid */
-.quotes__more { margin-top: 34px; }
-
-.quotes__group {
-  display: flex;
-  align-items: flex-start;   /* screenshots differ in height; don't stretch */
-  gap: 18px;
-  padding-right: 18px;
-  flex-shrink: 0;
-}
-
-.quote {
-  width: 320px;
-  flex-shrink: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-}
-
-.quote blockquote {
-  font-size: 0.94rem;
-  line-height: 1.6;
-  color: var(--text-mid);
-}
-
-.quote__who {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-soft);
-}
-
-.quote__avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+   Same trick as the horizontal strips, turned 90 degrees: each track holds
+   its set twice and travels exactly -50%, so the second copy lands where the
+   first began and there is no seam. The middle column runs the other way,
+   which stops the three reading as one sliding block.
+   -------------------------------------------------------------------------- */
+.tcols {
   display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  background: var(--purple-soft);
-  border: 1px solid var(--purple-line);
-  color: var(--purple-bright);
-  font-size: 0.78rem;
-  font-weight: 700;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  height: clamp(460px, 62vw, 680px);
+  overflow: hidden;
+  padding-inline: clamp(16px, 4vw, 40px);
+  max-width: 1240px;
+  margin-inline: auto;
+  /* the wall fades out rather than being cut at top and bottom */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 13%, #000 87%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 13%, #000 87%, transparent 100%);
 }
 
-.quote__name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
+.tcol { overflow: hidden; }
+
+.tcol__track {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  will-change: transform;
 }
+
+.tcol__track--up   { animation: tscroll-up 66s linear infinite; }
+.tcol__track--down { animation: tscroll-down 72s linear infinite; }
+
+@keyframes tscroll-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes tscroll-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+.tcol__track img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* --------------------------------------------------------------------------
+   Whop panel — rides in the middle column with the screenshots
+
+   Whop's own red, not the site purple, for the same reason the Discord
+   button stays blurple: it has to read as Whop.
+   -------------------------------------------------------------------------- */
+.whop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 26px 20px 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 120% 70% at 50% 118%, #e8402b 0%, rgba(232, 64, 43, 0.35) 42%, transparent 72%),
+    #0e0e13;
+}
+
+.whop__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.whop__mark { width: 26px; height: 16px; color: #ff4d2d; flex-shrink: 0; }
+
+.whop__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.whop__star { color: #e8402b; font-size: 2rem; }
+.whop__count { font-size: 0.84rem; color: var(--text-dim); }
+
+/* Stands in until there is a real score — never a made-up one */
+.whop__soon {
+  margin: 10px 0 2px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.whop__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: #fff;
+  color: #14141a;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: transform 0.18s var(--ease), box-shadow 0.2s;
+}
+
+.whop__btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5); }
+.whop__btn .whop__mark { width: 21px; height: 13px; }
+.whop__btn span { font-weight: 800; }
+
+.quotes__more { margin-top: 30px; }
 
 /* --------------------------------------------------------------------------
    Testimonial wall (testimonials.html)
@@ -2325,46 +2392,25 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 }
 
 /* --------------------------------------------------------------------------
-   Discount carousel
+   Discount cards
 
-   A scroll-snap scroller, not a JS slider. Touch swiping and keyboard arrows
-   come free from the browser, the arrow buttons only nudge scrollLeft, and
-   with JS off it degrades to a plain horizontal scroller that still works.
+   All firms shown at once rather than a carousel. Each card is a column:
+   branded banner, name, tagline, click-to-copy code, video slot.
    -------------------------------------------------------------------------- */
-/* One card is shown at a time, so the row is constrained rather than letting
-   a single card stretch the full 1080px measure. */
 .deals {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  max-width: 620px;
-  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
 }
-
-.deals__track {
-  display: flex;
-  gap: 18px;
-  flex: 1;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 4px;               /* room for the focus ring and card glow */
-  scrollbar-width: none;
-}
-
-.deals__track::-webkit-scrollbar { display: none; }
-.deals__track:focus-visible { outline: 2px solid var(--purple-bright); outline-offset: 2px; }
 
 .deal {
-  flex: 0 0 100%;            /* exactly one card per view */
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 26px 24px 24px;
+  padding: 0 18px 18px;
+  overflow: hidden;
   transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
 }
 
@@ -2374,60 +2420,165 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   box-shadow: var(--glow-sm), var(--shadow);
 }
 
-.deal__firm {
-  font-size: 1.16rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-
-.deal__code {
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 14px;
-}
-
-.deal__code span {
-  color: var(--purple-bright);
-  font-weight: 700;
-  text-shadow: var(--glow-text);
-  letter-spacing: 0.12em;
-}
-
-.deal__blurb {
-  font-size: 0.9rem;
-  color: var(--text-mid);
-  margin-bottom: 22px;
-}
-
-/* Buttons line up across cards regardless of blurb length */
-.deal .btn, .deal > span.btn { margin-top: auto; }
-
-.deals__nav {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+/* Full-bleed banner. The gradient stands in for the firm's own artwork;
+   swapping in a real image means adding background-image to the modifier. */
+.deal__banner {
   display: grid;
   place-items: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  margin: 0 -18px 0;
+  min-height: 168px;
+  padding: 20px;
+  position: relative;
+  text-decoration: none;
+  /* fades the art into the card rather than ending on a hard edge */
+  -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+}
+
+.deal__word {
+  font-size: clamp(1.15rem, 2.1vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+/* Each firm's own colour, so the cards read as three different brands */
+.deal__banner--alpha {
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 110%, rgba(34, 197, 94, 0.5), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(34, 197, 94, 0.16), transparent 70%),
+    #07130c;
+}
+
+.deal__banner--fundednext {
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 110%, rgba(79, 92, 234, 0.55), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(120, 90, 240, 0.2), transparent 70%),
+    #0a0c1e;
+}
+
+.deal__banner--topone {
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 110%, rgba(202, 187, 251, 0.42), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(202, 187, 251, 0.14), transparent 70%),
+    #100d18;
+}
+
+.deal__name {
+  margin-top: 2px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  text-shadow: none;
+}
+
+.deal__tag {
+  margin: 8px 0 18px;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: var(--text-mid);
-  transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+  text-align: center;
 }
 
-.deals__nav:hover:not(:disabled) {
+.deal__coderow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 7px 7px 7px 16px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.deal__codelabel { font-size: 0.87rem; font-weight: 600; color: var(--text); }
+
+.deal__code {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   color: var(--purple-ink);
-  background: var(--purple);
-  border-color: var(--purple);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
   box-shadow: var(--glow-sm);
+  transition: box-shadow 0.2s, transform 0.18s var(--ease);
 }
 
-.deals__nav:disabled { opacity: 0.3; cursor: default; }
-.deals__nav svg { width: 18px; height: 18px; }
+.deal__code:hover { box-shadow: var(--glow-md); transform: translateY(-1px); }
+.deal__code svg { width: 15px; height: 15px; }
+
+/* The tick swaps in for the copy glyph for a moment after a successful copy */
+.deal__done { display: none; }
+.deal__code.is-copied .deal__copy { display: none; }
+.deal__code.is-copied .deal__done { display: inline-flex; }
+
+.deal__code--tbc {
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: default;
+  box-shadow: none;
+}
+
+.deal__code--tbc:hover { transform: none; box-shadow: none; }
+
+/* Sits at the bottom of every card regardless of tagline length */
+.deal__video {
+  margin-top: auto;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(202, 187, 251, 0.05), transparent 65%),
+    var(--surface-2);
+}
+
+.deal__video img,
+.deal__video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.deal__play {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-line);
+  color: var(--purple-bright);
+}
+
+.deal__play svg { width: 17px; height: 17px; margin-left: 2px; }
+
+.deal__video figcaption {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
 
 /* --------------------------------------------------------------------------
    Poster page (rejection-block-checklist.html)
@@ -2660,17 +2811,16 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .vidbox__play { width: 52px; height: 52px; }
   .vidbox__play svg { width: 22px; height: 22px; }
 
+  /* Three columns at 390px gives ~110px cards — unreadable. Two, taller. */
+  .tcols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; height: clamp(420px, 105vw, 540px); }
+  .tcol__track { gap: 12px; }
+  .tcol:last-child { display: none; }
+
   .cta__title { font-size: 1.85rem; }
   .cta__sub   { font-size: 0.96rem; }
 
-  /* --- discounts: one card per screen, arrows sit under it ---------------- */
-  .deals        { flex-wrap: wrap; justify-content: center; gap: 10px; }
-  .deals__track { order: -1; flex: 1 0 100%; gap: 12px; }
-  .deal         { padding: 22px 20px 20px; }
-  .deals__nav   { width: 36px; height: 36px; }
 
   /* --- testimonials ------------------------------------------------------ */
-  .quotes__group  { gap: 12px; padding-right: 12px; }
   .quotes .shot   { width: min(78vw, 320px); }
   .quotes__more   { margin-top: 24px; }
   .quote-wall     { column-gap: 14px; }
@@ -2743,6 +2893,10 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   }
 
   .reveal { opacity: 1; transform: none; }
+
+  /* The wall stops rather than crawling */
+  .tcol__track { animation: none !important; transform: none !important; }
+  .tcols { height: auto; max-height: 560px; }
 
   /* Caret sits solid; initTyper() also skips the animation entirely */
   .typer__caret { animation: none !important; opacity: 1; }

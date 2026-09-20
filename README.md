@@ -242,6 +242,39 @@ viewport edge instead of letting it stop dead.
 On phones the same 190%-wide ellipse becomes a tight dome, so it widens to
 330% against a taller box, which flattens the curve back out.
 
+## Discount cards
+
+One card per firm, all shown at once (the carousel is gone). Each card is a
+branded banner that links out, the firm name and tagline, a click-to-copy code
+pill, and a slot for the walkthrough video.
+
+The banner washes are **CSS gradients standing in for the firms' own
+artwork** — to use a real image, add `background-image` to
+`.deal__banner--<slug>`. Each firm keeps its own colour (Alpha green,
+FundedNext indigo) so the three read as three brands.
+
+`initCopyCode()` handles the code pill. `navigator.clipboard` needs a secure
+context and can still be refused, so there is an `execCommand` fallback, and
+if both fail the code is still on screen to read. Nothing about the card
+depends on the copy working.
+
+## The testimonial wall
+
+Three vertical marquees: **outer columns travel down, the middle one up.**
+Same trick as the horizontal strips turned 90 degrees — each track holds its
+set twice and moves exactly `-50%`, so the second copy lands where the first
+began. **Add a card to BOTH copies in the same column** or the loop jumps.
+The duplicate set is `aria-hidden` with empty `alt`, so a screen reader hears
+each screenshot once.
+
+Screenshots only, no name captions. On phones the third column is hidden —
+three columns at 390px gives ~110px cards.
+
+The Whop panel rides in the middle column and uses **Whop's red, not the site
+purple**, for the same reason the Discord button stays blurple. It currently
+shows "Reviews coming soon": there is no rating yet, and a made-up score is
+not an option. The markup carries a comment with exactly what to swap in.
+
 ## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
@@ -296,7 +329,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=59`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=60`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
