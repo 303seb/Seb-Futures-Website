@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=66">
+<link rel="stylesheet" href="assets/css/style.css?v=67">
 </head>
 <body>
 
@@ -67,8 +67,8 @@
   <!-- ======================================================================
        EMAIL GATE
 
-       PASTE YOUR GOOGLE APPS SCRIPT URL IN data-endpoint BELOW.
-       It looks like https://script.google.com/macros/s/AKfy..../exec
+       data-endpoint is the Google Apps Script web app that appends the name
+       and email to the sheet. Clearing it disarms the gate.
 
        While data-endpoint is empty the gate removes itself and the checklist
        shows to everyone, so the page is never broken by a half-finished
@@ -81,15 +81,22 @@
        ====================================================================== -->
   <section class="section section--top" data-gate-section hidden>
     <div class="container">
-      <form class="gate" data-gate data-endpoint="" novalidate>
-        <label class="gate__label" for="gate-email">Enter your email to unlock the checklist</label>
+      <form class="gate" aria-labelledby="gate-heading" data-gate data-endpoint="https://script.google.com/macros/s/AKfycbyrmDK7-xa8gd4TqzfEFkiYIk6vez09ABEs6w-WfqYpeYAwhixwJi_FF5kgYLOBdiD-/exec" novalidate>
+        <p class="gate__label" id="gate-heading">Enter your details to unlock the checklist</p>
 
-        <div class="gate__row">
+        <div class="gate__fields">
+          <label class="sr-only" for="gate-name">Your name</label>
+          <input class="gate__input" id="gate-name" name="name" type="text"
+                 autocomplete="given-name" autocapitalize="words"
+                 placeholder="Your name" required>
+
+          <label class="sr-only" for="gate-email">Your email</label>
           <input class="gate__input" id="gate-email" name="email" type="email"
                  inputmode="email" autocomplete="email" spellcheck="false"
                  placeholder="you@email.com" required>
-          <button class="btn btn--primary gate__submit" type="submit">Unlock</button>
         </div>
+
+        <button class="btn btn--primary gate__submit" type="submit">Unlock the checklist</button>
 
         <!-- Honeypot: off-screen and skipped by tab, so a person never sees
              it and a bot that fills every field gives itself away. -->
@@ -100,9 +107,9 @@
 
         <p class="gate__error" data-gate-error role="alert" hidden></p>
         <p class="gate__note">
-          Your email is stored so The Market Element can contact you about the
-          community and future resources. No spam, and you can ask to be
-          removed at any time.
+          Your name and email are stored so The Market Element can contact you
+          about the community and future resources. No spam, and you can ask to
+          be removed at any time.
         </p>
       </form>
     </div>
@@ -198,6 +205,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=66"></script>
+<script src="assets/js/main.js?v=67"></script>
 </body>
 </html>

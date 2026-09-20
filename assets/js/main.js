@@ -460,6 +460,7 @@
     var locked = document.querySelector("[data-gate-locked]");
     var errorEl = form.querySelector("[data-gate-error]");
     var input = form.querySelector("#gate-email");
+    var nameInput = form.querySelector("#gate-name");
     var button = form.querySelector(".gate__submit");
     var endpoint = (form.getAttribute("data-endpoint") || "").trim();
     var KEY = "me:rb-checklist-unlocked";
@@ -479,10 +480,10 @@
     if (locked) locked.setAttribute("hidden", "");
     if (section) section.removeAttribute("hidden");
 
-    function fail(message) {
+    function fail(message, field) {
       errorEl.textContent = message;
       errorEl.removeAttribute("hidden");
-      input.focus();
+      (field || input).focus();
     }
 
     // Deliberately loose. Anything stricter rejects real addresses, and the
@@ -517,6 +518,9 @@
       event.preventDefault();
       errorEl.setAttribute("hidden", "");
 
+      var name = nameInput.value.trim();
+      if (!name) return fail("Please enter your name.", nameInput);
+
       var email = input.value.trim();
       if (!looksLikeEmail(email)) return fail("That does not look like an email address.");
 
@@ -529,6 +533,7 @@
       button.textContent = "Unlocking...";
 
       var body = new URLSearchParams();
+      body.append("name", name);
       body.append("email", email);
       body.append("source", "rejection-block-checklist");
 

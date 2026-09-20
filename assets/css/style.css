@@ -2566,8 +2566,10 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   color: var(--text);
 }
 
-.gate__row {
-  display: flex;
+/* Stacked rather than side by side: at the 460px the form is capped to,
+   two inputs on a row leave each too narrow to read a typed address. */
+.gate__fields {
+  display: grid;
   gap: 10px;
 }
 
@@ -2595,7 +2597,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
    finished; the form validates on submit instead. */
 .gate__input:invalid { box-shadow: none; }
 
-.gate__submit { flex: 0 0 auto; }
+.gate__submit { width: 100%; margin-top: 10px; }
 
 /* Off-screen rather than display:none -- a bot reading the DOM skips a
    hidden field but happily fills one that is merely positioned away. */
@@ -2622,10 +2624,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   color: var(--text-dim);
 }
 
-@media (max-width: 560px) {
-  .gate__row { flex-direction: column; }
-  .gate__submit { width: 100%; }
-}
 
 /* --------------------------------------------------------------------------
    18. Responsive
