@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=56">
+<link rel="stylesheet" href="assets/css/style.css?v=57">
 </head>
 <body>
 
@@ -66,156 +66,251 @@
       </div>
 
       <!-- ==================================================================
-           DISCORD PANEL
+           DISCORD PANEL — a styled replica of the real server, not an embed.
+           Discord exposes no public endpoint for messages and this site is
+           static, so the conversation is fixed. The member and online counts
+           in the top bar ARE live (invite endpoint, CORS-allowed).
 
-           A styled replica of the server, not an embed: Discord has no public
-           API that returns messages, and this site is static, so a live feed
-           is impossible. The member and online counts ARE live — they come
-           from the invite endpoint, which allows cross-origin reads.
-
-           Channels are tabs driven by initTabs(); add one by adding a
-           <button class="tab dui__channel"> with aria-controls pointing at a
-           matching .dui__feed panel id.
+           Channels are tabs on initTabs(). #trades carries real content; every
+           other channel is a .dui__feed--locked panel, which is what a
+           non-member actually sees.
            ================================================================== -->
       <figure class="hero__shot">
         <div class="dui">
           <div class="dui__rail" aria-hidden="true">
             <span class="dui__rail-server">M</span>
+            <span class="dui__rail-sep"></span>
+            <span class="dui__rail-dot"></span>
+            <span class="dui__rail-dot"></span>
             <span class="dui__rail-dot"></span>
             <span class="dui__rail-dot"></span>
           </div>
 
           <div class="dui__side">
-            <p class="dui__servername">Seb | The Market Element</p>
-            <p class="dui__group">Main hub</p>
+            <p class="dui__servername">Seb | The Market Elem&hellip;</p>
             <div class="dui__channels" role="tablist" aria-label="Channels" data-tabs>
-            <button class="tab dui__channel" role="tab" id="tab-wins"
-                    aria-controls="dui-wins" aria-selected="true" tabindex="0">
-              <span class="dui__hash" aria-hidden="true">#</span>wins
-            </button>
-            <button class="tab dui__channel" role="tab" id="tab-premarket"
-                    aria-controls="dui-premarket" aria-selected="false" tabindex="-1">
-              <span class="dui__hash" aria-hidden="true">#</span>premarket-analysis
-              <span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-            </button>
-            <button class="tab dui__channel" role="tab" id="tab-commentary"
-                    aria-controls="dui-commentary" aria-selected="false" tabindex="-1">
-              <span class="dui__hash" aria-hidden="true">#</span>market-commentary
-              <span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-            </button>
-            <button class="tab dui__channel" role="tab" id="tab-education"
-                    aria-controls="dui-education" aria-selected="false" tabindex="-1">
-              <span class="dui__hash" aria-hidden="true">#</span>education-hub
-              <span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-            </button>
+            <button class="tab dui__channel" role="tab" id="tab-joins" aria-controls="dui-joins"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__cname">joins</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-levels" aria-controls="dui-levels"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__cname">levels</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Important</p>
+            <button class="tab dui__channel" role="tab" id="tab-announcements" aria-controls="dui-announcements"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">📢</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">announcements</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-official-links" aria-controls="dui-official-links"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">🟣</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">official-links</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-new-posts" aria-controls="dui-new-posts"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">📲</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">new-posts</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Giveaways</p>
+            <button class="tab dui__channel" role="tab" id="tab-giveaways" aria-controls="dui-giveaways"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">🎁</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">giveaways</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-giveaway-proof" aria-controls="dui-giveaway-proof"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">🏆</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">giveaway-proof</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Results</p>
+            <button class="tab dui__channel" role="tab" id="tab-testimonials" aria-controls="dui-testimonials"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">💎</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">testimonials</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-payouts" aria-controls="dui-payouts"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">💰</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">payouts</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-profits" aria-controls="dui-profits"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">✅</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">profits</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Community</p>
+            <button class="tab dui__channel" role="tab" id="tab-general-chat" aria-controls="dui-general-chat"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">🗣️</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">general-chat</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-trades" aria-controls="dui-trades"
+                    aria-selected="true" tabindex="0"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">✅</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">trades</span></button>
+            <button class="tab dui__channel" role="tab" id="tab-psychology" aria-controls="dui-psychology"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">🧠</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">psychology</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-larp" aria-controls="dui-larp"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">💰</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">larp</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Education</p>
+            <button class="tab dui__channel" role="tab" id="tab-pdfs" aria-controls="dui-pdfs"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__cname">pdfs</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <button class="tab dui__channel" role="tab" id="tab-road-to-riches" aria-controls="dui-road-to-riches"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__cname">road-to-riches</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
+            <p class="dui__group">Exclusive</p>
+            <button class="tab dui__channel" role="tab" id="tab-seb" aria-controls="dui-seb"
+                    aria-selected="false" tabindex="-1"><span class="dui__hash" aria-hidden="true">#</span><span class="dui__emoji" aria-hidden="true">👑</span><span class="dui__bar" aria-hidden="true">|</span><span class="dui__cname">seb</span><span class="dui__lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></button>
             </div>
           </div>
 
           <div class="dui__main">
             <header class="dui__top">
               <span class="dui__hash" aria-hidden="true">#</span>
-              <span class="dui__topname">wins</span>
-              <span class="dui__presence"><i aria-hidden="true"></i><span data-discord-online>&mdash;</span> online</span>
+              <span class="dui__emoji" data-dui-emoji aria-hidden="true">✅</span>
+              <span class="dui__bar" data-dui-bar aria-hidden="true">|</span>
+              <span class="dui__topname">trades</span>
+              <span class="dui__presence">
+                <i aria-hidden="true"></i><span data-discord-online>&mdash;</span>&nbsp;online<span
+                  class="dui__presence-more"><span class="dui__presence-sep" aria-hidden="true">&middot;</span> <span data-discord-members>&mdash;</span>&nbsp;members</span>
+              </span>
             </header>
 
-            <div class="dui__feed" id="dui-wins" role="tabpanel" aria-labelledby="tab-wins">
+        <div class="dui__feed" id="dui-trades" role="tabpanel" aria-labelledby="tab-trades">
           <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">C</span>
+            <span class="dui__avatar dui__avatar--a" aria-hidden="true">C</span>
             <div>
-              <p class="dui__meta"><span class="dui__author">ChaosKamii</span><time>9:26 AM</time></p>
-            <p class="dui__text">trailing SL</p>
-            <p class="dui__text">+1321 on da day</p>
+              <p class="dui__meta"><span class="dui__author dui__author--red">ChaosKamii</span><time>9/17/26, 9:00&#8239;PM</time></p>
+              <p class="dui__text">entering based off narativr?</p>
             </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">W</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">Wenx</span><time>8:42 AM</time></p>
-            <p class="dui__text">681 on the day</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">T</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">TOXIC</span><time>9:36 AM</time></p>
-            <p class="dui__text">bang</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">K</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">kanevsnq</span><time>9:31 AM</time></p>
-            <p class="dui__text">Small dub</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">M</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">mark_ben949</span><time>8:42 AM</time></p>
-            <p class="dui__text">brazyy</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">S</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">Speedy</span><time>3:39 PM</time></p>
-            <p class="dui__text">40rr gc longs</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">S</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">Speedy</span><time>1:54 AM</time></p>
-            <p class="dui__text">50rr trailing</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">T</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">TOXIC</span><time>8:51 AM</time></p>
-            <p class="dui__text">stoped in profit but payout secured</p>
-            </div>
-          </div>
-          <div class="dui__msg">
-            <span class="dui__avatar" aria-hidden="true">C</span>
-            <div>
-              <p class="dui__meta"><span class="dui__author">ChaosKamii</span><time>7:53 AM</time></p>
-            <p class="dui__text">bro <b>@seb</b> ts prints its genuinely so easy</p>
-            </div>
-          </div>
-            </div>
-        <div class="dui__feed dui__feed--locked" id="dui-premarket" role="tabpanel" aria-labelledby="tab-premarket" hidden>
-          <span class="dui__lock-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          </span>
-          <p class="dui__lock-title">premarket-analysis is members only</p>
-          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
-          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
-        </div>
-        <div class="dui__feed dui__feed--locked" id="dui-commentary" role="tabpanel" aria-labelledby="tab-commentary" hidden>
-          <span class="dui__lock-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          </span>
-          <p class="dui__lock-title">market-commentary is members only</p>
-          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
-          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
-        </div>
-        <div class="dui__feed dui__feed--locked" id="dui-education" role="tabpanel" aria-labelledby="tab-education" hidden>
-          <span class="dui__lock-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          </span>
-          <p class="dui__lock-title">education-hub is members only</p>
-          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
-          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
-        </div>
           </div>
 
-          <aside class="dui__members">
-            <p class="dui__group">
-              Online &mdash; <span data-discord-online>&mdash;</span>
-            </p>
-            <p class="dui__membercount"><span data-discord-members>&mdash;</span> members</p>
-          </aside>
+          <div class="dui__msg">
+            <span class="dui__avatar dui__avatar--b" aria-hidden="true">L</span>
+            <div>
+              <p class="dui__meta"><span class="dui__author">luhrob</span><time>9/17/26, 9:06&#8239;PM</time></p>
+              <p class="dui__text">What do y&rsquo;all enter off?</p>
+            </div>
+          </div>
+
+          <div class="dui__msg">
+            <span class="dui__avatar dui__avatar--seb" aria-hidden="true">S</span>
+            <div>
+              <p class="dui__meta"><span class="dui__author dui__author--gold">seb</span><time>9/17/26, 9:07&#8239;PM</time></p>
+              <p class="dui__text">Rbs and ifvgs usually</p>
+              <p class="dui__text">sometimes displacement all I need tho</p>
+            </div>
+          </div>
+
+          <p class="dui__divider"><span>September 18, 2026</span></p>
+
+          <div class="dui__msg">
+            <span class="dui__avatar dui__avatar--c" aria-hidden="true">A</span>
+            <div>
+              <p class="dui__reply"><em>Original message was deleted</em></p>
+              <p class="dui__meta"><span class="dui__author">Alok</span><time>Yesterday at 7:34&#8239;AM</time></p>
+              <p class="dui__text">how do u trade nq in asia i watch but no volume</p>
+            </div>
+          </div>
+
+          <div class="dui__msg dui__msg--mention">
+            <span class="dui__avatar dui__avatar--seb" aria-hidden="true">S</span>
+            <div>
+              <p class="dui__meta"><span class="dui__author">SEB</span><span class="dui__app">APP</span><time>Yesterday at 9:00&#8239;AM</time></p>
+              <p class="dui__text"><b>@everyone</b> send those wins from today!</p>
+            </div>
+          </div>
+
+          <div class="dui__msg">
+            <span class="dui__avatar dui__avatar--b" aria-hidden="true">L</span>
+            <div>
+              <p class="dui__meta"><span class="dui__author">luhrob</span><time>Yesterday at 10:02&#8239;AM</time></p>
+              <img class="dui__shot" src="assets/discord/trade-luhrob.jpg"
+                   alt="A COMEX futures chart posted in #trades, closed at +1,310.00 USD."
+                   width="940" height="701" loading="lazy" decoding="async">
+              <p class="dui__react"><span>💯</span> 1</p>
+            </div>
+          </div>
+
+          <div class="dui__msg">
+            <span class="dui__avatar dui__avatar--a" aria-hidden="true">C</span>
+            <div>
+              <p class="dui__reply">@luhrob <em>Click to see attachment</em></p>
+              <p class="dui__meta"><span class="dui__author dui__author--red">ChaosKamii</span><time>Yesterday at 2:57&#8239;PM</time></p>
+              <p class="dui__text">what made u enter?</p>
+            </div>
+          </div>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-joins" role="tabpanel" aria-labelledby="tab-joins" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#joins is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-levels" role="tabpanel" aria-labelledby="tab-levels" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#levels is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-announcements" role="tabpanel" aria-labelledby="tab-announcements" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#announcements is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-official-links" role="tabpanel" aria-labelledby="tab-official-links" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#official-links is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-new-posts" role="tabpanel" aria-labelledby="tab-new-posts" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#new-posts is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-giveaways" role="tabpanel" aria-labelledby="tab-giveaways" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#giveaways is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-giveaway-proof" role="tabpanel" aria-labelledby="tab-giveaway-proof" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#giveaway-proof is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-testimonials" role="tabpanel" aria-labelledby="tab-testimonials" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#testimonials is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-payouts" role="tabpanel" aria-labelledby="tab-payouts" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#payouts is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-profits" role="tabpanel" aria-labelledby="tab-profits" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#profits is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-general-chat" role="tabpanel" aria-labelledby="tab-general-chat" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#general-chat is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-psychology" role="tabpanel" aria-labelledby="tab-psychology" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#psychology is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-larp" role="tabpanel" aria-labelledby="tab-larp" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#larp is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-pdfs" role="tabpanel" aria-labelledby="tab-pdfs" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#pdfs is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-road-to-riches" role="tabpanel" aria-labelledby="tab-road-to-riches" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#road-to-riches is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+        <div class="dui__feed dui__feed--locked" id="dui-seb" role="tabpanel" aria-labelledby="tab-seb" hidden>
+          <span class="dui__lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <p class="dui__lock-title">#seb is members only</p>
+          <p class="dui__lock-copy">Join the Discord to unlock this channel.</p>
+          <a href="https://discord.gg/RJQQMAvDkJ" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Join Discord</a>
+        </div>
+
+            <div class="dui__compose" aria-hidden="true">
+              <span class="dui__plus">+</span>
+              <span>Message #<span data-dui-compose>&#8239;✅&#8239;| trades</span></span>
+            </div>
+          </div>
         </div>
       </figure>
     </div>
@@ -745,6 +840,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=56"></script>
+<script src="assets/js/main.js?v=57"></script>
 </body>
 </html>

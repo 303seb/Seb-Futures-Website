@@ -183,40 +183,47 @@ deliberately absent so it runs off the fold like the reference.
 
 ## The Discord panel
 
-`.dui` on the home page is a **styled replica of the server, not an embed.**
-That distinction is forced, not stylistic:
+`.dui` on the home page is a **styled replica of the real server, not an
+embed.** That is forced, not stylistic:
 
-- Discord has **no public API that returns messages.** Reading a channel needs
-  a bot token and something running to hold it; a token in client-side JS is a
-  leaked token, and this site is static anyway. The conversation is therefore
-  fixed content and will not update when new messages are posted.
+- Discord exposes **no public endpoint that returns messages.** Reading a
+  channel needs a bot token and something running to hold it; a token in
+  client-side JS is a leaked token, and this site is static. The conversation
+  is fixed content and will not update when people post.
 - The **member and online counts are live.** The invite endpoint
   (`/api/v10/invites/<code>?with_counts=true`) returns both and allows
-  cross-origin reads, so `initDiscordPanel()` fetches them on load. If the
-  fetch fails the markup keeps its em-dash placeholders rather than showing a
-  wrong number.
+  cross-origin reads, so `initDiscordPanel()` fetches them on load. On failure
+  the em-dash placeholders stay rather than a wrong number appearing.
 - Enabling the server widget (Server Settings → Widget) would additionally
-  expose up to 100 **online members with avatars** — still no messages. Worth
-  turning on for a real member rail.
+  expose up to 100 **online members with avatars** — still no messages.
 
-Channels are ordinary tabs driven by `initTabs()`, so arrow-key navigation
-comes free. To add one, add a `<button class="tab dui__channel">` whose
-`aria-controls` names a matching `.dui__feed` panel. Channels without content
-use `.dui__feed--locked`, which is honest — non-members genuinely cannot read
-them — and doubles as a CTA.
+The sidebar mirrors the real server: seventeen channels in their real
+categories. `#trades` carries real messages transcribed from a screenshot,
+including the pinned `@everyone` and luhrob's chart
+(`assets/discord/trade-luhrob.jpg`, cropped from the same screenshot).
+**Every other channel is a `.dui__feed--locked` panel** — which is what a
+non-member genuinely sees, and doubles as a CTA.
 
-Messages in `#wins` are transcribed from real member screenshots. **The channel
-names are a guess** and should be replaced with the real ones.
+Channels are ordinary tabs on `initTabs()`, so arrow-key navigation is free.
+To add one, add a `<button class="tab dui__channel">` whose `aria-controls`
+names a matching `.dui__feed`. The header, its emoji and the compose bar are
+mirrored from the selected tab's `.dui__cname` / `.dui__emoji` spans — read
+those, never the tab's `textContent`, which also carries the hash and
+separator.
 
-### Two traps this component hit
+### Four traps this component hit
 
-`[hidden]` is only `display: none` in the UA stylesheet, so a panel with an
-author `display` (here `grid`) ignores it and renders on top of the others.
-There is now a global `[hidden] { display: none !important; }`.
-
-A `1fr` grid track floors at its content's min-content width, so the
-horizontal channel scroller widened the whole panel instead of scrolling. The
-tracks are `minmax(0, 1fr)` and `.dui__main` carries `min-height: 0`.
+- `[hidden]` is only `display: none` in the UA sheet, so a panel with an
+  author `display` ignores it. There is a global
+  `[hidden] { display: none !important; }`.
+- A `1fr` grid track floors at min-content, so the phone channel scroller
+  widened the panel instead of scrolling. Tracks are `minmax(0, 1fr)` and
+  `.dui__main` carries `min-height: 0`.
+- `.hero__shot img` (0,1,1) out-specifies `.dui__shot` (0,1,0), so the chart
+  rendered full width. The rule is `.dui .dui__shot`.
+- Hiding a count span on mobile left its label text node behind
+  ("26 online members"). Number and label are wrapped together in
+  `.dui__presence-more`.
 
 ## Typography
 
@@ -272,7 +279,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=56`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=57`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

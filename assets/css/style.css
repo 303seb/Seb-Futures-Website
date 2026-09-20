@@ -644,106 +644,112 @@ p { color: var(--text-mid); }
 /* --------------------------------------------------------------------------
    Discord panel
 
-   Four columns: server rail, channel sidebar, message pane, member list. The
-   channel buttons are ordinary tabs, so initTabs() drives them and the arrow
-   keys work without any extra code.
+   A replica of the real server, not an embed. Three columns: server rail,
+   channel sidebar, message pane. The channel buttons are ordinary tabs, so
+   initTabs() drives them and arrow-key navigation comes free.
    -------------------------------------------------------------------------- */
 .dui {
   display: grid;
-  grid-template-columns: 58px 210px minmax(0, 1fr) 168px;
-  height: clamp(340px, 46vw, 470px);
+  grid-template-columns: 62px 232px minmax(0, 1fr);
+  height: clamp(390px, 56vw, 612px);
   text-align: left;
-  font-size: 0.83rem;
-  background: #121216;
-  color: #d6d7dc;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  background: #131318;
+  color: #d5d6db;
 }
 
 .dui__rail {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 11px;
-  padding-top: 14px;
-  background: #0b0b0e;
+  gap: 9px;
+  padding-top: 13px;
+  background: #0a0a0d;
 }
 
 .dui__rail-server {
-  width: 38px;
-  height: 38px;
-  border-radius: 13px;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
   background: var(--purple);
   color: var(--purple-ink);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 
-.dui__rail-dot {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-}
+.dui__rail-sep { width: 20px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.08); }
+.dui__rail-dot { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); }
 
-.dui__side {
-  background: #16161b;
-  padding: 0 8px 12px;
-  overflow: hidden;
-}
+.dui__side { background: #17171c; display: flex; flex-direction: column; min-height: 0; }
 
 .dui__servername {
-  padding: 15px 8px 13px;
-  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 14px;
+  flex-shrink: 0;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+/* The list is longer than the panel, exactly as it is in the app */
+.dui .dui__channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px 8px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .dui__group {
-  padding: 8px;
-  font-size: 0.66rem;
+  padding: 13px 8px 4px;
+  font-size: 0.64rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #8a8b93;
+  color: #8b8c95;
 }
 
-.dui .dui__channels { display: flex; flex-direction: column; gap: 1px; }
-
-/* Overrides the pill .tab styling this borrows its behaviour from */
 .dui .dui__channel {
   display: flex;
   align-items: center;
   gap: 5px;
   width: 100%;
-  padding: 7px 8px;
+  padding: 6px 8px;
   border: 0;
   border-radius: 5px;
   background: none;
   font: inherit;
+  font-size: 0.82rem;
   font-weight: 500;
-  color: #8a8b93;
+  color: #8b8c95;
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.14s, color 0.14s;
 }
 
-.dui .dui__channel:hover { background: rgba(255, 255, 255, 0.045); color: #d6d7dc; }
+.dui .dui__channel:hover { background: rgba(255, 255, 255, 0.04); color: #d5d6db; }
 
 .dui .dui__channel[aria-selected="true"] {
-  background: rgba(202, 187, 251, 0.14);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
   box-shadow: none;
 }
 
-.dui__hash { color: #6d6e77; font-weight: 500; }
-.dui .dui__channel[aria-selected="true"] .dui__hash { color: var(--purple); }
-.dui__lock { margin-left: auto; display: flex; }
+.dui__hash  { color: #72737c; font-weight: 400; }
+.dui__bar   { color: #4d4e56; }
+.dui__emoji { font-size: 0.86em; line-height: 1; }
+.dui__cname { overflow: hidden; text-overflow: ellipsis; }
+.dui__lock  { margin-left: auto; display: flex; opacity: 0.55; }
 .dui__lock svg { width: 11px; height: 11px; }
 
 .dui__main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
@@ -751,88 +757,216 @@ p { color: var(--text-mid); }
 .dui__top {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 16px;
+  gap: 5px;
   height: 46px;
+  padding: 0 16px;
   flex-shrink: 0;
   font-weight: 700;
   color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
+.dui__topname { margin-right: 4px; }
+
+.dui__presence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #9a9ba3;
+  white-space: nowrap;
+}
+
+.dui__presence-more { display: inline; }
+.dui__presence i { width: 7px; height: 7px; border-radius: 50%; background: #2fd4b4; }
+.dui__presence-sep { color: #5c5d65; }
+
+/* Anchored to the bottom like a real channel; the oldest line fades out of
+   the top rather than being chopped mid-glyph. */
 .dui__feed {
   flex: 1;
+  min-height: 0;
   overflow: hidden;
-  padding: 14px 16px;
-  /* The pane is a window onto a longer channel, so the last message fades
-     rather than being chopped mid-line */
-  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  padding: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 8%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 8%);
 }
 
-.dui__msg { display: flex; gap: 11px; padding: 6px 0; }
+.dui__msg { display: flex; gap: 12px; padding: 5px 0; }
+
+.dui__msg--mention {
+  background: rgba(250, 166, 26, 0.07);
+  box-shadow: inset 2px 0 0 #faa61a;
+  margin-inline: -16px;
+  padding-inline: 16px;
+}
 
 .dui__avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  background: rgba(202, 187, 251, 0.16);
-  color: var(--purple);
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  color: #fff;
 }
 
-.dui__meta { display: flex; align-items: baseline; gap: 8px; }
-.dui__author { font-weight: 600; color: var(--purple); }
-.dui__meta time { font-size: 0.68rem; color: #85868f; }  /* 4.5:1 on the feed */
-.dui__text { color: #d6d7dc; line-height: 1.45; }
-.dui__text b { color: var(--purple); background: rgba(202, 187, 251, 0.15); border-radius: 3px; padding: 0 3px; }
+.dui__avatar--a   { background: #b4544e; }
+.dui__avatar--b   { background: #4e6fb4; }
+.dui__avatar--c   { background: #5a5f6b; }
+.dui__avatar--seb { background: var(--purple); color: var(--purple-ink); }
+
+.dui__meta { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.dui__author { font-weight: 600; color: #f2f3f5; }
+.dui__author--red  { color: #ed6a5e; }
+.dui__author--gold { color: #f0b232; }
+
+.dui__app {
+  position: relative;
+  top: -1px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #5865f2;
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.dui__meta time { font-size: 0.68rem; color: #85868f; }
+.dui__text { color: #d5d6db; }
+
+.dui__text b {
+  padding: 0 2px;
+  border-radius: 3px;
+  background: rgba(88, 101, 242, 0.3);
+  color: #c9cdfb;
+  font-weight: 500;
+}
+
+.dui__reply {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+  font-size: 0.73rem;
+  color: #85868f;
+}
+
+/* The elbow Discord draws from a reply up to its parent */
+.dui__reply::before {
+  content: "";
+  width: 13px;
+  height: 7px;
+  flex-shrink: 0;
+  border-left: 2px solid #4d4e56;
+  border-top: 2px solid #4d4e56;
+  border-top-left-radius: 5px;
+  transform: translateY(3px);
+}
+
+.dui__divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 6px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #85868f;
+}
+
+.dui__divider::before,
+.dui__divider::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.07); }
+
+.dui .dui__shot {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+  margin-top: 6px;
+  border-radius: 7px;
+}
+
+.dui__react {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  padding: 2px 7px;
+  border-radius: 7px;
+  background: rgba(88, 101, 242, 0.16);
+  border: 1px solid rgba(88, 101, 242, 0.5);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #c9cdfb;
+}
 
 .dui__feed--locked {
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 9px;
+  gap: 8px;
+  padding: 16px;
   text-align: center;
   mask-image: none;
   -webkit-mask-image: none;
 }
 
-.dui__lock-mark { color: var(--purple); }
-.dui__lock-mark svg { width: 26px; height: 26px; }
+.dui__lock-mark { color: var(--purple); opacity: 1; }
+.dui__lock-mark svg { width: 28px; height: 28px; }
 .dui__lock-title { font-weight: 700; color: #fff; }
-.dui__lock-copy { color: #8a8b93; margin-bottom: 4px; }
+.dui__lock-copy { color: #9a9ba3; margin-bottom: 4px; }
 
-.dui__members { background: #16161b; padding: 8px; }
-.dui__membercount { padding: 0 8px; font-size: 0.74rem; color: #8a8b93; }
+.dui__compose {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  margin: 10px 16px 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #1e1f25;
+  color: #909199;   /* 4.5:1 on the compose bar */
+  font-size: 0.8rem;
+}
 
-/* Only surfaces once the member rail is gone */
-.dui__presence { display: none; }
+.dui__plus {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #b5bac1;
+  color: #1e1f25;
+  font-weight: 700;
+  line-height: 1;
+}
 
 /* --------------------------------------------------------------------------
    The panel on a phone
 
-   Four columns cannot survive 390px, so the rail and the member list go and
-   the channels become a horizontal scroller above the feed. The live online
-   count moves into the top bar so it is not lost with the member rail.
+   Three columns cannot survive 390px, so the server rail goes and the channel
+   sidebar becomes a horizontal scroller above the feed.
    -------------------------------------------------------------------------- */
 @media (max-width: 860px) {
   .dui {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
-    height: clamp(360px, 84vw, 440px);
+    height: clamp(380px, 88vw, 460px);
     font-size: 0.8rem;
   }
 
   .dui__rail,
-  .dui__members,
   .dui__servername,
-  .dui__side .dui__group { display: none; }
+  .dui__group { display: none; }
 
-  .dui__side { padding: 10px 0 0; background: #121216; overflow: visible; }
+  .dui__side { background: #131318; padding-top: 10px; overflow: visible; }
 
   .dui .dui__channels {
     flex-direction: row;
@@ -847,32 +981,20 @@ p { color: var(--text-mid); }
   .dui .dui__channel {
     width: auto;
     flex-shrink: 0;
-    border-radius: 999px;
     padding: 6px 12px;
+    border-radius: 999px;
     background: rgba(255, 255, 255, 0.045);
   }
 
   .dui .dui__channel[aria-selected="true"] { background: rgba(202, 187, 251, 0.18); }
+
   .dui__lock { margin-left: 4px; }
-
   .dui__top { height: 42px; padding: 0 13px; }
-
-  .dui__presence {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin-left: auto;
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #8a8b93;
-  }
-
-  .dui__presence i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #2fd4b4;
-  }
+  /* hide the label with its number, not just the number, or the stray
+     text node leaves "26 online members" behind */
+  .dui__presence-more { display: none; }
+  .dui__compose { display: none; }
+  .dui .dui__shot { width: min(100%, 240px); }
 }
 
 .hero__shot-inner {

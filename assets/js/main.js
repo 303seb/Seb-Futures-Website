@@ -214,25 +214,41 @@
     var panel = document.querySelector(".dui");
     if (!panel) return;
 
-    var head = panel.querySelector(".dui__topname");
-    var tabs = panel.querySelectorAll(".dui__channel");
-    if (head && tabs.length) {
-      var mirror = function (tab) {
-        // trim first: the label is indented markup, so the "#" is not at
-        // index 0 and a leading-anchored strip would miss it, leaving "##"
-        head.textContent = (tab.textContent || "").trim().replace(/^#\s*/, "");
-      };
-      tabs.forEach(function (t) {
-        t.addEventListener("click", function () { mirror(t); });
+    // Mirror the selected channel into the header. The tab's textContent
+    // carries the hash, emoji and separator too, so read the name from its
+    // own span rather than trying to strip them back off.
+    var head  = panel.querySelector(".dui__topname");
+    var emoji = panel.querySelector("[data-dui-emoji]");
+    var bar   = panel.querySelector("[data-dui-bar]");
+    var compose = panel.querySelector("[data-dui-compose]");
+    var list  = panel.querySelector(".dui__channels");
+
+    function mirror(tab) {
+      var nameEl = tab.querySelector(".dui__cname");
+      var emojiEl = tab.querySelector(".dui__emoji");
+      var name = nameEl ? nameEl.textContent : "";
+      if (head) head.textContent = name;
+      if (emoji) {
+        emoji.textContent = emojiEl ? emojiEl.textContent : "";
+        emoji.hidden = !emojiEl;
+      }
+      if (bar) bar.hidden = !emojiEl;
+      if (compose) {
+        compose.textContent = (emojiEl ? "\u2009" + emojiEl.textContent + "\u2009| " : " ") + name;
+      }
+    }
+
+    if (head && list) {
+      list.addEventListener("click", function (e) {
+        var t = e.target.closest(".dui__channel");
+        if (t) mirror(t);
       });
       // initTabs also moves selection with the arrow keys
       new MutationObserver(function (records) {
         records.forEach(function (r) {
           if (r.target.getAttribute("aria-selected") === "true") mirror(r.target);
         });
-      }).observe(panel.querySelector(".dui__channels"), {
-        subtree: true, attributes: true, attributeFilter: ["aria-selected"]
-      });
+      }).observe(list, { subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
     }
 
     var online = document.querySelectorAll("[data-discord-online]");
