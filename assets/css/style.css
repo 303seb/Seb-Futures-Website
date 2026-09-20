@@ -33,16 +33,16 @@
   --border-soft:   #cfcfd7;
   --paper-deep:    #d2d2d6;  /* unused: the footer sits on --bg now */
 
-  /* Violet — same hue as the brand lavender, dark enough for a light ground */
-  --purple:        #5630cf;  /* fills and buttons; white on it 7.7:1 */
-  --purple-bright: #4829ae;  /* the accent as TEXT; 7.0:1 on the page */
-  --purple-deep:   #3a218c;  /* gradient ends */
-  --purple-tint:   #cabbfb;  /* the brand lavender, as a fill behind dark ink */
-  --purple-ink:    #ffffff;  /* text ON a purple fill */
+  /* Lavender — the brand purple, as specified */
+  --purple:        #cabbfb;  /* fills, marks, and text */
+  --purple-bright: #cabbfb;
+  --purple-deep:   #a58cf8;  /* gradient ends — same hue, one step down */
+  --purple-tint:   #cabbfb;
+  --purple-ink:    #16111f;  /* text ON a purple fill: 10.6:1 */
   --purple-soft:   rgba(202, 187, 251, 0.55);
-  --purple-line:   rgba(86, 48, 207, 0.32);
-  --purple-ring:   rgba(86, 48, 207, 0.30);
-  --purple-glow:   rgba(86, 48, 207, 0.28);
+  --purple-line:   rgba(202, 187, 251, 0.62);
+  --purple-ring:   rgba(202, 187, 251, 0.58);
+  --purple-glow:   rgba(202, 187, 251, 0.45);
 
   /* Order-flow colours */
   --blue:          #4d84ff;
@@ -72,9 +72,9 @@
   --shadow:    0 6px 20px rgba(24, 22, 38, 0.14);
   --shadow-lg: 0 18px 44px rgba(24, 22, 38, 0.18);
 
-  --glow-sm:   0 2px 10px rgba(86, 48, 207, 0.18);
-  --glow-md:   0 4px 18px rgba(86, 48, 207, 0.24);
-  --glow-lg:   0 10px 30px rgba(86, 48, 207, 0.28);
+  --glow-sm:   0 2px 10px rgba(202, 187, 251, 0.45);
+  --glow-md:   0 4px 18px rgba(202, 187, 251, 0.55);
+  --glow-lg:   0 10px 30px rgba(202, 187, 251, 0.6);
 
   /* A lit-type effect needs a dark ground. There is none to give here. */
   --glow-text: none;
@@ -1143,7 +1143,7 @@ p { color: var(--text-mid); }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--purple-ink);
-  background: var(--purple-deep);
+  background: var(--purple);
   box-shadow: 0 6px 24px rgba(24, 22, 38, 0.28);
 }
 

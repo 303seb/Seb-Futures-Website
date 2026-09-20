@@ -159,33 +159,33 @@ trading site in trouble.
 
 ## The palette
 
-**Light theme.** Page `#dcdcdc`, cards white, ink dark. Defined once in the
-token block at the top of the stylesheet.
+Light theme. Page `#dcdcdc`, cards white, ink dark. Purple `#cabbfb`. Both hex
+codes are the client's, specified exactly, and are **deliberately kept even
+though they clash** — this was raised and confirmed.
 
-The accent is hue 254 — the same hue as the brand lavender `#cabbfb` — but
-**darkened, because the lavender is lighter than the page and scores 1.27:1
-on it.** It survives as `--purple-tint`, a soft fill sitting behind dark text
-(the giveaway tab chip, avatars, the play button, the hazard stripes), and
-must never be used as text.
+`#cabbfb` is almost the same brightness as `#dcdcdc`, so anything painted in
+the purple on the page ground scores **1.27:1** (1.75:1 on a white card).
+Headings, the MARKET wordmark, the stat figures, the Enter Giveaway link and
+the typed hero word are all faint by design, not by accident. **Do not
+"fix" this by shifting either colour without asking.**
+
+Where the purple still works, and why: as a *fill* under dark text. Buttons,
+badges and the restricted-access tape use `--purple-ink` (`#16111f`) on the
+lavender at 10.6:1, so their labels stay crisp even where the button's own
+outline against the page does not.
 
 | token | value | role |
 | --- | --- | --- |
-| `--purple` | `#5630cf` | fills and buttons; white on it 7.7:1 |
-| `--purple-bright` | `#4829ae` | the accent as text; 7.0:1 on the page |
-| `--purple-deep` | `#3a218c` | the deeper end of every gradient |
-| `--purple-tint` | `#cabbfb` | soft fill behind dark ink, never text |
-| `--purple-ink` | `#ffffff` | text on a purple fill |
+| `--purple` | `#cabbfb` | fills, marks, text |
+| `--purple-deep` | `#a58cf8` | the deeper end of every gradient |
+| `--purple-ink` | `#16111f` | text on a purple fill — 10.6:1 |
 
-**`--glow-text` is `none` and the `--glow-*` tokens are soft violet shadows,
-not halos.** A glow needs a dark ground to read as light; on this theme it
-would just be a smudge. If the site ever goes back to dark, those three tokens
-and `--glow-text` are what turn the lighting back on.
+`--glow-text` is `none` and the `--glow-*` tokens are soft shadows. A glow
+needs a dark ground to read as light; on this theme it would be a smudge. If
+the page ever goes dark again, those are the tokens that turn lighting back
+on — and the purple would come back to 11.8:1 with no other change.
 
-Contrast is verified by walking the rendered DOM and comparing each text
-element's computed colour against its composited background — not by eye.
-All five pages pass AA.
-
-## Typography## Typography
+## Typography## Typography## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
 and labels in JetBrains Mono; that is gone, along with its font request. Do not
@@ -239,7 +239,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=51`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=52`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.
