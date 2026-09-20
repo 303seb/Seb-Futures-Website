@@ -159,44 +159,29 @@ trading site in trouble.
 
 ## The palette
 
-Light theme. Page `#dcdcdc`, cards white, **all body ink pure black**, purple
-`#cabbfb`. Both hex codes are the client's, specified exactly.
+Dark theme, rebuilt from a client reference. Page `#030305`, cards `#101015`,
+purple `#cabbfb` — light enough to read straight onto the page at 11.8:1, so
+anything sitting **on** a purple fill uses `--purple-ink` (`#16111f`, 10.6:1).
+White on the purple is 1.75:1 and must never be used.
 
-The purple is within a hair of the page's brightness (1.27:1), so **every
-purple glyph carries a thin black stroke** to cut it out from the background:
+The ground is not flat black: `body::before` lays a 76px grid at ~3% white,
+masked to fade out before it reaches the headline, and `body::after` adds a
+purple bloom behind the hero plus an edge vignette. Both are `position: fixed`
+so they do not slide under the content, and `z-index: 0` with the real content
+at `z-index: 1`.
 
-```css
--webkit-text-stroke: 0.055em #000;   /* 0.04em on display sizes */
-paint-order: stroke fill;
-```
+## The hero
 
-Two things matter here. The stroke is in **em**, so it stays proportional from
-a 14px label to a 65px headline — a fixed px value vanishes on one and clogs
-the other. And `paint-order: stroke fill` puts the stroke *behind* the fill;
-without it the stroke eats inward from both edges and thins the letterform.
+`.hero__title` uses `background-clip: text` with a white-to-grey gradient, and
+its `<span>` carries a purple gradient for the brand half. The span is
+`white-space: nowrap` so "The Market Element" never splits mid-phrase —
+checked at 320-1920px, it always fits because the clamp scales it down first.
 
-The same problem in shape form — lavender chips, the FAQ and check markers,
-the eyebrow dot — is solved the same way, with black rings. Line icons are
-drawn in `currentColor`, which a text stroke cannot reach, so they get two
-tight black `drop-shadow`s instead. The check-list tick is two stacked
-polylines: a wide black one under a narrow lavender one.
+`.hero__shot` is an empty framed slot for a screenshot of the Discord server.
+Drop in an `<img>` and the frame sizes itself; the bottom border and radius are
+deliberately absent so it runs off the fold like the reference.
 
-**An automated contrast check will still flag the purple at 1.27:1** — the
-formula compares fill against background and cannot see a stroke. That is
-expected. Do not "fix" it by shifting either colour.
-
-| token | value | role |
-| --- | --- | --- |
-| `--purple` | `#cabbfb` | fills, marks, text (always stroked) |
-| `--purple-deep` | `#a58cf8` | the deeper end of every gradient |
-| `--purple-ink` | `#16111f` | text on a purple fill — 10.6:1 |
-
-`--glow-text` is `none` and the `--glow-*` tokens are soft shadows; a glow
-needs a dark ground. If the page ever goes dark again, those tokens plus
-removing the strokes is the whole job — the purple returns to 11.8:1 on its
-own.
-
-## Typography## Typography## Typography## Typography
+## Typography## Typography## Typography## Typography## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
 and labels in JetBrains Mono; that is gone, along with its font request. Do not
@@ -250,7 +235,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=54`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=55`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

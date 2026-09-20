@@ -1,22 +1,19 @@
 /* ==========================================================================
    Seb Futures — core stylesheet
 
-   Light grey + violet. Ink is dark on a #dcdcdc ground, cards are white, and
-   depth comes from soft shadows rather than glows — a glow needs a dark
-   ground to read as light, so on this theme they are shadows instead.
+   Charcoal + neon purple. The background is a lifted charcoal rather than
+   pure black, and depth comes from neon glows in the accent colour.
 
-   The purple is #cabbfb and the page is #dcdcdc. Both are specified exactly
-   and are deliberately kept although they clash: the purple is nearly the
-   same brightness as the page, so anything painted in it scores 1.27:1 there
-   (1.75:1 on a white card). Faint headings, wordmark and stat figures are
-   intended. Do not shift either colour to "fix" it.
-     --purple      #cabbfb  fills, marks, text.
-     --purple-deep #a58cf8  the deeper end of every gradient.
-     --purple-ink  #16111f  text ON a purple fill — 10.6:1, so button and
-                            badge labels stay crisp.
+   ONE purple, hue 254, and light. Being light it reads straight onto the
+   near-black page as text (11.8:1) — but anything sitting ON it must be dark:
+     --purple      #cabbfb  L86  fills, marks, glows, and text.
+     --purple-deep #a58cf8  L76  the deeper end of every gradient.
+     --purple-ink  #16111f       text on a purple fill. White there is
+                                 1.75:1 and must never be used.
    Never hard-code a purple hex outside this block. The rgba(202, 187, 251)
    values below are the purple at partial alpha.
-   Body copy is a dark gray so long-form reading stays comfortable.
+   Titles and key figures are lavender; body copy is a light gray so long-form
+   reading stays comfortable.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -24,22 +21,22 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Charcoal — lifted off pure black so surfaces can stack */
-  --bg:            #dcdcdc;
-  --bg-elev:       #d2d2d6;  /* unused while section banding is off */
-  --surface:       #ffffff;
-  --surface-2:     #f2f2f5;
-  --border:        #c1c1ca;
-  --border-soft:   #cfcfd7;
-  --paper-deep:    #d2d2d6;  /* unused: the footer sits on --bg now */
+  --bg:            #030305;
+  --bg-elev:       #101015;  /* unused while section banding is off */
+  --surface:       #101015;
+  --surface-2:     #17171e;
+  --border:        #23232d;
+  --border-soft:   #191921;
+  --paper-deep:    #060609;  /* unused: the footer sits on --bg now */
 
-  /* Lavender — the brand purple, as specified */
-  --purple:        #cabbfb;  /* fills, marks, and text */
-  --purple-bright: #cabbfb;
+  /* Lavender */
+  --purple:        #cabbfb;  /* fills, marks, glow, and text */
+  --purple-bright: #cabbfb;  /* same colour; kept so existing rules resolve */
   --purple-deep:   #a58cf8;  /* gradient ends — same hue, one step down */
-  --purple-ink:    #16111f;  /* text ON a purple fill: 10.6:1 */
-  --purple-soft:   rgba(202, 187, 251, 0.55);
-  --purple-line:   rgba(202, 187, 251, 0.62);
-  --purple-ring:   rgba(202, 187, 251, 0.58);
+  --purple-ink:    #16111f;  /* text ON a purple fill: 10.2:1. White is 1.8:1 */
+  --purple-soft:   rgba(202, 187, 251, 0.14);
+  --purple-line:   rgba(202, 187, 251, 0.38);
+  --purple-ring:   rgba(202, 187, 251, 0.36);
   --purple-glow:   rgba(202, 187, 251, 0.45);
 
   /* Order-flow colours */
@@ -49,11 +46,10 @@
   --green:         #2fd4b4;
   --green-ink:     #4fe3c6;
 
-  /* Ink — all black. The grey hierarchy is gone by request; weight and size
-     carry the hierarchy instead. */
-  --text:          #000000;
-  --text-mid:      #000000;
-  --text-dim:      #000000;
+  /* Ink */
+  --text:          #f4f4f8;
+  --text-mid:      #c8c8d8;
+  --text-dim:      #9a9ab0;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   /* One typeface across the whole site. The old --font-mono is gone; if you
@@ -64,93 +60,58 @@
   --radius-sm: 11px;
   --radius-lg: 24px;
 
-  /* On a light ground a shadow reads as depth; a glow reads as nothing at
-     all, so the --glow-* tokens are soft violet shadows here, not halos. */
-  --shadow-xs: 0 1px 2px rgba(24, 22, 38, 0.10);
-  --shadow-sm: 0 2px 8px rgba(24, 22, 38, 0.12);
-  --shadow:    0 6px 20px rgba(24, 22, 38, 0.14);
-  --shadow-lg: 0 18px 44px rgba(24, 22, 38, 0.18);
+  /* On charcoal a shadow reads as depth, a glow reads as light */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow:    0 6px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6);
 
-  --glow-sm:   0 2px 10px rgba(202, 187, 251, 0.45);
-  --glow-md:   0 4px 18px rgba(202, 187, 251, 0.55);
-  --glow-lg:   0 10px 30px rgba(202, 187, 251, 0.6);
+  --glow-sm:   0 0 12px rgba(202, 187, 251, 0.5);
+  --glow-md:   0 0 22px rgba(202, 187, 251, 0.6);
+  --glow-lg:   0 0 42px rgba(202, 187, 251, 0.55);
 
-  /* A lit-type effect needs a dark ground. There is none to give here. */
-  --glow-text: none;
+  /* The neon "lit" look on type */
+  --glow-text: 0 0 18px rgba(202, 187, 251, 0.55), 0 0 38px rgba(202, 187, 251, 0.35);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
 }
 
 /* --------------------------------------------------------------------------
-   1b. Purple outlines
+   1c. The ground
 
-   The purple is within a hair of the page's brightness (1.27:1), so a purple
-   glyph on its own is barely there. Every one of them carries a thin black
-   stroke to cut it out from the background.
-
-   paint-order puts the stroke BEHIND the fill, so the letterform keeps its
-   full weight instead of the stroke eating inward from both edges. Display
-   type gets a slightly heavier stroke than body-sized type — a stroke that
-   reads as a hairline at 60px turns small text to mush.
+   A faint square grid, fixed so it does not slide under the content, plus a
+   vignette that darkens the edges and a single soft purple bloom behind the
+   hero. Everything here is one or two percent of white — enough that the page
+   is not a flat black rectangle, not enough to compete with the type.
    -------------------------------------------------------------------------- */
-h1, h2, h3, h4,
-.h2--split em,
-.hero h1 em,
-.brand__text span,
-.typer,
-.stat__num,
-.tier__amount,
-.step::before,
-.channel__hash,
-.schedule__time,
-.giveaway__prize span,
-.countdown__val,
-.disclaimer h4,
-.deal__code span,
-.quote__avatar,
-.shot__avatar,
-.btn--ghost,
-.entry-note a,
-td.prize,
-.nav__links > a:hover,
-.nav__links > a.active,
-.nav__links > a.nav__hl,
-.back-link:hover,
-.tab:hover,
-.footer__nav a:hover,
-.faq-item.is-open .faq-item__q {
-  /* em, not px, so the stroke stays proportional from a 14px label to a
-     65px headline instead of vanishing on one and clogging the other. */
-  -webkit-text-stroke: 0.055em #000;
-  paint-order: stroke fill;
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Display sizes need proportionally less to read as a hairline */
-h1, h2,
-.hero h1 em,
-.h2--split em,
-.stat__num,
-.tier__amount { -webkit-text-stroke-width: 0.04em; }
-
-/* The lavender chips and markers are the same brightness problem in shape
-   form, so their rings go black too. */
-.card__icon,
-.vidbox__play,
-.quote__avatar,
-.shot__avatar,
-.faq-item__icon,
-.check-list li::before,
-.eyebrow::before { border-color: #000; }
-
-.eyebrow::before { border: 1px solid #000; }
-
-/* Line icons are drawn in currentColor, so a text stroke cannot reach them.
-   Two tight black drop-shadows ring the strokes instead. */
-.card__icon svg,
-.vidbox__play svg {
-  filter: drop-shadow(0 0 0.7px #000) drop-shadow(0 0 0.7px #000);
+body::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+  background-size: 76px 76px;
+  /* Fades the grid out top and bottom so it never crosses the headline */
+  -webkit-mask-image: radial-gradient(ellipse 120% 85% at 50% 32%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 120% 85% at 50% 32%, #000 30%, transparent 78%);
 }
+
+body::after {
+  background:
+    radial-gradient(ellipse 60% 42% at 50% 8%, rgba(202, 187, 251, 0.10), transparent 70%),
+    radial-gradient(ellipse 100% 60% at 50% 0%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Everything real sits above the ground */
+.promo, .nav, main, footer { position: relative; z-index: 1; }
 
 /* --------------------------------------------------------------------------
    2. Reset + base
@@ -323,67 +284,93 @@ p { color: var(--text-mid); }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.25s;
+  padding: 18px 24px 0;
 }
 
-/* Only once content is actually sliding underneath */
-.nav.is-stuck { border-bottom-color: var(--border-soft); }
-
-/* Same 1080px measure as .container, so the bar's contents line up with the
-   page instead of floating on their own grid. */
+/* A capsule floating over the page, only as wide as its contents. */
 .nav__bubble {
   position: relative;
-  max-width: 1080px;
+  width: max-content;
+  max-width: 100%;
   margin-inline: auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
-  gap: 18px;
-  padding: 12px 24px;
+  gap: 14px;
+  padding: 9px 9px 9px 20px;
+  background: rgba(16, 16, 22, 0.82);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 14px 38px -12px rgba(0, 0, 0, 0.9);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav.is-stuck .nav__bubble {
+  background: rgba(12, 12, 17, 0.94);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1rem;
+  gap: 9px;
+  font-weight: 650;
+  font-size: 0.97rem;
   letter-spacing: -0.02em;
   color: var(--text);
-  justify-self: start;
-}
-
-/* Brand mark — assets/logo-dark.png (light linework, for charcoal) */
-.brand__mark {
-  height: 34px;
-  width: auto;
   flex-shrink: 0;
 }
 
-/* SEB glows; FUTURES stays white */
-.brand__text { color: var(--text); }
-
-.brand__text span {
-  color: var(--purple-bright);
-  text-shadow: var(--glow-text);
+.brand__mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--purple);
+  color: var(--purple-ink);
+  font-size: 0.82rem;
+  font-weight: 800;
 }
 
-/* Centre column — page titles */
+.brand__text { color: var(--text); white-space: nowrap; }
+
+/* The hairline between wordmark and links, as in the reference */
+.nav__rule {
+  width: 1px;
+  height: 22px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .nav__links {
   display: flex;
   align-items: center;
   gap: 2px;
-  justify-self: center;
 }
 
-.nav__links > a {
-  padding: 7px 12px;
-  border-radius: 10px;
+/* The CTA now sits outside .nav__links, at the capsule's right end */
+.nav__cta {
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 10px 18px;
   font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text);
+  border-radius: 999px;
+}
+
+.nav__cta svg { width: 15px; height: 15px; }
+
+.nav__links > a {
+  padding: 8px 13px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text-mid);
   transition: color 0.18s, background 0.18s, text-shadow 0.18s;
 }
 
@@ -506,6 +493,9 @@ p { color: var(--text-mid); }
   transition: transform 0.18s var(--ease), background 0.18s, border-color 0.18s, box-shadow 0.25s, color 0.18s;
 }
 
+/* Inline SVGs carry no intrinsic size, so inside a flex row they collapse */
+.btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
@@ -515,11 +505,11 @@ p { color: var(--text-mid); }
 .btn--primary {
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
   color: var(--purple-ink);
-  box-shadow: var(--glow-md), 0 4px 14px rgba(24, 22, 38, 0.18);
+  box-shadow: var(--glow-md), 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
 .btn--primary:hover {
-  box-shadow: var(--glow-lg), 0 8px 22px rgba(24, 22, 38, 0.22);
+  box-shadow: var(--glow-lg), 0 8px 22px rgba(0, 0, 0, 0.5);
 }
 
 .btn--ghost {
@@ -538,23 +528,24 @@ p { color: var(--text-mid); }
 .btn--discord {
   background: #5865f2;
   color: #fff;
-  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.32), 0 2px 8px rgba(24, 22, 38, 0.16);
+  box-shadow: 0 0 20px rgba(88, 101, 242, 0.45), 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
 .btn--discord:hover {
   background: #4752c4;
-  box-shadow: 0 6px 22px rgba(88, 101, 242, 0.42), 0 4px 14px rgba(24, 22, 38, 0.2);
+  box-shadow: 0 0 32px rgba(88, 101, 242, 0.6), 0 8px 22px rgba(0, 0, 0, 0.5);
 }
 
 .btn--light {
   background: var(--text);
-  color: #ffffff;
+  color: #141419;
 }
 
 .btn--light:hover { background: #fff; }
 
 .btn--sm { padding: 9px 17px; font-size: 0.85rem; }
-.btn--lg { padding: 16px 32px; font-size: 1rem; }
+.btn--lg { padding: 17px 36px; font-size: 1.02rem; border-radius: 999px; }
+.btn--lg svg { width: 21px; height: 21px; }
 .btn--block { width: 100%; }
 
 .btn-row {
@@ -590,25 +581,78 @@ p { color: var(--text-mid); }
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  padding-block: clamp(44px, 6vw, 78px) clamp(28px, 3.4vw, 44px);
+  padding-block: clamp(56px, 11vw, 132px) 0;
+  text-align: center;
   overflow: hidden;
 }
 
-/* Hero title: "Trade Smarter," white, the rest in the heading neon.
-   Bigger and a step lighter than the global heading weight. */
-.hero h1 {
-  font-size: clamp(2.6rem, 6.6vw, 4.6rem);
+/* Light at the top, grey at the bottom — the reference's display treatment.
+   background-clip only paints the gradient where the glyphs are. */
+.hero__title {
+  font-size: clamp(2.5rem, 7.4vw, 5.5rem);
   font-weight: 700;
-  color: var(--text);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin-bottom: 20px;
+  background: linear-gradient(180deg, #ffffff 18%, #9d9daa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   text-shadow: none;
-  margin-bottom: 16px;
+  text-wrap: balance;
 }
 
-.hero h1 em {
-  font-style: normal;
-  background: none;
-  color: var(--purple-bright);
-  text-shadow: var(--glow-text);
+/* The brand half takes the purple, and keeps its own gradient so the two
+   halves sit on the same optical weight. */
+.hero__title span {
+  background: linear-gradient(180deg, var(--purple) 12%, #9f8ad8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.hero__sub {
+  max-width: 44ch;
+  margin: 0 auto 34px;
+  font-size: clamp(1.02rem, 1.55vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--text-mid);
+}
+
+/* The framed server screenshot under the fold. Tall on purpose: the
+   reference crops it at the viewport edge rather than showing all of it. */
+.hero__shot {
+  margin: clamp(46px, 7vw, 86px) auto 0;
+  max-width: 1010px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom: 0;
+  overflow: hidden;
+  background: rgba(14, 14, 20, 0.8);
+  box-shadow: 0 -2px 60px -12px rgba(202, 187, 251, 0.22),
+              0 -30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+.hero__shot img { display: block; width: 100%; height: auto; }
+
+.hero__shot-inner {
+  display: grid;
+  place-items: center;
+  min-height: clamp(220px, 34vw, 400px);
+  background:
+    linear-gradient(180deg, rgba(202, 187, 251, 0.05), transparent 60%),
+    repeating-linear-gradient(-45deg,
+      rgba(255, 255, 255, 0.018) 0 12px, transparent 12px 24px);
+}
+
+.hero__shot-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 /* Bold, white — sits between the title and the lede */
@@ -1019,7 +1063,7 @@ p { color: var(--text-mid); }
   border-radius: 50%;
   background-color: var(--purple-soft);
   border: 1px solid var(--purple-line);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%23000' stroke-width='6.4'/%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%23cabbfb' stroke-width='3.2'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b06ff7' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: center;
@@ -1048,8 +1092,8 @@ p { color: var(--text-mid); }
   border-color: var(--text);
 }
 
-.panel--light h3 { color: var(--text); text-shadow: none; }
-.panel--light p { color: var(--text-mid); }
+.panel--light h3 { color: #141419; text-shadow: none; }
+.panel--light p { color: #4a4d57; }
 
 /* --------------------------------------------------------------------------
    10b. Pricing tiers
@@ -1194,7 +1238,7 @@ p { color: var(--text-mid); }
   display: grid;
   place-items: center;
   cursor: not-allowed;
-  background: rgba(228, 228, 232, 0.76);
+  background: rgba(8, 8, 12, 0.74);
   -webkit-backdrop-filter: blur(3px) saturate(0.45);
   backdrop-filter: blur(3px) saturate(0.45);
 }
@@ -1211,9 +1255,10 @@ p { color: var(--text-mid); }
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--purple-ink);
-  background: var(--purple);
-  box-shadow: 0 6px 24px rgba(24, 22, 38, 0.28);
+  color: var(--purple-bright);
+  text-shadow: var(--glow-text);
+  background: rgba(12, 12, 17, 0.97);
+  box-shadow: 0 0 30px rgba(202, 187, 251, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .tier__tape::before,
@@ -1224,7 +1269,7 @@ p { color: var(--text-mid); }
   right: 0;
   height: 6px;
   background: repeating-linear-gradient(-45deg,
-    #000 0 7px, transparent 7px 14px);
+    var(--purple) 0 7px, rgba(202, 187, 251, 0.16) 7px 14px);
 }
 
 .tier__tape::before { top: 0; }
@@ -1485,7 +1530,7 @@ p { color: var(--text-mid); }
 }
 
 .countdown__cell {
-  background: var(--surface-2);
+  background: rgba(0, 0, 0, 0.32);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 15px 8px;
@@ -1541,7 +1586,7 @@ thead th {
   color: var(--text-dim);
   padding: 15px 20px;
   border-bottom: 1px solid var(--border);
-  background: var(--surface-2);
+  background: rgba(255, 255, 255, 0.025);
   white-space: nowrap;
 }
 
@@ -1662,7 +1707,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
    16. Disclaimer + footer
    -------------------------------------------------------------------------- */
 .disclaimer {
-  background: var(--surface-2);
+  background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--border);
   border-left: 3px solid var(--purple);
   border-radius: var(--radius-sm);
@@ -2049,14 +2094,14 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
     align-items: stretch;
     gap: 4px;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(24, 24, 30, 0.98);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 20px;
     box-shadow:
       0 0 0 1px var(--purple-ring),
       0 0 26px 2px rgba(202, 187, 251, 0.38),
-      0 12px 30px -6px rgba(24, 22, 38, 0.22);
+      0 12px 30px -6px rgba(0, 0, 0, 0.75);
     transform: translateY(-10px) scale(0.98);
     opacity: 0;
     visibility: hidden;
@@ -2102,7 +2147,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .section--tight { padding-block: 26px; }
   .section__head  { margin-bottom: 22px; }
   .section__head p { margin-top: 9px; }
-  .hero           { padding-block: 22px 26px; }
+  .hero           { padding-block: 34px 0; }
   .page-head      { padding-block: 22px 18px; }
   .container      { padding-inline: 16px; }
 
@@ -2156,7 +2201,8 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   /* Two of the longer h2s still cannot fit one line; balance splits them
      evenly rather than leaving one orphan word. */
   h1, h2, .lede { text-wrap: balance; }
-  .hero h1      { font-size: 2.35rem; margin-bottom: 12px; }
+  .hero__title  { font-size: 2.35rem; margin-bottom: 14px; }
+  .hero__sub    { font-size: 1rem; margin-bottom: 26px; }
   .lede         { font-size: 0.98rem; }
   .hero .lede   { margin-bottom: 22px; }
 
@@ -2233,7 +2279,10 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .disclaimer p   { font-size: 0.8rem; }
 
   /* --- top bar ----------------------------------------------------------- */
-  .nav__bubble      { gap: 8px; padding: 9px 14px; }
+  .nav__bubble      { gap: 10px; padding: 8px 8px 8px 14px; width: 100%; }
+  .brand            { margin-right: auto; }
+  .nav__rule        { display: none; }
+  .nav__cta         { padding: 9px 14px; font-size: 0.8rem; }
   .brand__mark      { height: 26px; }
   .brand__text      { font-size: 0.82rem; }
   .nav__social      { gap: 2px; }
@@ -2248,7 +2297,7 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 
 /* Small phones — 360px and below */
 @media (max-width: 380px) {
-  .hero h1     { font-size: 2.1rem; }
+  .hero__title { font-size: 2.05rem; }
   h1           { font-size: 1.65rem; }
   h2           { font-size: 1.36rem; }
   h3           { font-size: 1.16rem; }
