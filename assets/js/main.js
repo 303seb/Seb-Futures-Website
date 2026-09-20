@@ -436,6 +436,126 @@
   }
 
   /* ----------------------------------------------------------------------
+     Email gate
+
+     Collect-only: the address is posted to a Google Apps Script web app,
+     which appends it to a sheet. Nothing is emailed.
+
+     The gate arms itself only when data-endpoint is filled in, so an
+     unfinished setup leaves the page working rather than showing a form
+     that goes nowhere. The poster is visible in the markup and hidden here,
+     which means a JS failure fails open instead of locking the page.
+
+     Apps Script does not answer CORS preflight, so the body goes as
+     url-encoded form data -- a "simple" request that skips preflight -- and
+     the post is fire-and-forget under no-cors. The reply cannot be read, so
+     a resolved promise is taken as delivered; a rejected one falls back to
+     a hidden-iframe form submit, which no CORS rule applies to.
+     ---------------------------------------------------------------------- */
+  function initEmailGate() {
+    var form = document.querySelector("[data-gate]");
+    if (!form) return;
+
+    var section = document.querySelector("[data-gate-section]");
+    var locked = document.querySelector("[data-gate-locked]");
+    var errorEl = form.querySelector("[data-gate-error]");
+    var input = form.querySelector("#gate-email");
+    var button = form.querySelector(".gate__submit");
+    var endpoint = (form.getAttribute("data-endpoint") || "").trim();
+    var KEY = "me:rb-checklist-unlocked";
+    var loadedAt = Date.now();
+
+    function unlock() {
+      if (section) section.remove();
+      if (locked) locked.removeAttribute("hidden");
+    }
+
+    // No endpoint yet, or this browser has already given an address.
+    if (!endpoint) return unlock();
+    try {
+      if (window.localStorage && localStorage.getItem(KEY)) return unlock();
+    } catch (err) { /* private mode: just show the gate */ }
+
+    if (locked) locked.setAttribute("hidden", "");
+    if (section) section.removeAttribute("hidden");
+
+    function fail(message) {
+      errorEl.textContent = message;
+      errorEl.removeAttribute("hidden");
+      input.focus();
+    }
+
+    // Deliberately loose. Anything stricter rejects real addresses, and the
+    // list is unverified either way.
+    function looksLikeEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    }
+
+    function viaIframe(body) {
+      var name = "gate-sink-" + Date.now();
+      var frame = document.createElement("iframe");
+      frame.name = name;
+      frame.style.display = "none";
+      document.body.appendChild(frame);
+
+      var proxy = document.createElement("form");
+      proxy.method = "POST";
+      proxy.action = endpoint;
+      proxy.target = name;
+      body.forEach(function (value, key) {
+        var field = document.createElement("input");
+        field.type = "hidden";
+        field.name = key;
+        field.value = value;
+        proxy.appendChild(field);
+      });
+      document.body.appendChild(proxy);
+      proxy.submit();
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      errorEl.setAttribute("hidden", "");
+
+      var email = input.value.trim();
+      if (!looksLikeEmail(email)) return fail("That does not look like an email address.");
+
+      // Honeypot filled, or submitted faster than a person can type: a bot.
+      // Both are answered with the success state so it learns nothing.
+      var trapped = form.querySelector("#gate-website").value !== "" ||
+                    Date.now() - loadedAt < 1200;
+
+      button.disabled = true;
+      button.textContent = "Unlocking...";
+
+      var body = new URLSearchParams();
+      body.append("email", email);
+      body.append("source", "rejection-block-checklist");
+
+      function done() {
+        try {
+          if (window.localStorage) localStorage.setItem(KEY, "1");
+        } catch (err) { /* nothing to do */ }
+        unlock();
+        if (locked) {
+          var heading = locked.querySelector(".poster");
+          if (heading) heading.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      if (trapped) return done();
+
+      if (window.fetch) {
+        fetch(endpoint, { method: "POST", mode: "no-cors", body: body })
+          .then(done, function () { viaIframe(body); done(); });
+      } else {
+        viaIframe(body);
+        done();
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------------------
      Misc
      ---------------------------------------------------------------------- */
   function initYear() {
@@ -451,6 +571,7 @@
     initCopyCode();
     initDiscordPanel();
     initDuiScale();
+    initEmailGate();
     initFaq();
     initCountdown();
     initReveal();

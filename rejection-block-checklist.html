@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=65">
+<link rel="stylesheet" href="assets/css/style.css?v=66">
 </head>
 <body>
 
@@ -65,13 +65,57 @@
   </section>
 
   <!-- ======================================================================
+       EMAIL GATE
+
+       PASTE YOUR GOOGLE APPS SCRIPT URL IN data-endpoint BELOW.
+       It looks like https://script.google.com/macros/s/AKfy..../exec
+
+       While data-endpoint is empty the gate removes itself and the checklist
+       shows to everyone, so the page is never broken by a half-finished
+       setup. The same is true if JavaScript fails: the poster is visible in
+       the markup and only hidden once the gate is actually armed.
+
+       This is a soft gate. The poster and PDF are at public URLs, so it
+       collects addresses from people willing to give one -- it does not
+       stop anyone determined to skip it.
+       ====================================================================== -->
+  <section class="section section--top" data-gate-section hidden>
+    <div class="container">
+      <form class="gate" data-gate data-endpoint="" novalidate>
+        <label class="gate__label" for="gate-email">Enter your email to unlock the checklist</label>
+
+        <div class="gate__row">
+          <input class="gate__input" id="gate-email" name="email" type="email"
+                 inputmode="email" autocomplete="email" spellcheck="false"
+                 placeholder="you@email.com" required>
+          <button class="btn btn--primary gate__submit" type="submit">Unlock</button>
+        </div>
+
+        <!-- Honeypot: off-screen and skipped by tab, so a person never sees
+             it and a bot that fills every field gives itself away. -->
+        <div class="gate__trap" aria-hidden="true">
+          <label for="gate-website">Leave this empty</label>
+          <input id="gate-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <p class="gate__error" data-gate-error role="alert" hidden></p>
+        <p class="gate__note">
+          Your email is stored so The Market Element can contact you about the
+          community and future resources. No spam, and you can ask to be
+          removed at any time.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ======================================================================
        THE POSTER
 
        Shown as an image rather than an embedded PDF on purpose: iOS Safari
        renders <embed>/<iframe> PDFs as a grey box or forces a download, so
        most phone visitors would see nothing. The PDF is the download button.
        ====================================================================== -->
-  <section class="section section--top">
+  <section class="section section--top" data-gate-locked>
     <div class="container">
 
       <figure class="poster reveal">
@@ -154,6 +198,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=65"></script>
+<script src="assets/js/main.js?v=66"></script>
 </body>
 </html>
