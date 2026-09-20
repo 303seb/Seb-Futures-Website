@@ -932,50 +932,43 @@ p { color: var(--text-mid); }
 /* --------------------------------------------------------------------------
    The panel on a phone
 
-   Three columns cannot survive 390px, so the server rail goes and the channel
-   sidebar becomes a horizontal scroller above the feed.
+   The phone gets the desktop panel, not a rearranged one: same server rail,
+   same vertical channel list, same header, same compose bar. It is laid out
+   at a fixed design size and then scaled down as a single piece, so every
+   padding, radius and avatar shrinks by the same factor and the composition
+   is preserved exactly.
+
+   The tracks are narrower than desktop's 62/232, and the design width is set
+   by the header, which cannot wrap: the widest channel, #announcements, needs
+   334px of feed before "32 online - 309 members" starts being clipped. That
+   is also why the breakpoint is 700 and not 620 -- the native layout fits
+   the panel down to 620, but its feed drops under 334px at about 690, so the
+   header would clip on the longer channels in between. 56/196 leaves the
+   longest channel name un-ellipsised with a little slack.
+
+   initDuiScale() sets --dui-k from the wrapper's width. The aspect-ratio
+   reserves the right box before it runs, so the page never jumps, and the
+   max-width means the panel stops growing at its design size rather than
+   being scaled up past it.
    -------------------------------------------------------------------------- */
-@media (max-width: 860px) {
+@media (max-width: 700px) {
+  .hero__shot {
+    position: relative;
+    max-width: 592px;
+    margin-inline: auto;
+    aspect-ratio: 592 / 600;
+  }
+
   .dui {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
-    height: clamp(380px, 88vw, 460px);
-    font-size: 0.8rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 592px;
+    height: 600px;
+    grid-template-columns: 56px 196px minmax(0, 1fr);
+    transform: scale(var(--dui-k, 1));
+    transform-origin: top left;
   }
-
-  .dui__rail,
-  .dui__servername,
-  .dui__group { display: none; }
-
-  .dui__side { background: #131318; padding-top: 10px; overflow: visible; }
-
-  .dui .dui__channels {
-    flex-direction: row;
-    gap: 6px;
-    padding: 0 12px 10px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .dui .dui__channels::-webkit-scrollbar { display: none; }
-
-  .dui .dui__channel {
-    width: auto;
-    flex-shrink: 0;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.045);
-  }
-
-  .dui .dui__channel[aria-selected="true"] { background: rgba(202, 187, 251, 0.18); }
-
-  .dui__lock { margin-left: 4px; }
-  .dui__top { height: 42px; padding: 0 13px; }
-  /* hide the label with its number, not just the number, or the stray
-     text node leaves "26 online members" behind */
-  .dui__presence-more { display: none; }
-  .dui__compose { display: none; }
-  .dui .dui__shot { width: min(100%, 240px); }
 }
 
 .hero__shot-inner {

@@ -390,6 +390,52 @@
   }
 
   /* ----------------------------------------------------------------------
+     Discord panel: fit the desktop composition to a phone
+
+     Below 620px the panel keeps its desktop layout at a fixed design size
+     and is scaled down as one piece, so the phone shows the same component
+     rather than a rearranged one. The scale factor has to come from JS:
+     CSS can divide a length by a number but cannot produce the bare number
+     that scale() needs. Never scales above 1 -- past its design size the
+     panel simply stops growing.
+     ---------------------------------------------------------------------- */
+  function initDuiScale() {
+    var dui = document.querySelector(".dui");
+    if (!dui) return;
+    var wrap = dui.parentElement;
+    var mq = window.matchMedia("(max-width: 620px)");
+
+    function apply() {
+      if (!mq.matches) {
+        dui.style.removeProperty("--dui-k");
+        return;
+      }
+      // offsetWidth is the laid-out width, which transforms do not affect,
+      // so the design size stays in the stylesheet rather than being
+      // duplicated here.
+      var design = dui.offsetWidth;
+      if (!design) return;
+      var k = Math.min(1, wrap.clientWidth / design);
+      dui.style.setProperty("--dui-k", k.toFixed(4));
+    }
+
+    apply();
+
+    // Fires on rotation and on the address bar collapsing, both of which
+    // change the available width.
+    var pending;
+    window.addEventListener("resize", function () {
+      clearTimeout(pending);
+      pending = setTimeout(apply, 80);
+    });
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+
+    // Late web-font swap can change nothing here, but the images inside the
+    // feed can still be decoding when DOMContentLoaded fires.
+    window.addEventListener("load", apply);
+  }
+
+  /* ----------------------------------------------------------------------
      Misc
      ---------------------------------------------------------------------- */
   function initYear() {
@@ -404,6 +450,7 @@
     initTabs();
     initCopyCode();
     initDiscordPanel();
+    initDuiScale();
     initFaq();
     initCountdown();
     initReveal();
