@@ -181,7 +181,44 @@ checked at 320-1920px, it always fits because the clamp scales it down first.
 Drop in an `<img>` and the frame sizes itself; the bottom border and radius are
 deliberately absent so it runs off the fold like the reference.
 
-## Typography## Typography## Typography## Typography## Typography
+## The Discord panel
+
+`.dui` on the home page is a **styled replica of the server, not an embed.**
+That distinction is forced, not stylistic:
+
+- Discord has **no public API that returns messages.** Reading a channel needs
+  a bot token and something running to hold it; a token in client-side JS is a
+  leaked token, and this site is static anyway. The conversation is therefore
+  fixed content and will not update when new messages are posted.
+- The **member and online counts are live.** The invite endpoint
+  (`/api/v10/invites/<code>?with_counts=true`) returns both and allows
+  cross-origin reads, so `initDiscordPanel()` fetches them on load. If the
+  fetch fails the markup keeps its em-dash placeholders rather than showing a
+  wrong number.
+- Enabling the server widget (Server Settings → Widget) would additionally
+  expose up to 100 **online members with avatars** — still no messages. Worth
+  turning on for a real member rail.
+
+Channels are ordinary tabs driven by `initTabs()`, so arrow-key navigation
+comes free. To add one, add a `<button class="tab dui__channel">` whose
+`aria-controls` names a matching `.dui__feed` panel. Channels without content
+use `.dui__feed--locked`, which is honest — non-members genuinely cannot read
+them — and doubles as a CTA.
+
+Messages in `#wins` are transcribed from real member screenshots. **The channel
+names are a guess** and should be replaced with the real ones.
+
+### Two traps this component hit
+
+`[hidden]` is only `display: none` in the UA stylesheet, so a panel with an
+author `display` (here `grid`) ignores it and renders on top of the others.
+There is now a global `[hidden] { display: none !important; }`.
+
+A `1fr` grid track floors at its content's min-content width, so the
+horizontal channel scroller widened the whole panel instead of scrolling. The
+tracks are `minmax(0, 1fr)` and `.dui__main` carries `min-height: 0`.
+
+## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
 and labels in JetBrains Mono; that is gone, along with its font request. Do not
@@ -235,7 +272,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=55`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=56`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

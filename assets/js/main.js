@@ -196,6 +196,65 @@
   }
 
   /* ----------------------------------------------------------------------
+     Discord panel
+
+     Two jobs. First, keep the header in step with whichever channel tab is
+     selected — initTabs() owns the switching, this just mirrors the name.
+
+     Second, the only genuinely live part of the panel. Discord exposes no
+     public endpoint for messages, so the conversation is static, but the
+     invite endpoint returns member and online counts and allows cross-origin
+     reads, so those two numbers are real and fetched on load. If the fetch
+     fails the markup keeps its em-dash placeholders rather than showing a
+     wrong number.
+     ---------------------------------------------------------------------- */
+  var DISCORD_INVITE = "RJQQMAvDkJ";
+
+  function initDiscordPanel() {
+    var panel = document.querySelector(".dui");
+    if (!panel) return;
+
+    var head = panel.querySelector(".dui__topname");
+    var tabs = panel.querySelectorAll(".dui__channel");
+    if (head && tabs.length) {
+      var mirror = function (tab) {
+        // trim first: the label is indented markup, so the "#" is not at
+        // index 0 and a leading-anchored strip would miss it, leaving "##"
+        head.textContent = (tab.textContent || "").trim().replace(/^#\s*/, "");
+      };
+      tabs.forEach(function (t) {
+        t.addEventListener("click", function () { mirror(t); });
+      });
+      // initTabs also moves selection with the arrow keys
+      new MutationObserver(function (records) {
+        records.forEach(function (r) {
+          if (r.target.getAttribute("aria-selected") === "true") mirror(r.target);
+        });
+      }).observe(panel.querySelector(".dui__channels"), {
+        subtree: true, attributes: true, attributeFilter: ["aria-selected"]
+      });
+    }
+
+    var online = document.querySelectorAll("[data-discord-online]");
+    var members = document.querySelectorAll("[data-discord-members]");
+    if (!online.length && !members.length) return;
+
+    fetch("https://discord.com/api/v10/invites/" + DISCORD_INVITE + "?with_counts=true")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        var fmt = function (n) { return n.toLocaleString("en-US"); };
+        if (typeof d.approximate_presence_count === "number") {
+          online.forEach(function (el) { el.textContent = fmt(d.approximate_presence_count); });
+        }
+        if (typeof d.approximate_member_count === "number") {
+          members.forEach(function (el) { el.textContent = fmt(d.approximate_member_count); });
+        }
+      })
+      .catch(function () { /* placeholders stay */ });
+  }
+
+  /* ----------------------------------------------------------------------
      FAQ accordion — one open at a time within a group
      ---------------------------------------------------------------------- */
   function initFaq() {
@@ -325,6 +384,7 @@
     initTyper();
     initTabs();
     initCarousel();
+    initDiscordPanel();
     initFaq();
     initCountdown();
     initReveal();

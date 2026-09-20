@@ -120,6 +120,10 @@ body::after {
 *::before,
 *::after { box-sizing: border-box; }
 
+/* [hidden] is only display:none in the UA sheet, so any author `display`
+   silently defeats it. This keeps the attribute authoritative. */
+[hidden] { display: none !important; }
+
 * { margin: 0; padding: 0; }
 
 html {
@@ -636,6 +640,240 @@ p { color: var(--text-mid); }
 }
 
 .hero__shot img { display: block; width: 100%; height: auto; }
+
+/* --------------------------------------------------------------------------
+   Discord panel
+
+   Four columns: server rail, channel sidebar, message pane, member list. The
+   channel buttons are ordinary tabs, so initTabs() drives them and the arrow
+   keys work without any extra code.
+   -------------------------------------------------------------------------- */
+.dui {
+  display: grid;
+  grid-template-columns: 58px 210px minmax(0, 1fr) 168px;
+  height: clamp(340px, 46vw, 470px);
+  text-align: left;
+  font-size: 0.83rem;
+  background: #121216;
+  color: #d6d7dc;
+}
+
+.dui__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  padding-top: 14px;
+  background: #0b0b0e;
+}
+
+.dui__rail-server {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--purple);
+  color: var(--purple-ink);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.dui__rail-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dui__side {
+  background: #16161b;
+  padding: 0 8px 12px;
+  overflow: hidden;
+}
+
+.dui__servername {
+  padding: 15px 8px 13px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dui__group {
+  padding: 8px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a8b93;
+}
+
+.dui .dui__channels { display: flex; flex-direction: column; gap: 1px; }
+
+/* Overrides the pill .tab styling this borrows its behaviour from */
+.dui .dui__channel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  color: #8a8b93;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dui .dui__channel:hover { background: rgba(255, 255, 255, 0.045); color: #d6d7dc; }
+
+.dui .dui__channel[aria-selected="true"] {
+  background: rgba(202, 187, 251, 0.14);
+  color: #fff;
+  box-shadow: none;
+}
+
+.dui__hash { color: #6d6e77; font-weight: 500; }
+.dui .dui__channel[aria-selected="true"] .dui__hash { color: var(--purple); }
+.dui__lock { margin-left: auto; display: flex; }
+.dui__lock svg { width: 11px; height: 11px; }
+
+.dui__main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+
+.dui__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 46px;
+  flex-shrink: 0;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.dui__feed {
+  flex: 1;
+  overflow: hidden;
+  padding: 14px 16px;
+  /* The pane is a window onto a longer channel, so the last message fades
+     rather than being chopped mid-line */
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+}
+
+.dui__msg { display: flex; gap: 11px; padding: 6px 0; }
+
+.dui__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(202, 187, 251, 0.16);
+  color: var(--purple);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.dui__meta { display: flex; align-items: baseline; gap: 8px; }
+.dui__author { font-weight: 600; color: var(--purple); }
+.dui__meta time { font-size: 0.68rem; color: #85868f; }  /* 4.5:1 on the feed */
+.dui__text { color: #d6d7dc; line-height: 1.45; }
+.dui__text b { color: var(--purple); background: rgba(202, 187, 251, 0.15); border-radius: 3px; padding: 0 3px; }
+
+.dui__feed--locked {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 9px;
+  text-align: center;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.dui__lock-mark { color: var(--purple); }
+.dui__lock-mark svg { width: 26px; height: 26px; }
+.dui__lock-title { font-weight: 700; color: #fff; }
+.dui__lock-copy { color: #8a8b93; margin-bottom: 4px; }
+
+.dui__members { background: #16161b; padding: 8px; }
+.dui__membercount { padding: 0 8px; font-size: 0.74rem; color: #8a8b93; }
+
+/* Only surfaces once the member rail is gone */
+.dui__presence { display: none; }
+
+/* --------------------------------------------------------------------------
+   The panel on a phone
+
+   Four columns cannot survive 390px, so the rail and the member list go and
+   the channels become a horizontal scroller above the feed. The live online
+   count moves into the top bar so it is not lost with the member rail.
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .dui {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    height: clamp(360px, 84vw, 440px);
+    font-size: 0.8rem;
+  }
+
+  .dui__rail,
+  .dui__members,
+  .dui__servername,
+  .dui__side .dui__group { display: none; }
+
+  .dui__side { padding: 10px 0 0; background: #121216; overflow: visible; }
+
+  .dui .dui__channels {
+    flex-direction: row;
+    gap: 6px;
+    padding: 0 12px 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .dui .dui__channels::-webkit-scrollbar { display: none; }
+
+  .dui .dui__channel {
+    width: auto;
+    flex-shrink: 0;
+    border-radius: 999px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .dui .dui__channel[aria-selected="true"] { background: rgba(202, 187, 251, 0.18); }
+  .dui__lock { margin-left: 4px; }
+
+  .dui__top { height: 42px; padding: 0 13px; }
+
+  .dui__presence {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #8a8b93;
+  }
+
+  .dui__presence i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2fd4b4;
+  }
+}
 
 .hero__shot-inner {
   display: grid;
