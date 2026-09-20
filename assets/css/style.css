@@ -5,19 +5,18 @@
    depth comes from soft shadows rather than glows — a glow needs a dark
    ground to read as light, so on this theme they are shadows instead.
 
-   ONE purple, hue 254, three lightnesses. On a light ground the accent has to
-   be DARK — #cabbfb, the chosen brand lavender, is lighter than the page and
-   scores 1.27:1 on it, so it survives as a tint only:
-     --purple       #5630cf  fills and buttons. White on it 7.7:1.
-     --purple-bright #4829ae the accent as TEXT. 7.0:1 on the page.
-     --purple-deep  #3a218c  the deeper end of every gradient.
-     --purple-tint  #cabbfb  the brand lavender, used as a soft fill behind
-                             dark text — never as text itself.
-     --purple-ink   #ffffff  text ON a purple fill.
-   Never hard-code a purple hex outside this block. The rgba(86, 48, 207)
-   values below are --purple at partial alpha.
-   Titles and key figures are violet; body copy is a dark gray so long-form
-   reading stays comfortable.
+   The purple is #cabbfb and the page is #dcdcdc. Both are specified exactly
+   and are deliberately kept although they clash: the purple is nearly the
+   same brightness as the page, so anything painted in it scores 1.27:1 there
+   (1.75:1 on a white card). Faint headings, wordmark and stat figures are
+   intended. Do not shift either colour to "fix" it.
+     --purple      #cabbfb  fills, marks, text.
+     --purple-deep #a58cf8  the deeper end of every gradient.
+     --purple-ink  #16111f  text ON a purple fill — 10.6:1, so button and
+                            badge labels stay crisp.
+   Never hard-code a purple hex outside this block. The rgba(202, 187, 251)
+   values below are the purple at partial alpha.
+   Body copy is a dark gray so long-form reading stays comfortable.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
