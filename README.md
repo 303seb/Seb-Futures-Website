@@ -225,6 +225,23 @@ separator.
   ("26 online members"). Number and label are wrapped together in
   `.dui__presence-more`.
 
+## The closing arc
+
+`.cta__arc` is a very wide, very tall box with only its top two corners
+rounded. The slash syntax `50% 50% 0 0 / 100% 100% 0 0` gives those corners a
+vertical radius equal to the full height, which turns a rectangle into a dome;
+only its crown sits inside the section and the rest is clipped, so the rim
+reads as a horizon.
+
+Two things keep it honest at any width. `.cta` declares `--cta-pad` and
+`--cta-mark`, and the arc's `top` is `calc(var(--cta-pad) + var(--cta-mark)/2)`
+— so the logo tile straddles the rim rather than the two being lined up by
+eye at one breakpoint. And a horizontal mask fades the rim out before the
+viewport edge instead of letting it stop dead.
+
+On phones the same 190%-wide ellipse becomes a tight dome, so it widens to
+330% against a taller box, which flattens the curve back out.
+
 ## Typography
 
 **One family, Inter, everywhere.** The site used to set codes, badges, prices
@@ -279,7 +296,7 @@ Two decisions worth knowing before changing them:
 
 ## Cache busting
 
-Asset URLs carry a version query (`style.css?v=57`). **Bump it on every CSS or
+Asset URLs carry a version query (`style.css?v=59`). **Bump it on every CSS or
 JS change** — GitHub Pages serves with `cache-control: max-age=600`, so without
 it, returning visitors keep the stale file and the change looks like it never
 deployed.

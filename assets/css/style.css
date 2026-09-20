@@ -1966,16 +1966,79 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 /* --------------------------------------------------------------------------
    14. CTA band
    -------------------------------------------------------------------------- */
-/* No panel — the type carries it, so it is set a size up to hold the space
-   the box used to. */
-.cta-band { text-align: center; }
+/* --------------------------------------------------------------------------
+   Closing CTA — the arc
 
-.cta-band h2 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); margin-bottom: 18px; }
-.cta-band p {
-  margin: 0 auto 32px;
-  max-width: 52ch;
-  font-size: clamp(1.06rem, 1.7vw, 1.26rem);
-  color: var(--text);
+   A very wide, very tall box with only its top two corners rounded (the
+   slash syntax gives them a vertical radius equal to the full height, which
+   is what turns a rectangle into a dome). Only the crown of that dome sits
+   inside the section; everything below is clipped, so the rim reads as a
+   horizon. A mask fades the rim out at both ends instead of letting it end
+   abruptly at the viewport edge.
+   -------------------------------------------------------------------------- */
+.cta {
+  /* shared so the arc can be positioned from them rather than guessed at */
+  --cta-pad:  clamp(78px, 11vw, 142px);
+  --cta-mark: clamp(54px, 6vw, 68px);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--cta-pad) clamp(54px, 7vw, 92px);
+  text-align: center;
+}
+
+.cta__arc {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  /* the crown lands on the middle of the mark, so the tile straddles the rim */
+  top: calc(var(--cta-pad) + var(--cta-mark) / 2);
+  width: 190%;
+  height: 1400px;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-top: 1px solid rgba(202, 187, 251, 0.62);
+  background:
+    radial-gradient(ellipse 30% 22% at 50% 0%, rgba(202, 187, 251, 0.26), transparent 72%),
+    linear-gradient(180deg, rgba(202, 187, 251, 0.075), transparent 30%);
+  box-shadow: 0 -6px 90px -10px rgba(202, 187, 251, 0.5);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 20%, #000 80%, transparent 100%);
+}
+
+/* Sits on the crown of the arc */
+.cta__mark {
+  display: grid;
+  place-items: center;
+  width: var(--cta-mark);
+  height: var(--cta-mark);
+  margin: 0 auto clamp(26px, 4vw, 44px);
+  border-radius: clamp(16px, 2vw, 21px);
+  background: linear-gradient(170deg, var(--purple) 0%, var(--purple-deep) 100%);
+  color: var(--purple-ink);
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  box-shadow: 0 0 34px rgba(202, 187, 251, 0.45), 0 10px 26px rgba(0, 0, 0, 0.6);
+}
+
+.cta__title {
+  font-size: clamp(1.95rem, 4.4vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+  background: linear-gradient(180deg, #ffffff 22%, #9d9daa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+.cta__sub {
+  max-width: 64ch;
+  margin: 0 auto clamp(26px, 3.4vw, 38px);
+  font-size: clamp(0.98rem, 1.45vw, 1.1rem);
+  color: var(--text-mid);
 }
 
 /* --------------------------------------------------------------------------
@@ -2087,17 +2150,13 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 /* --------------------------------------------------------------------------
    Footer
 
-   Deliberately no border-top: the page ground already runs edge to edge, so a
-   rule would be the only seam left on the site. Separation comes from the last
-   section's own padding instead.
-
-   One wrapping row — brand | links | socials — then a single small line. The
-   risk disclosure is collapsed rather than trimmed: the headline warning is
-   the always-visible summary, and the full text stays in the DOM.
+   Two rows separated by a hairline, as in the reference: brand and links,
+   then the copyright with the socials and the risk disclosure. No border on
+   the footer itself — the arc above already marks the boundary.
    -------------------------------------------------------------------------- */
 .footer {
   background: var(--bg);
-  padding-block: 30px 22px;
+  padding-block: 0 26px;
 }
 
 .footer__bar {
@@ -2105,26 +2164,47 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px 24px;
+  gap: 16px 28px;
+  padding-block: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.brand--sm { font-size: 0.9rem; gap: 8px; }
-.brand--sm .brand__mark { height: 26px; }
+.brand--sm { font-size: 0.95rem; gap: 9px; }
+.brand--sm .brand__mark { width: 25px; height: 25px; border-radius: 8px; font-size: 0.78rem; }
 
 .footer__nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px 20px;
+  justify-content: flex-end;
+  gap: 8px 26px;
 }
 
 .footer__nav a {
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   color: var(--text-mid);
-  transition: color 0.18s, text-shadow 0.18s;
+  transition: color 0.18s;
 }
 
-.footer__nav a:hover { color: var(--purple-bright); text-shadow: var(--glow-text); }
+.footer__nav a:hover { color: var(--purple-bright); }
+
+.footer__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer__copy { font-size: 0.78rem; color: var(--text-dim); }
+
+.footer__end {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 
 .socials { display: flex; gap: 7px; }
 
@@ -2150,57 +2230,25 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 
 .socials svg { width: 14px; height: 14px; }
 
-.footer__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 6px 20px;
-  margin-top: 18px;
-}
-
-.footer__copy { font-size: 0.74rem; color: var(--text-dim); }
-
-.footer__risk { font-size: 0.74rem; color: var(--text-dim); max-width: 78ch; }
+.footer__risk { font-size: 0.78rem; color: var(--text-dim); max-width: 74ch; }
 
 .footer__risk summary {
   cursor: pointer;
   list-style: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   transition: color 0.18s;
 }
 
 .footer__risk summary::-webkit-details-marker { display: none; }
-
-/* Own marker, so the row stays one clean line */
-.footer__risk summary::after {
-  content: "+";
-  margin-left: 7px;
-  color: var(--text-dim);
-}
-
-.footer__risk[open] summary::after { content: "\2212"; }
-.footer__risk summary:hover { color: var(--text-mid); }
-.footer__risk summary strong { color: var(--text-mid); }
+.footer__risk summary:hover { color: var(--purple-bright); }
+.footer__risk summary strong { font-weight: 500; }
 
 .footer__risk p {
   margin-top: 9px;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   line-height: 1.65;
   color: var(--text-dim);
-}
-
-/* --------------------------------------------------------------------------
-   17. Scroll reveal
-   -------------------------------------------------------------------------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -2520,10 +2568,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
      lines instead of three at phone width. */
   .about__copy h2 { font-size: 1.27rem; }
 
-  /* Sized up on desktop to hold the space the removed panel left; that
-     extra size costs a whole line on a phone. */
-  .cta-band h2 { font-size: 1.9rem; }
-  .cta-band p  { font-size: 1rem; }
 
   /* The strip only holds three names; the desktop gap leaves it looking like
      stray words drifting past. */
@@ -2606,11 +2650,18 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .faq-group    { padding-inline: 18px; margin-bottom: 14px; }
   .faq-item__q  { padding: 16px 0; font-size: 1rem; gap: 14px; }
 
+  /* A 190%-wide ellipse over a 390px viewport is a tight dome; widening it
+     against the same height flattens the curve back to a horizon. */
+  .cta__arc { width: 330%; height: 1500px; }
+
   /* --- about: copy above the video ---------------------------------------- */
   .about        { grid-template-columns: 1fr; gap: 24px; }
   .about__copy p { font-size: 0.875rem; }
   .vidbox__play { width: 52px; height: 52px; }
   .vidbox__play svg { width: 22px; height: 22px; }
+
+  .cta__title { font-size: 1.85rem; }
+  .cta__sub   { font-size: 0.96rem; }
 
   /* --- discounts: one card per screen, arrows sit under it ---------------- */
   .deals        { flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -2629,8 +2680,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .shot__name     { font-size: 0.8rem; }
 
   /* --- closing CTA + footer ---------------------------------------------- */
-  .cta-band       { padding: 32px 20px; }
-  .cta-band p     { margin-bottom: 22px; }
   .footer         { padding-block: 24px 20px; }
   .footer__bar    { justify-content: center; text-align: center; gap: 12px; }
   .footer__nav    { gap: 6px 16px; }
@@ -2664,7 +2713,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .lede        { font-size: 0.94rem; }
   .card p, .faq-item__a p, .check-list li { font-size: 0.85rem; }
   .about__copy h2 { font-size: 1.18rem; }
-  .cta-band h2 { font-size: 1.72rem; }
   .brand__text { font-size: 0.78rem; }
   .stat__num   { font-size: 1.02rem; }
   .stat__label { font-size: 0.61rem; }
