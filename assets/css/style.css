@@ -309,20 +309,10 @@ p { color: var(--text-mid); }
   flex-shrink: 0;
 }
 
-.brand__mark {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  background: var(--purple);
-  color: var(--purple-ink);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.brand__text { color: var(--text); white-space: nowrap; }
+/* The wordmark, same split as the hero: SEB in the brand purple, FUTURES
+   in white. No mark beside it -- the word is the logo. */
+.brand__text { color: #fff; white-space: nowrap; font-weight: 800; }
+.brand__text span { color: var(--purple); }
 
 /* The hairline between wordmark and links, as in the reference */
 .nav__rule {
@@ -2161,7 +2151,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
 }
 
 .brand--sm { font-size: 0.95rem; gap: 9px; }
-.brand--sm .brand__mark { width: 25px; height: 25px; border-radius: 8px; font-size: 0.78rem; }
 
 .footer__nav {
   display: flex;
@@ -2845,7 +2834,6 @@ td.prize { color: var(--purple-bright); font-size: 0.85rem; }
   .brand            { margin-right: auto; }
   .nav__rule        { display: none; }
   .nav__cta         { padding: 9px 14px; font-size: 0.8rem; }
-  .brand__mark      { height: 26px; }
   .brand__text      { font-size: 0.82rem; }
   .nav__social      { gap: 2px; }
   .nav__social a    { width: 30px; height: 30px; border-radius: 9px; }
