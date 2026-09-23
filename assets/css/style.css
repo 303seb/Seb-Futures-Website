@@ -571,31 +571,21 @@ p { color: var(--text-mid); }
   overflow: hidden;
 }
 
-/* Light at the top, grey at the bottom — the reference's display treatment.
-   background-clip only paints the gradient where the glyphs are. */
+/* The wordmark. Flat colour rather than the gradient the sentence used to
+   carry: a gradient reads as a treatment applied to a phrase, and this is a
+   name, so it should be one solid weight. */
 .hero__title {
   font-size: clamp(2.5rem, 7.4vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 1.02;
   margin-bottom: 20px;
-  background: linear-gradient(180deg, #ffffff 18%, #9d9daa 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #ffffff;
   text-shadow: none;
-  text-wrap: balance;
-}
-
-/* The brand half takes the purple, and keeps its own gradient so the two
-   halves sit on the same optical weight. */
-.hero__title span {
-  background: linear-gradient(180deg, var(--purple) 12%, #9f8ad8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
   white-space: nowrap;
 }
+
+.hero__title span { color: var(--purple); }
 
 .hero__sub {
   max-width: 44ch;
@@ -1137,11 +1127,14 @@ p { color: var(--text-mid); }
     #0e0e13;
 }
 
+/* 1.2rem, not 1.05rem: white on Whop's red is 4.04:1, which clears AA for
+   large text but not for small, and bold text only counts as large from
+   18.66px. At 1.05rem this sat 1.9px under that line. */
 .whop__brand {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #fff;
