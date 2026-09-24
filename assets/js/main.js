@@ -211,7 +211,7 @@
      fails the markup keeps its em-dash placeholders rather than showing a
      wrong number.
      ---------------------------------------------------------------------- */
-  var DISCORD_INVITE = "RJQQMAvDkJ";
+  var DISCORD_INVITE = "Y7kmzBYfVe";
 
   function initDiscordPanel() {
     var panel = document.querySelector(".dui");
